@@ -1,0 +1,85 @@
+services:
+
+#    # ... sonata ADmin
+#    app.admin.usuario:
+#            class: AppBundle\Admin\UsuarioAdmin
+#            arguments: [~, AppBundle\Entity\Usuario, SonataAdminBundle:CRUD]
+#            tags:
+#                - { name: sonata.admin, manager_type: orm, group: Usuarios, label: Usuario }
+#            public: true
+#
+#    app.admin.grupo_usuario:
+#            class: AppBundle\Admin\GrupoUsuarioAdmin
+#            arguments: [~, AppBundle\Entity\GrupoUsuario, SonataAdminBundle:CRUD]
+#            tags:
+#                - { name: sonata.admin, manager_type: orm, group: Usuarios, label: Usuario-Grupo }
+#            public: true
+#
+#    app.admin.universidad:
+#            class: AppBundle\Admin\UniversidadAdmin
+#            arguments: [~, AppBundle\Entity\Universidad, SonataAdminBundle:CRUD]
+#            tags:
+#                - { name: sonata.admin, manager_type: orm, group: Universidades, label: Universidad }
+#            public: true
+#
+#    app.admin.especialidad:
+#            class: AppBundle\Admin\EspecialidadAdmin
+#            arguments: [~, AppBundle\Entity\Especialidad, SonataAdminBundle:CRUD]
+#            tags:
+#                - { name: sonata.admin, manager_type: orm, group: Universidades, label: Especialidad }
+#            public: true
+#
+#    app.admin.grupo:
+#            class: AppBundle\Admin\GrupoAdmin
+#            arguments: [~, AppBundle\Entity\Grupo, SonataAdminBundle:CRUD]
+#            tags:
+#                - { name: sonata.admin, manager_type: orm, group: Universidades, label: Grupo }
+#            public: true
+#
+#    app.admin.orla:
+#            class: AppBundle\Admin\OrlaAdmin
+#            arguments: [~, AppBundle\Entity\Orla, SonataAdminBundle:CRUD]
+#            tags:
+#                - { name: sonata.admin, manager_type: orm, group: Orlas, label: Orlas }
+#            public: true
+#
+#    app.admin.grupo_orla:
+#            class: AppBundle\Admin\GrupoOrlaAdmin
+#            arguments: [~, AppBundle\Entity\GrupoOrla, SonataAdminBundle:CRUD]
+#            tags:
+#                - { name: sonata.admin, manager_type: orm, group: Orlas, label: Orlas Asignadas }
+#            public: true
+#
+#    app.admin.grupo_orla_usuario:
+#            class: AppBundle\Admin\GrupoOrlaUsuarioAdmin
+#            arguments: [~, AppBundle\Entity\GrupoOrlaUsuario, SonataAdminBundle:CRUD]
+#            tags:
+#                - { name: sonata.admin, manager_type: orm, group: Orlas, label: Votaciones }
+#            public: true
+    app.admin.grupo:
+        class: AppBundle\Admin\GrupoAdmin
+        arguments: [~, AppBundle\Entity\Grupo, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Grupo }
+        public: true
+
+    app.admin.grupos_usuarios:
+        class: AppBundle\Admin\GruposUsuariosAdmin
+        arguments: [~, AppBundle\Entity\GruposUsuarios, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: GruposUsuarios }
+        public: true
+
+    app.admin.universidad:
+        class: AppBundle\Admin\UniversidadAdmin
+        arguments: [~, AppBundle\Entity\Universidad, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Universidad }
+        public: true
+
+    app.admin.especialidad:
+        class: AppBundle\Admin\EspecialidadAdmin
+        arguments: [~, AppBundle\Entity\Especialidad, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Especialidad }
+        public: true

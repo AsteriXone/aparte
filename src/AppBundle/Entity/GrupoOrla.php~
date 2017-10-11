@@ -1,0 +1,129 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * GrupoOrla
+ *
+ * @ORM\Table(name="grupo_orla")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\GrupoOrlaRepository")
+ */
+class GrupoOrla
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * Relations
+     */
+    /**
+     * @ORM\ManyToOne(targetEntity="Orla", inversedBy="grupo_orlas")
+     */
+    protected $orla;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Grupo", inversedBy="grupo_orlas")
+     */
+    protected $asignacion;
+
+
+    /**
+     * @ORM\OneToMany(targetEntity="GrupoOrlaUsuario", mappedBy="usuario")
+     */
+    protected $grupo_orla_usuario;
+
+    public function __construct()
+    {
+        $this->grupo_orla_usuario = new ArrayCollection();
+    }
+
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set orla
+     *
+     * @param \AppBundle\Entity\Orla $orla
+     *
+     * @return GrupoOrla
+     */
+    public function setOrla(\AppBundle\Entity\Orla $orla = null)
+    {
+        $this->orla = $orla;
+
+        return $this;
+    }
+
+    /**
+     * Get orla
+     *
+     * @return \AppBundle\Entity\Orla
+     */
+    public function getOrla()
+    {
+        return $this->orla;
+    }
+
+    /**
+     * Set grupo
+     *
+     * @param \AppBundle\Entity\GrupoOrla $grupo
+     *
+     * @return GrupoOrla
+     */
+    public function setGrupo(\AppBundle\Entity\GrupoOrla $grupo = null)
+    {
+        $this->grupo = $grupo;
+
+        return $this;
+    }
+
+    /**
+     * Get grupo
+     *
+     * @return \AppBundle\Entity\GrupoOrla
+     */
+    public function getGrupo()
+    {
+        return $this->grupo;
+    }
+
+    /**
+     * Set asignacion
+     *
+     * @param \AppBundle\Entity\Grupo $asignacion
+     *
+     * @return GrupoOrla
+     */
+    public function setAsignacion(\AppBundle\Entity\Grupo $asignacion = null)
+    {
+        $this->asignacion = $asignacion;
+
+        return $this;
+    }
+
+    /**
+     * Get asignacion
+     *
+     * @return \AppBundle\Entity\Grupo
+     */
+    public function getAsignacion()
+    {
+        return $this->asignacion;
+    }
+}

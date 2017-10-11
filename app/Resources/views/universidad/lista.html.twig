@@ -1,0 +1,11 @@
+{% extends 'layout.html.twig' %}
+{% block title %}Lista universidades{% endblock %}
+{% block content %}
+    <h2>Lista Universidades</h2>
+    <ul>
+    {% for universidad in universidades %}
+        <li>Universidad con ID {{ universidad.id }}: {{ universidad.nombre }} -> <a href="{{ path('universidad_editar',{'id':universidad.id}) }}">Editar</a>
+        </li>
+    {% endfor %}
+    </ul>
+{% endblock %}

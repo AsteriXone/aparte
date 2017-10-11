@@ -1,0 +1,47 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * GrupoOrlaUsuario
+ *
+ * @ORM\Table(name="grupo_orla_usuario")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\GrupoOrlaUsuarioRepository")
+ */
+class GrupoOrlaUsuario
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * Relations
+     */
+    /**
+     * @ORM\ManyToOne(targetEntity="GrupoOrla", inversedBy="grupo_orla_usuario")
+     */
+    protected $asignacion;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Usuario", inversedBy="grupo_orla_usuario")
+     */
+    protected $usuario;
+
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+}
+

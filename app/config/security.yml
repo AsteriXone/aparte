@@ -1,0 +1,36 @@
+# To get started with security, check out the documentation:
+# https://symfony.com/doc/current/security.html
+security:
+    access_control:
+              - { path: ^/admin, roles: ROLE_ADMIN }
+
+    providers:
+          in_memory:
+              memory:
+                  users:
+                      ruben: { password: ruben, roles: 'ROLE_USER' }
+                      admin: { password: admin, roles: 'ROLE_ADMIN'}
+          our_db_provider:
+              entity:
+                  class: AppBundle:User
+                  property: username
+
+    encoders:
+          Symfony\Component\Security\Core\User\User: plaintext
+          AppBundle\Entity\User:
+            algorithm: bcrypt
+
+    firewalls:
+        # disables authentication for assets and the profiler, adapt it according to your needs
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        secured_area:
+          pattern: ^/
+          anonymous: ~
+          form_login:
+            login_path: login
+            check_path: login
+          logout: ~
+          provider: our_db_provider

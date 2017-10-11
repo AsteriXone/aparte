@@ -1,0 +1,128 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Grupos_Usuarios
+ *
+ * @ORM\Table(name="grupos__usuarios")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\Grupos_UsuariosRepository")
+ */
+class Grupos_Usuarios
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="usuario_id", type="integer")
+     */
+    private $usuarioId;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="grupo_id", type="integer")
+     */
+    private $grupoId;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="codigo_grupo", type="string", length=255, unique=true)
+     */
+    private $codigoGrupo;
+
+
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set usuarioId
+     *
+     * @param integer $usuarioId
+     *
+     * @return Grupos_Usuarios
+     */
+    public function setUsuarioId($usuarioId)
+    {
+        $this->usuarioId = $usuarioId;
+
+        return $this;
+    }
+
+    /**
+     * Get usuarioId
+     *
+     * @return int
+     */
+    public function getUsuarioId()
+    {
+        return $this->usuarioId;
+    }
+
+    /**
+     * Set grupoId
+     *
+     * @param integer $grupoId
+     *
+     * @return Grupos_Usuarios
+     */
+    public function setGrupoId($grupoId)
+    {
+        $this->grupoId = $grupoId;
+
+        return $this;
+    }
+
+    /**
+     * Get grupoId
+     *
+     * @return int
+     */
+    public function getGrupoId()
+    {
+        return $this->grupoId;
+    }
+
+    /**
+     * Set codigoGrupo
+     *
+     * @param string $codigoGrupo
+     *
+     * @return Grupos_Usuarios
+     */
+    public function setCodigoGrupo($codigoGrupo)
+    {
+        $this->codigoGrupo = $codigoGrupo;
+
+        return $this;
+    }
+
+    /**
+     * Get codigoGrupo
+     *
+     * @return string
+     */
+    public function getCodigoGrupo()
+    {
+        return $this->codigoGrupo;
+    }
+}
+
