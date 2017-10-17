@@ -35,7 +35,14 @@
             </form-->
             <ul class="nav navbar-nav navbar-right">
                  <li>
-                    <a href="{{ url('login') }}"><span class="glyphicon glyphicon-user"></span> Login</a>
+                    <a href="{{ url('login') }}">
+                        {% if app.user %}
+                        {{ app.user.username }}
+                            {% else %}
+                            Acceso
+                        {% endif %}
+                        <span class="glyphicon glyphicon-user"></span>
+                    </a>
                 </li>
             </ul>
         </div><!-- /.navbar-collapse -->

@@ -4,10 +4,15 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
 
 /**
  * @ORM\Table(name="app_users")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
+ * @UniqueEntity(fields="email", message="Este Email ya está registrado")
+ * @UniqueEntity(fields="telephone", message="Este Teléfono ya está registrado")
  */
 class User implements UserInterface, \Serializable
 {
@@ -19,7 +24,8 @@ class User implements UserInterface, \Serializable
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=25, unique=true)
+     * @ORM\Column(type="string", length=50)
+     * @Assert\NotBlank()
      */
     private $username;
 
@@ -29,9 +35,29 @@ class User implements UserInterface, \Serializable
     private $password;
 
     /**
+     * @Assert\NotBlank()
+     * @Assert\Length(max=4096)
+     */
+    private $plainPassword;
+
+    /**
      * @ORM\Column(type="string", length=60, unique=true)
+     * @Assert\NotBlank()
+     * @Assert\Email()
      */
     private $email;
+
+    /**
+     * @ORM\Column(type="string", length=180)
+     * @Assert\NotBlank()
+     */
+    private $address;
+
+    /**
+     * @ORM\Column(type="integer", unique=true)
+     * @Assert\NotBlank()
+     */
+    private $telephone;
 
     /**
      * @ORM\Column(name="is_active", type="boolean")
@@ -179,5 +205,61 @@ class User implements UserInterface, \Serializable
     public function getIsActive()
     {
         return $this->isActive;
+    }
+
+    /**
+     * Set address
+     *
+     * @param string $address
+     *
+     * @return User
+     */
+    public function setAddress($address)
+    {
+        $this->address = $address;
+
+        return $this;
+    }
+
+    /**
+     * Get address
+     *
+     * @return string
+     */
+    public function getAddress()
+    {
+        return $this->address;
+    }
+
+    /**
+     * Set telephone
+     *
+     * @param integer $telephone
+     *
+     * @return User
+     */
+    public function setTelephone($telephone)
+    {
+        $this->telephone = $telephone;
+
+        return $this;
+    }
+
+    /**
+     * Get telephone
+     *
+     * @return integer
+     */
+    public function getTelephone()
+    {
+        return $this->telephone;
+    }
+
+    public function setPlainPassword($password){
+        $this->plainPassword = $password;
+    }
+
+    public function getPlainPassword(){
+        return $this->plainPassword;
     }
 }
