@@ -2,6 +2,7 @@
 // src/AppBundle/Entity/User.php
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -30,6 +31,11 @@ class User implements UserInterface, \Serializable
     private $username;
 
     /**
+     * @ORM\Column(type="array")
+     */
+    private $roles;
+
+    /**
      * @ORM\Column(type="string", length=64)
      */
     private $password;
@@ -54,7 +60,7 @@ class User implements UserInterface, \Serializable
     private $address;
 
     /**
-     * @ORM\Column(type="integer", unique=true)
+     * @ORM\Column(type="string", unique=true)
      * @Assert\NotBlank()
      */
     private $telephone;
@@ -67,9 +73,21 @@ class User implements UserInterface, \Serializable
     public function __construct()
     {
         $this->isActive = true;
+        $this->grupos_usuarios = new ArrayCollection();
         // may not be needed, see section on salt below
         // $this->salt = md5(uniqid('', true));
     }
+    public function __toString()
+    {
+        return (string) $this->username;
+    }
+
+    /**
+     * @ORM\OneToMany(targetEntity="GruposUsuarios", mappedBy="user")
+     */
+    protected $grupos_usuarios;
+
+
 
     public function getUsername()
     {
@@ -90,7 +108,8 @@ class User implements UserInterface, \Serializable
 
     public function getRoles()
     {
-        return array('ROLE_ADMIN');
+        // return array('ROLE_ADMIN');
+        return array($this->roles);
     }
 
     public function eraseCredentials()
@@ -261,5 +280,53 @@ class User implements UserInterface, \Serializable
 
     public function getPlainPassword(){
         return $this->plainPassword;
+    }
+
+    /**
+     * Set roles
+     *
+     * @param array $roles
+     *
+     * @return User
+     */
+    public function setRoles($roles)
+    {
+        $this->roles = $roles;
+
+        return $this;
+    }
+
+    /**
+     * Add gruposUsuario
+     *
+     * @param \AppBundle\Entity\GruposUsuarios $gruposUsuario
+     *
+     * @return User
+     */
+    public function addGruposUsuario(\AppBundle\Entity\GruposUsuarios $gruposUsuario)
+    {
+        $this->grupos_usuarios[] = $gruposUsuario;
+
+        return $this;
+    }
+
+    /**
+     * Remove gruposUsuario
+     *
+     * @param \AppBundle\Entity\GruposUsuarios $gruposUsuario
+     */
+    public function removeGruposUsuario(\AppBundle\Entity\GruposUsuarios $gruposUsuario)
+    {
+        $this->grupos_usuarios->removeElement($gruposUsuario);
+    }
+
+    /**
+     * Get gruposUsuarios
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getGruposUsuarios()
+    {
+        return $this->grupos_usuarios;
     }
 }

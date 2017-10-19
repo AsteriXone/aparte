@@ -8,7 +8,7 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 
-class GruposUsuariosAdmin extends AbstractAdmin
+class UserAdmin extends AbstractAdmin
 {
     /**
      * @param DatagridMapper $datagridMapper
@@ -17,8 +17,13 @@ class GruposUsuariosAdmin extends AbstractAdmin
     {
         $datagridMapper
             ->add('id')
-            ->add('grupo')
-            ->add('user')
+            ->add('username')
+            ->add('roles')
+            ->add('password')
+            ->add('email')
+            ->add('address')
+            ->add('telephone')
+            ->add('isActive')
         ;
     }
 
@@ -29,8 +34,13 @@ class GruposUsuariosAdmin extends AbstractAdmin
     {
         $listMapper
             ->add('id')
-            ->add('grupo')
-            ->add('user')
+            ->add('username')
+            ->add('roles')
+            ->add('password')
+            ->add('email')
+            ->add('address')
+            ->add('telephone')
+            ->add('isActive')
             ->add('_action', null, array(
                 'actions' => array(
                     'show' => array(),
@@ -47,9 +57,14 @@ class GruposUsuariosAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            //->add('id')
-            ->add('grupo')
-            ->add('user')
+            ->add('id')
+            ->add('username')
+            ->add('roles')
+            ->add('password')
+            ->add('email')
+            ->add('address')
+            ->add('telephone')
+            ->add('isActive')
         ;
     }
 
@@ -60,7 +75,13 @@ class GruposUsuariosAdmin extends AbstractAdmin
     {
         $showMapper
             ->add('id')
-            ->add('grupo')
+            ->add('username')
+            ->add('roles')
+            ->add('password')
+            ->add('email')
+            ->add('address')
+            ->add('telephone')
+            ->add('isActive')
         ;
     }
 }

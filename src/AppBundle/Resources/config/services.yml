@@ -60,26 +60,33 @@ services:
         class: AppBundle\Admin\GrupoAdmin
         arguments: [~, AppBundle\Entity\Grupo, SonataAdminBundle:CRUD]
         tags:
-            - { name: sonata.admin, manager_type: orm, group: admin, label: Grupo }
+            - { name: sonata.admin, manager_type: orm, group: Grupos, label: Grupo }
         public: true
 
     app.admin.grupos_usuarios:
         class: AppBundle\Admin\GruposUsuariosAdmin
         arguments: [~, AppBundle\Entity\GruposUsuarios, SonataAdminBundle:CRUD]
         tags:
-            - { name: sonata.admin, manager_type: orm, group: admin, label: GruposUsuarios }
+            - { name: sonata.admin, manager_type: orm, group: Grupos, label: GruposUsuarios }
         public: true
 
     app.admin.universidad:
         class: AppBundle\Admin\UniversidadAdmin
         arguments: [~, AppBundle\Entity\Universidad, SonataAdminBundle:CRUD]
         tags:
-            - { name: sonata.admin, manager_type: orm, group: admin, label: Universidad }
+            - { name: sonata.admin, manager_type: orm, group: Universidades, label: Universidad }
         public: true
 
     app.admin.especialidad:
         class: AppBundle\Admin\EspecialidadAdmin
         arguments: [~, AppBundle\Entity\Especialidad, SonataAdminBundle:CRUD]
         tags:
-            - { name: sonata.admin, manager_type: orm, group: admin, label: Especialidad }
+            - { name: sonata.admin, manager_type: orm, group: Universidades, label: Especialidad }
+        public: true
+
+    app.admin.user:
+        class: AppBundle\Admin\UserAdmin
+        arguments: [~, AppBundle\Entity\User, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Usuarios, label: User }
         public: true

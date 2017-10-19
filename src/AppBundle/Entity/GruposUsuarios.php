@@ -28,6 +28,11 @@ class GruposUsuarios
       */
     private $grupo;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="grupos_usuarios")
+     */
+    private $user;
+
     
     /**
      * Get id
@@ -136,5 +141,29 @@ class GruposUsuarios
     public function getGrupo()
     {
         return $this->grupo;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \AppBundle\Entity\User $user
+     *
+     * @return GruposUsuarios
+     */
+    public function setUser(\AppBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \AppBundle\Entity\User
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 }

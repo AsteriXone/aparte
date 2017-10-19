@@ -7,6 +7,9 @@
                 <div class="panel-heading">
                     <h3 class="panel-title text-center">REGISTRO</h3>
                 </div>
+                {% if (error) %}
+                    <div  class="panel-body">{{ error }}</div>
+                {% endif %}
                 <div class="panel-body">
                     {{ form_start(form) }}
                     {{ form_widget(form) }}
