@@ -2,13 +2,15 @@
 
 namespace AppBundle\Admin;
 
+use AppBundle\Entity\Dias_Cuadrante;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
-class GruposUsuariosAdmin extends AbstractAdmin
+class CuadranteAdmin extends AbstractAdmin
 {
     /**
      * @param DatagridMapper $datagridMapper
@@ -17,8 +19,8 @@ class GruposUsuariosAdmin extends AbstractAdmin
     {
         $datagridMapper
             ->add('id')
+            ->add('nombreCuadrante')
             ->add('grupo')
-            ->add('user')
         ;
     }
 
@@ -29,8 +31,11 @@ class GruposUsuariosAdmin extends AbstractAdmin
     {
         $listMapper
             ->add('id')
-            ->add('grupo')
-            ->add('user')
+            ->add('nombreCuadrante')
+            ->add('grupo', null, array(
+                'label' => 'Grupo al que pertenece',
+                'sortable' => 'true',
+            ))
             ->add('_action', null, array(
                 'actions' => array(
                     'show' => array(),
@@ -48,8 +53,12 @@ class GruposUsuariosAdmin extends AbstractAdmin
     {
         $formMapper
             //->add('id')
+            ->add('nombreCuadrante')
             ->add('grupo')
-            ->add('user')
+//            ->add('cuadrante_dia', 'sonata_type_model', array(
+//                'class' => 'AppBundle:CuadranteDia',
+//                'choice_label' => 'prueba',
+//            ));
         ;
     }
 
@@ -60,8 +69,8 @@ class GruposUsuariosAdmin extends AbstractAdmin
     {
         $showMapper
             ->add('id')
+            ->add('nombreCuadrante')
             ->add('grupo')
-            ->add('user')
         ;
     }
 }

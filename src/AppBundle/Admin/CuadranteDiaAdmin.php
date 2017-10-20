@@ -8,7 +8,7 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 
-class GruposUsuariosAdmin extends AbstractAdmin
+class CuadranteDiaAdmin extends AbstractAdmin
 {
     /**
      * @param DatagridMapper $datagridMapper
@@ -17,8 +17,10 @@ class GruposUsuariosAdmin extends AbstractAdmin
     {
         $datagridMapper
             ->add('id')
-            ->add('grupo')
-            ->add('user')
+            ->add('cuadrante')
+            ->add('fecha')
+            ->add('horaInicio')
+            ->add('horaFin')
         ;
     }
 
@@ -28,9 +30,11 @@ class GruposUsuariosAdmin extends AbstractAdmin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->add('id')
-            ->add('grupo')
-            ->add('user')
+//            ->add('id')
+            ->add('cuadrante')
+            ->add('fecha')
+            ->add('horaInicio')
+            ->add('horaFin')
             ->add('_action', null, array(
                 'actions' => array(
                     'show' => array(),
@@ -47,9 +51,11 @@ class GruposUsuariosAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            //->add('id')
-            ->add('grupo')
-            ->add('user')
+//            ->add('id')
+            ->add('fecha')
+            ->add('horaInicio')
+            ->add('horaFin')
+            ->add('cuadrante')
         ;
     }
 
@@ -60,8 +66,10 @@ class GruposUsuariosAdmin extends AbstractAdmin
     {
         $showMapper
             ->add('id')
-            ->add('grupo')
-            ->add('user')
+            ->add('cuadrante')
+            ->add('fecha')
+            ->add('horaInicio')
+            ->add('horaFin')
         ;
     }
 }

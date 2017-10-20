@@ -33,10 +33,10 @@ class UserAdmin extends AbstractAdmin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->add('id')
-            ->add('username')
-            ->add('roles')
-            ->add('password')
+//            ->add('id')
+//            ->add('username')
+//            ->add('roles')
+//            ->add('password')
             ->add('email')
             ->add('address')
             ->add('telephone')
@@ -57,14 +57,24 @@ class UserAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('id')
-            ->add('username')
+//            ->add('id')
+            ->add('username', null, array(
+                'label' => 'Nombre'
+            ))
             ->add('roles')
-            ->add('password')
-            ->add('email')
-            ->add('address')
-            ->add('telephone')
-            ->add('isActive')
+//            ->add('plainPassword', null, array(
+//                'label' => 'Contraseña'
+//            ))
+            ->add('email', null, array(
+                'label' => 'Email'
+            ))
+            ->add('address', null, array(
+                'label' => 'Dirección'
+            ))
+            ->add('telephone', null, array(
+                'label' => 'Teléfono'
+            ))
+//            ->add('isActive')
         ;
     }
 

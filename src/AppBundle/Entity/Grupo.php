@@ -51,9 +51,17 @@ class Grupo
      */
     private $grupos_usuarios;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Cuadrante", mappedBy="grupo")
+     */
+    protected $cuadrantes;
+
+
+
     public function __construct()
     {
         $this->grupos_usuarios = new ArrayCollection();
+        $this->cuadrantes = new ArrayCollection();
     }
 
     public function __toString()
@@ -271,5 +279,43 @@ class Grupo
     public function getAnio()
     {
         return $this->anio;
+    }
+
+//    public function getGupo()
+//    {
+//        return $this;
+//    }
+    /**
+     * Add cuadrante
+     *
+     * @param \AppBundle\Entity\Cuadrante $cuadrante
+     *
+     * @return Grupo
+     */
+    public function addCuadrante(\AppBundle\Entity\Cuadrante $cuadrante)
+    {
+        $this->cuadrantes[] = $cuadrante;
+
+        return $this;
+    }
+
+    /**
+     * Remove cuadrante
+     *
+     * @param \AppBundle\Entity\Cuadrante $cuadrante
+     */
+    public function removeCuadrante(\AppBundle\Entity\Cuadrante $cuadrante)
+    {
+        $this->cuadrantes->removeElement($cuadrante);
+    }
+
+    /**
+     * Get cuadrantes
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCuadrantes()
+    {
+        return $this->cuadrantes;
     }
 }

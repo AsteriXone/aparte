@@ -1,0 +1,53 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Cuadrante
+ *
+ * @ORM\Table(name="cuadrante")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\CuadranteRepository")
+ */
+class Cuadrante
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nombre_cuadrante", type="string", length=255, unique=true)
+     */
+    private $nombreCuadrante;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Grupo", inversedBy="cuadrantes")
+     * @ORM\JoinColumn(name="id_grupo", referencedColumnName="id")
+     */
+    protected $grupo;
+
+    /**
+     * @ORM\OneToMany(targetEntity="CuadranteDia", mappedBy="cuadrante")
+     */
+    protected $cuadrante_dia;
+
+    public function __construct()
+    {
+        $this->dias_cuadrante = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        // TODO: Implement __toString() method.
+        return (string) $this->nombreCuadrante." - ". $this -> getGrupo();
+    }
+}

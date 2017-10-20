@@ -38,13 +38,13 @@ class User implements UserInterface, \Serializable
     /**
      * @ORM\Column(type="string", length=64)
      */
-    private $password;
+    private $password = 'default';
 
     /**
      * @Assert\NotBlank()
      * @Assert\Length(max=4096)
      */
-    private $plainPassword;
+    private $plainPassword = 'default';
 
     /**
      * @ORM\Column(type="string", length=60, unique=true)
