@@ -49,56 +49,56 @@ class SecurityController extends Controller
 
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $password = $passwordEncoder->encodePassword($usuario, $usuario->getPlainPassword());
-
-            $usuario->setPassword($password);
-            $usuario->setRoles('ROLE_USER');
-
-            $groupcode = $form['groupcode']->getData();
-
-            if ($groupcode){
-                // Usuario introduce codigo-grupo
-                // Se comprueba codigo
-                $grupo = $this->getDoctrine()
-                    ->getRepository(Grupo::class)
-                    ->findBy(
-                        array('codigoGrupo' => $groupcode)
-                    );
-                // Si hay codigo asignado a grupo
-                if ($grupo){
-                    // Persist User to DB && asign to group-user
-                    $idGrupo = $grupo[0]->getId();
-
-                    $em = $this->getDoctrine()->getManager();
-                    $em->persist($usuario);
-                    $em->flush();
-
-                    $gruposUsuarios = new GruposUsuarios();
-                    $gruposUsuarios->setGrupo($grupo[0]);
-                    $gruposUsuarios->setUser($usuario);
-
-                    $em2 = $this->getDoctrine()->getManager();
-                    $em2->persist($gruposUsuarios);
-                    $em2->flush();
-
-//                    echo ('User Id: '.$usuario->getId());
-//                    echo ('Grupo Id:'. $idGrupo);
-
-                    $token = new UsernamePasswordToken($usuario, null, 'main', $usuario->getRoles());
-                    $this->get('security.token_storage')->setToken($token);
-                    $this->get('session')->set('_security_main', serialize($token));
-
-                    return $this->redirectToRoute('homepage');
-                } else {
-                    $error  = 'El código no es válido!';
-                }
-
-            } else {
-                // Usuario NO introduce codigo-grupo
-                $error = 'Debes introducir un código';
-            }
-        }
+//        if ($form->isSubmitted() && $form->isValid()) {
+//            $password = $passwordEncoder->encodePassword($usuario, $usuario->getPlainPassword());
+//
+//            $usuario->setPassword($password);
+//            $usuario->setRoles('ROLE_USER');
+//
+//            $groupcode = $form['groupcode']->getData();
+//
+//            if ($groupcode){
+//                // Usuario introduce codigo-grupo
+//                // Se comprueba codigo
+//                $grupo = $this->getDoctrine()
+//                    ->getRepository(Grupo::class)
+//                    ->findBy(
+//                        array('codigoGrupo' => $groupcode)
+//                    );
+//                // Si hay codigo asignado a grupo
+//                if ($grupo){
+//                    // Persist User to DB && asign to group-user
+//                    $idGrupo = $grupo[0]->getId();
+//
+//                    $em = $this->getDoctrine()->getManager();
+//                    $em->persist($usuario);
+//                    $em->flush();
+//
+//                    $gruposUsuarios = new GruposUsuarios();
+//                    $gruposUsuarios->setGrupo($grupo[0]);
+//                    $gruposUsuarios->setUser($usuario);
+//
+//                    $em2 = $this->getDoctrine()->getManager();
+//                    $em2->persist($gruposUsuarios);
+//                    $em2->flush();
+//
+////                    echo ('User Id: '.$usuario->getId());
+////                    echo ('Grupo Id:'. $idGrupo);
+//
+//                    $token = new UsernamePasswordToken($usuario, null, 'main', $usuario->getRoles());
+//                    $this->get('security.token_storage')->setToken($token);
+//                    $this->get('session')->set('_security_main', serialize($token));
+//
+//                    return $this->redirectToRoute('homepage');
+//                } else {
+//                    $error  = 'El código no es válido!';
+//                }
+//
+//            } else {
+//                // Usuario NO introduce codigo-grupo
+//                $error = 'Debes introducir un código';
+//            }
+//        }
         return $this->render(
             'security/registrar.html.twig',
             array(
