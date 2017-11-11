@@ -1,36 +1,61 @@
 # To get started with security, check out the documentation:
 # https://symfony.com/doc/current/security.html
 security:
-    access_control:
-              - { path: ^/admin, roles: ROLE_ADMIN }
+
+
+#    providers:
+#          in_memory:
+#              memory:
+#                  users:
+#                      ruben: { password: ruben, roles: 'ROLE_USER' }
+#                      admin: { password: admin, roles: 'ROLE_ADMIN'}
+#          our_db_provider:
+#              entity:
+#                  class: AppBundle:User
+#                  # property: username
 
     providers:
-          in_memory:
-              memory:
-                  users:
-                      ruben: { password: ruben, roles: 'ROLE_USER' }
-                      admin: { password: admin, roles: 'ROLE_ADMIN'}
-          our_db_provider:
-              entity:
-                  class: AppBundle:User
-                  # property: username
+            fos_userbundle:
+                id: fos_user.user_provider.username
+
 
     encoders:
-          Symfony\Component\Security\Core\User\User: plaintext
-          AppBundle\Entity\User:
-            algorithm: bcrypt
+            FOS\UserBundle\Model\UserInterface: bcrypt
+#          Symfony\Component\Security\Core\User\User: plaintext
+#          AppBundle\Entity\User:
+#            algorithm: bcrypt
+
+    role_hierarchy:
+            ROLE_USER:  ROLE_USER
+            ROLE_ADMIN: ROLE_ADMIN
 
     firewalls:
-        # disables authentication for assets and the profiler, adapt it according to your needs
-        dev:
-            pattern: ^/(_(profiler|wdt)|css|images|js)/
-            security: false
+#        # disables authentication for assets and the profiler, adapt it according to your needs
+#        dev:
+#            pattern: ^/(_(profiler|wdt)|css|images|js)/
+#            security: false
+#
+#        secured_area:
+#          pattern: ^/
+#          anonymous: ~
+#          form_login:
+#            login_path: login
+#            check_path: login
+#          logout: ~
+#          provider: our_db_provider
+          main:
+              pattern: ^/
+              form_login:
+                  provider: fos_userbundle
+                  csrf_token_generator: security.csrf.token_manager
+                  # if you are using Symfony < 2.8, use the following config instead:
+                  # csrf_provider: form.csrf_provider
 
-        secured_area:
-          pattern: ^/
-          anonymous: ~
-          form_login:
-            login_path: login
-            check_path: login
-          logout: ~
-          provider: our_db_provider
+              logout:       true
+              anonymous:    true
+
+    access_control:
+            - { path: ^/login, role: IS_AUTHENTICATED_ANONYMOUSLY }
+            - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
+            - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
+            - { path: ^/admin/, role: IS_AUTHENTICATED_ANONYMOUSLY }

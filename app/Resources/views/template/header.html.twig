@@ -12,37 +12,42 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="{{ url('homepage') }}"> <img style="max-height: 50px" src="img/aparteLogo.jpg"/></a>
+            <a class="navbar-brand" href="{{ url('homepage') }}"> <img style="max-height: 50px" src="{{ asset('img/aparteLogo.jpg') }}"/></a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li><a href="{{ path('orlas') }}">Orlas Universitarias</a></li>
-                <li><a href="{{ path('mantenimiento') }}">Fotoescuela</a></li>
-                <li><a href="{{ path('mantenimiento') }}">Graduaciones</a></li>
-                <li><a href="{{ path('mantenimiento') }}">Retratos</a></li>
-                <li><a href="{{ path('mantenimiento') }}">Reportaje social</a></li>
-                <li><a href="{{ path('mantenimiento') }}">Quienes Somos</a></li>
-                <li><a href="{{ path('mantenimiento') }}">Como trabajamos</a></li>
-                <li><a href="{{ path('mantenimiento') }}">Contactar</a></li>
+                {% if app.user %}
+                    <!-- Menú para usuarios registrados -->
+                    <li><a href="#">Mi Pedido</a></li>
+                    <li><a href="#">Votar Orla</a></li>
+                    <li><a href="#">Votar Profe</a></li>
+                    <li><a href="#">Pedir Cita</a></li>
+                    <li><a href="#">Contactar</a></li>
+                {% else %}
+                    <li><a href="{{ path('orlas') }}">Orlas</a></li>
+                    <li><a href="{{ path('mantenimiento') }}">Fotoescuela</a></li>
+                    <li><a href="{{ path('mantenimiento') }}">Graduaciones</a></li>
+                    <li><a href="{{ path('mantenimiento') }}">Retratos</a></li>
+                    <li><a href="{{ path('mantenimiento') }}">Reportajes</a></li>
+                    <li><a href="{{ path('mantenimiento') }}">Quienes Somos</a></li>
+                    <li><a href="{{ path('mantenimiento') }}">Contactar</a></li>
+                {% endif %}
             </ul>
-            <!--form class="navbar-form navbar-left">
-                <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Search">
-                </div>
-                <button type="submit" class="btn btn-default">Submit</button>
-            </form-->
             <ul class="nav navbar-nav navbar-right">
                  <li>
-                    <a href="{{ url('login') }}">
-                        {% if app.user %}
-                        {{ app.user.username }}
-                            {% else %}
-                            Acceso
-                        {% endif %}
-                        <span class="glyphicon glyphicon-user"></span>
-                    </a>
+                     {% if app.user %}
+                         <a href="{{ path('fos_user_security_logout') }}">
+                             Cerrar Sesión
+                             <span class="glyphicon glyphicon-log-out"></span>
+                         </a>
+                     {% else %}
+                         <a href="{{ path('fos_user_security_login') }}">
+                             Acceso
+                             <span class="glyphicon glyphicon-user"></span>
+                         </a>
+                     {% endif %}
                 </li>
             </ul>
         </div><!-- /.navbar-collapse -->

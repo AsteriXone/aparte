@@ -2,331 +2,243 @@
 // src/AppBundle/Entity/User.php
 namespace AppBundle\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
+use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-
 
 /**
- * @ORM\Table(name="app_users")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
- * @UniqueEntity(fields="email", message="Este Email ya está registrado")
- * @UniqueEntity(fields="telephone", message="Este Teléfono ya está registrado")
+ * @ORM\Entity
+ * @ORM\Table(name="fos_user")
  */
-class User implements UserInterface, \Serializable
+class User extends BaseUser
 {
     /**
-     * @ORM\Column(type="integer")
      * @ORM\Id
+     * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
-     * @ORM\Column(type="string", length=50)
-     * @Assert\NotBlank()
+     * @var string
+     *
+     * @ORM\Column(name="nombre", type="string", length=255)
      */
-    private $username;
+    protected $nombre;
 
     /**
-     * @ORM\Column(type="array")
+     * @var string
+     *
+     * @ORM\Column(name="apellido1", type="string", length=255)
      */
-    private $roles;
+    protected $ape_1;
 
     /**
-     * @ORM\Column(type="string", length=64)
+     * @var string
+     *
+     * @ORM\Column(name="apellido2", type="string", length=255)
      */
-    private $password = 'default';
+    protected $ape_2;
 
     /**
-     * @Assert\NotBlank()
-     * @Assert\Length(max=4096)
+     * @var string
+     *
+     * @ORM\Column(name="direccion", type="string", length=255)
      */
-    private $plainPassword = 'default';
+    protected $direccion;
 
     /**
-     * @ORM\Column(type="string", length=60, unique=true)
-     * @Assert\NotBlank()
-     * @Assert\Email()
+     * @var string
+     *
+     * @ORM\Column(name="telefono", type="string", length=255)
      */
-    private $email;
+    protected $telefono;
 
     /**
-     * @ORM\Column(type="string", length=180)
-     * @Assert\NotBlank()
+     * @var string
+     *
+     * @ORM\Column(name="titulacion", type="string", length=255)
      */
-    private $address;
+    protected $titulacion;
 
     /**
-     * @ORM\Column(type="string", unique=true)
-     * @Assert\NotBlank()
+     * @var string
+     *
+     * @ORM\Column(name="mencion", type="string", length=255)
      */
-    private $telephone;
+    protected $mencion;
 
-    /**
-     * @ORM\Column(name="is_active", type="boolean")
-     */
-    private $isActive;
 
     public function __construct()
     {
-        $this->isActive = true;
-        $this->grupos_usuarios = new ArrayCollection();
-        // may not be needed, see section on salt below
-        // $this->salt = md5(uniqid('', true));
-    }
-    public function __toString()
-    {
-        return (string) $this->username;
+        parent::__construct();
+        // your own logic
     }
 
     /**
-     * @ORM\OneToMany(targetEntity="GruposUsuarios", mappedBy="user")
-     */
-    protected $grupos_usuarios;
-
-
-
-    public function getUsername()
-    {
-        return $this->username;
-    }
-
-    public function getSalt()
-    {
-        // you *may* need a real salt depending on your encoder
-        // see section on salt below
-        return null;
-    }
-
-    public function getPassword()
-    {
-        return $this->password;
-    }
-
-    public function getRoles()
-    {
-        // return array('ROLE_ADMIN');
-        return array($this->roles);
-    }
-
-    public function eraseCredentials()
-    {
-    }
-
-    /** @see \Serializable::serialize() */
-    public function serialize()
-    {
-        return serialize(array(
-            $this->id,
-            $this->username,
-            $this->password,
-            // see section on salt below
-            // $this->salt,
-        ));
-    }
-
-    /** @see \Serializable::unserialize() */
-    public function unserialize($serialized)
-    {
-        list (
-            $this->id,
-            $this->username,
-            $this->password,
-            // see section on salt below
-            // $this->salt
-            ) = unserialize($serialized);
-    }
-
-    /**
-     * Get id
+     * Set nombre
      *
-     * @return integer
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * Set username
-     *
-     * @param string $username
+     * @param string $nombre
      *
      * @return User
      */
-    public function setUsername($username)
+    public function setNombre($nombre)
     {
-        $this->username = $username;
+        $this->nombre = $nombre;
 
         return $this;
     }
 
     /**
-     * Set password
-     *
-     * @param string $password
-     *
-     * @return User
-     */
-    public function setPassword($password)
-    {
-        $this->password = $password;
-
-        return $this;
-    }
-
-    /**
-     * Set email
-     *
-     * @param string $email
-     *
-     * @return User
-     */
-    public function setEmail($email)
-    {
-        $this->email = $email;
-
-        return $this;
-    }
-
-    /**
-     * Get email
+     * Get nombre
      *
      * @return string
      */
-    public function getEmail()
+    public function getNombre()
     {
-        return $this->email;
+        return $this->nombre;
     }
 
     /**
-     * Set isActive
+     * Set ape1
      *
-     * @param boolean $isActive
+     * @param string $ape1
      *
      * @return User
      */
-    public function setIsActive($isActive)
+    public function setApe1($ape1)
     {
-        $this->isActive = $isActive;
+        $this->ape_1 = $ape1;
 
         return $this;
     }
 
     /**
-     * Get isActive
-     *
-     * @return boolean
-     */
-    public function getIsActive()
-    {
-        return $this->isActive;
-    }
-
-    /**
-     * Set address
-     *
-     * @param string $address
-     *
-     * @return User
-     */
-    public function setAddress($address)
-    {
-        $this->address = $address;
-
-        return $this;
-    }
-
-    /**
-     * Get address
+     * Get ape1
      *
      * @return string
      */
-    public function getAddress()
+    public function getApe1()
     {
-        return $this->address;
+        return $this->ape_1;
     }
 
     /**
-     * Set telephone
+     * Set ape2
      *
-     * @param integer $telephone
+     * @param string $ape2
      *
      * @return User
      */
-    public function setTelephone($telephone)
+    public function setApe2($ape2)
     {
-        $this->telephone = $telephone;
+        $this->ape_2 = $ape2;
 
         return $this;
     }
 
     /**
-     * Get telephone
+     * Get ape2
      *
-     * @return integer
+     * @return string
      */
-    public function getTelephone()
+    public function getApe2()
     {
-        return $this->telephone;
-    }
-
-    public function setPlainPassword($password){
-        $this->plainPassword = $password;
-    }
-
-    public function getPlainPassword(){
-        return $this->plainPassword;
+        return $this->ape_2;
     }
 
     /**
-     * Set roles
+     * Set direccion
      *
-     * @param array $roles
+     * @param string $direccion
      *
      * @return User
      */
-    public function setRoles($roles)
+    public function setDireccion($direccion)
     {
-        $this->roles = $roles;
+        $this->direccion = $direccion;
 
         return $this;
     }
 
     /**
-     * Add gruposUsuario
+     * Get direccion
      *
-     * @param \AppBundle\Entity\GruposUsuarios $gruposUsuario
+     * @return string
+     */
+    public function getDireccion()
+    {
+        return $this->direccion;
+    }
+
+    /**
+     * Set telefono
+     *
+     * @param string $telefono
      *
      * @return User
      */
-    public function addGruposUsuario(\AppBundle\Entity\GruposUsuarios $gruposUsuario)
+    public function setTelefono($telefono)
     {
-        $this->grupos_usuarios[] = $gruposUsuario;
+        $this->telefono = $telefono;
 
         return $this;
     }
 
     /**
-     * Remove gruposUsuario
+     * Get telefono
      *
-     * @param \AppBundle\Entity\GruposUsuarios $gruposUsuario
+     * @return string
      */
-    public function removeGruposUsuario(\AppBundle\Entity\GruposUsuarios $gruposUsuario)
+    public function getTelefono()
     {
-        $this->grupos_usuarios->removeElement($gruposUsuario);
+        return $this->telefono;
     }
 
     /**
-     * Get gruposUsuarios
+     * Set titulacion
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @param string $titulacion
+     *
+     * @return User
      */
-    public function getGruposUsuarios()
+    public function setTitulacion($titulacion)
     {
-        return $this->grupos_usuarios;
+        $this->titulacion = $titulacion;
+
+        return $this;
+    }
+
+    /**
+     * Get titulacion
+     *
+     * @return string
+     */
+    public function getTitulacion()
+    {
+        return $this->titulacion;
+    }
+
+    /**
+     * Set mencion
+     *
+     * @param string $mencion
+     *
+     * @return User
+     */
+    public function setMencion($mencion)
+    {
+        $this->mencion = $mencion;
+
+        return $this;
+    }
+
+    /**
+     * Get mencion
+     *
+     * @return string
+     */
+    public function getMencion()
+    {
+        return $this->mencion;
     }
 }

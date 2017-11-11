@@ -24,7 +24,8 @@ class AppKernel extends Kernel
             new Sonata\DoctrineORMAdminBundle\SonataDoctrineORMAdminBundle(),
             // And finally, the storage and SonataAdminBundle
             new Sonata\AdminBundle\SonataAdminBundle(),
-
+            // FosUser Bundle
+            new FOS\UserBundle\FOSUserBundle(),
             // Our Bundles
             new AppBundle\AppBundle(),
         ];

@@ -1,0 +1,108 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: ASUS
+ * Date: 16/09/2017
+ * Time: 18:38
+ */
+
+namespace AppBundle\Controller;
+
+use AppBundle\Entity\GruposUsuarios;
+use AppBundle\Entity\User;
+use AppBundle\Form\registerType;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use AppBundle\Entity\Grupo;
+
+class SecurityController extends Controller
+{
+    /**
+     * @Route("/login2", name="login2")
+     */
+    public function loginrAction(Request $request, AuthenticationUtils $authUtils)
+    {
+        // get the login error if there is one
+        $error = $authUtils->getLastAuthenticationError();
+
+        // last username entered by the user
+        $lastUsername = $authUtils->getLastUsername();
+
+        return $this->render('security/login.html.twig', array(
+            'last_username' => $lastUsername,
+            'error'         => $error,
+        ));
+    }
+
+    /**
+     * @Route("/registrar", name="registrar")
+     */
+    public function registerAction(Request $request, UserPasswordEncoderInterface $passwordEncoder)
+    {
+        $usuario = new User();
+        $error = false;
+        $form = $this->createForm(registerType::class, $usuario);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $password = $passwordEncoder->encodePassword($usuario, $usuario->getPlainPassword());
+
+            $usuario->setPassword($password);
+            $usuario->setRoles('ROLE_ADMIN');
+
+            $groupcode = $form['groupcode']->getData();
+
+            if ($groupcode){
+                // Usuario introduce codigo-grupo
+                // Se comprueba codigo
+                $grupo = $this->getDoctrine()
+                    ->getRepository(Grupo::class)
+                    ->findBy(
+                        array('codigoGrupo' => $groupcode)
+                    );
+                // Si hay codigo asignado a grupo
+                if ($grupo){
+                    // Persist User to DB && asign to group-user
+                    $idGrupo = $grupo[0];
+
+                    $em = $this->getDoctrine()->getManager();
+                    $em->persist($usuario);
+                    $em->flush();
+
+                    $gruposUsuarios = new GruposUsuarios();
+                    $gruposUsuarios->setGrupo($idGrupo);
+                    $gruposUsuarios->setUser($usuario);
+
+                    $em2 = $this->getDoctrine()->getManager();
+                    $em2->persist($gruposUsuarios);
+                    $em2->flush();
+
+
+                    $token = new UsernamePasswordToken($usuario, null, 'main', $usuario->getRoles());
+                    $this->get('security.token_storage')->setToken($token);
+                    $this->get('session')->set('_security_main', serialize($token));
+
+                    return $this->redirectToRoute('homepage');
+                } else {
+                    $error  = 'El código no es válido!';
+                }
+
+            } else {
+                // Usuario NO introduce codigo-grupo
+                $error = 'Debes introducir un código';
+            }
+        }
+        return $this->render(
+            'security/registrar.html.twig',
+            array(
+                'form'  => $form->createView(),
+                'error' => $error
+            )
+        );
+    }
+}

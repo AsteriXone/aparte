@@ -1,0 +1,32 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+<div class="container-fluid">
+<div class="row">
+    <div class="col-md-6 col-md-offset-3">
+        <div class="login-panel panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title text-center">REGISTRO</h3>
+            </div>
+            <div class="panel-body">
+                {{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register'}}) }}
+                {{ form_row(form.nombre) }}
+                {{ form_row(form.ape_1) }}
+                {{ form_row(form.ape_2) }}
+                {{ form_row(form.direccion) }}
+                {{ form_row(form.telefono) }}
+                {{ form_row(form.email) }}
+                {{ form_row(form.username) }}
+                {{ form_row(form.plainPassword) }}
+                {{ form_row(form.groupcode) }}
+                {{ form_row(form.titulacion) }}
+                {{ form_row(form.mencion) }}
+                <div>
+                    <button type="submit" class="btn btn-lg btn-success btn-block">{{ 'registration.submit'|trans }}</button>
+                </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>
