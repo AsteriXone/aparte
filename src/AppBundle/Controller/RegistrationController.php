@@ -3,6 +3,7 @@
 
 namespace AppBundle\Controller;
 
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use FOS\UserBundle\Controller\RegistrationController as BaseController;
 use FOS\UserBundle\Event\GetResponseUserEvent;
@@ -63,6 +64,10 @@ class RegistrationController extends BaseController
                     $dispatcher->dispatch(FOSUserEvents::REGISTRATION_COMPLETED, new FilterUserResponseEvent($user, $request, $response));
 
                     return $response;
+                } else {
+                    $form->get('groupcode')->addError(new FormError('El código no es válido!!'));
+                    $session = $request->getSession();
+                    $session->getFlashBag()->add('error', 'Error en código grupo!');
                 }
             }
 

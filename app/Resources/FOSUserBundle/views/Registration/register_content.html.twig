@@ -7,7 +7,17 @@
             <div class="panel-heading">
                 <h3 class="panel-title text-center">REGISTRO</h3>
             </div>
+
             <div class="panel-body">
+                {% if app.request.hasPreviousSession %}
+                    {% for type, messages in app.session.flashbag.all() %}
+                        {% for message in messages %}
+                            <div class="flash-{{ type }}">
+                                <div class="text-center alert alert-danger">{{ message }}</div>
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
+                {% endif %}
                 {{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register'}}) }}
                 {{ form_row(form.nombre) }}
                 {{ form_row(form.ape_1) }}

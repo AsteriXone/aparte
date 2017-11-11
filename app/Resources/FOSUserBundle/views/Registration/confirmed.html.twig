@@ -3,8 +3,18 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
 {% block fos_user_content %}
-    <p>{{ 'registration.confirmed'|trans({'%username%': user.username}) }}</p>
-    {% if targetUrl %}
-    <p><a href="{{ targetUrl }}">{{ 'registration.back'|trans }}</a></p>
-    {% endif %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <div class="alert alert-success text-center" role="alert">
+                    <p><strong>{{ 'registration.confirmed'|trans({'%username%': user.username}) }}</strong></p>
+                    {% if targetUrl %}
+                        <p><a href="{{ targetUrl }}">{{ 'registration.back'|trans }}</a></p>
+                    {% endif %}
+                    <br/>
+                    <p>Como puedes observar, hemos cambiado los enlaces de la barra de navegación situada en el borde superior para adaptarlos a tu cuenta.</p>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock fos_user_content %}
