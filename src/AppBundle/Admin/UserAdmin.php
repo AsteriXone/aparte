@@ -21,9 +21,8 @@ class UserAdmin extends AbstractAdmin
             ->add('roles')
             ->add('password')
             ->add('email')
-            ->add('address')
-            ->add('telephone')
-            ->add('isActive')
+            ->add('direccion')
+            ->add('telefono')
         ;
     }
 
@@ -38,9 +37,8 @@ class UserAdmin extends AbstractAdmin
 //            ->add('roles')
 //            ->add('password')
             ->add('email')
-            ->add('address')
-            ->add('telephone')
-            ->add('isActive')
+            ->add('direccion')
+            ->add('telefono')
             ->add('_action', null, array(
                 'actions' => array(
                     'show' => array(),
@@ -69,10 +67,10 @@ class UserAdmin extends AbstractAdmin
             ->add('email', null, array(
                 'label' => 'Email'
             ))
-            ->add('address', null, array(
+            ->add('direccion', null, array(
                 'label' => 'Dirección'
             ))
-            ->add('telephone', null, array(
+            ->add('telefono', null, array(
                 'label' => 'Teléfono'
             ))
 //            ->add('isActive')
@@ -90,9 +88,8 @@ class UserAdmin extends AbstractAdmin
             ->add('roles')
             ->add('password')
             ->add('email')
-            ->add('address')
-            ->add('telephone')
-            ->add('isActive')
+            ->add('direccion')
+            ->add('telefono')
         ;
     }
 }

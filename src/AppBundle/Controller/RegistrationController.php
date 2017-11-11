@@ -3,6 +3,8 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Grupo;
+use AppBundle\Entity\GruposUsuarios;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use FOS\UserBundle\Controller\RegistrationController as BaseController;
@@ -41,31 +43,57 @@ class RegistrationController extends BaseController
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
                 $groupcode = $form['groupcode']->getData();
-                if ($groupcode == "1234"){
-                    $event = new FormEvent($form, $request);
-                    $dispatcher->dispatch(FOSUserEvents::REGISTRATION_SUCCESS, $event);
 
-                    $userManager->updateUser($user);
+                if ($groupcode){
 
-                    /*****************************************************
-                     * Add new functionality (e.g. log the registration) *
-                     *****************************************************/
+                    // Usuario introduce codigo-grupo
+                    // Se comprueba codigo
+                    $grupo = $this->getDoctrine()
+                        ->getRepository(Grupo::class)
+                        ->findBy(
+                            array('codigoGrupo' => $groupcode)
+                        );
+
+                    // Si hay codigo asignado a grupo
+                    if ($grupo) {
+                        $event = new FormEvent($form, $request);
+                        $dispatcher->dispatch(FOSUserEvents::REGISTRATION_SUCCESS, $event);
+                        $user->addRole("ROLE_ADMIN");
+                        $userManager->updateUser($user);
+
+                        /*****************************************************
+                         * Add new functionality (e.g. log the registration) *
+                         *****************************************************/
 
 
-                    $this->container->get('logger')->info(
-                        sprintf("New user registration: %s", $user)
-                    );
+                        // Persist User to DB && asign to group-user
+                        $idGrupo = $grupo[0];
 
-                    if (null === $response = $event->getResponse()) {
-                        $url = $this->generateUrl('fos_user_registration_confirmed');
-                        $response = new RedirectResponse($url);
+                        $gruposUsuarios = new GruposUsuarios();
+                        $gruposUsuarios->setGrupo($idGrupo);
+                        $gruposUsuarios->setUser($user);
+
+                        $em2 = $this->getDoctrine()->getManager();
+                        $em2->persist($gruposUsuarios);
+                        $em2->flush();
+
+                        if (null === $response = $event->getResponse()) {
+                            $url = $this->generateUrl('fos_user_registration_confirmed');
+                            $response = new RedirectResponse($url);
+                        }
+
+                        $dispatcher->dispatch(FOSUserEvents::REGISTRATION_COMPLETED, new FilterUserResponseEvent($user, $request, $response));
+
+                        return $response;
+                    } else {
+                        // Error no coincide código de grupo en DB
+                        $form->get('groupcode')->addError(new FormError('El código no es válido!!'));
+                        $session = $request->getSession();
+                        $session->getFlashBag()->add('error', 'Error en código grupo!');
                     }
-
-                    $dispatcher->dispatch(FOSUserEvents::REGISTRATION_COMPLETED, new FilterUserResponseEvent($user, $request, $response));
-
-                    return $response;
                 } else {
-                    $form->get('groupcode')->addError(new FormError('El código no es válido!!'));
+                    // Error no se ha introducido código grupo
+                    $form->get('groupcode')->addError(new FormError('Debes introducir un código!'));
                     $session = $request->getSession();
                     $session->getFlashBag()->add('error', 'Error en código grupo!');
                 }
