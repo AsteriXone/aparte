@@ -43,9 +43,14 @@ class UserAdmin extends AbstractAdmin
 //            ->add('username')
 //            ->add('roles')
 //            ->add('password')
+            ->add('nombre')
+            ->add('ape_1')
+            ->add('ape_2')
+            ->add('username')
             ->add('email')
             ->add('direccion')
             ->add('telefono')
+            ->add('roles')
             ->add('_action', null, array(
                 'actions' => array(
                     'show' => array(),
