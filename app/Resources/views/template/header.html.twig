@@ -19,13 +19,24 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 {% if app.user %}
-                    <!-- Menú para usuarios registrados -->
-                    <li><a href="#">Mi Pedido</a></li>
-                    <li><a href="#">Votar Orla</a></li>
-                    <li><a href="#">Votar Profe</a></li>
-                    <li><a href="#">Pedir Cita</a></li>
-                    <li><a href="#">Contactar</a></li>
+                    <!-- Menú para usuarios logueados -->
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <!-- ROLE_ADMIN -->
+                        <li><a href="{{ path('fos_user_registration_register') }}">Administración</a></li>
+                        <li><a href="#"></a></li>
+                        <li><a href="#">Votar Profe</a></li>
+                        <li><a href="#">Pedir Cita</a></li>
+                        <li><a href="#">Contactar</a></li>
+                        {% elseif is_granted('ROLE_USER') %}
+                            <!-- ROLE_USER -->
+                            <li><a href="#">Mi Pedido</a></li>
+                            <li><a href="#">Votar Orla</a></li>
+                            <li><a href="#">Votar Profe</a></li>
+                            <li><a href="#">Pedir Cita</a></li>
+                            <li><a href="#">Contactar</a></li>
+                    {% endif %}
                 {% else %}
+                    <!-- Menú para usuarios por defecto -->
                     <li><a href="{{ path('orlas') }}">Orlas</a></li>
                     <li><a href="{{ path('mantenimiento') }}">Fotoescuela</a></li>
                     <li><a href="{{ path('mantenimiento') }}">Graduaciones</a></li>
