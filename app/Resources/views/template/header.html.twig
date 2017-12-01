@@ -22,28 +22,28 @@
                     <!-- Menú para usuarios logueados -->
                     {% if is_granted('ROLE_ADMIN') %}
                         <!-- ROLE_ADMIN -->
-                        <li><a href="{{ path('fos_user_registration_register') }}">Administración</a></li>
-                        <li><a href="#"></a></li>
-                        <li><a href="#">Votar Profe</a></li>
-                        <li><a href="#">Pedir Cita</a></li>
-                        <li><a href="#">Contactar</a></li>
+                        <li><a href="{{ path('sonata_admin_redirect') }}">Administración</a></li>
+                        <li><a href="{{ path('muestras') }}">Muestras</a></li>
+                        <li><a href="{{ path('mantenimiento') }}">Citas</a></li>
+                        <!-- li><a href="#"></a></li>
+                        <li><a href="#"></a></li -->
                         {% elseif is_granted('ROLE_USER') %}
                             <!-- ROLE_USER -->
-                            <li><a href="#">Mi Pedido</a></li>
-                            <li><a href="#">Votar Orla</a></li>
-                            <li><a href="#">Votar Profe</a></li>
-                            <li><a href="#">Pedir Cita</a></li>
-                            <li><a href="#">Contactar</a></li>
+                            <li><a href="{{ path('muestras') }}">Muestras</a></li>
+                            <li><a href="{{ path('mantenimiento') }}">Mi Pedido</a></li>
+                            <li><a href="{{ path('mantenimiento') }}">Votar Orla</a></li>
+                            <li><a href="{{ path('mantenimiento') }}">Votar Profe</a></li>
+                            <li><a href="{{ path('mantenimiento') }}">Pedir Cita</a></li>
+                            <li><a href="{{ path('mantenimiento') }}">Contactar</a></li>
                     {% endif %}
                 {% else %}
                     <!-- Menú para usuarios por defecto -->
                     <li><a href="{{ path('orlas') }}">Orlas</a></li>
-                    <li><a href="{{ path('mantenimiento') }}">Fotoescuela</a></li>
-                    <li><a href="{{ path('mantenimiento') }}">Graduaciones</a></li>
-                    <li><a href="{{ path('mantenimiento') }}">Retratos</a></li>
-                    <li><a href="{{ path('mantenimiento') }}">Reportajes</a></li>
-                    <li><a href="{{ path('mantenimiento') }}">Quienes Somos</a></li>
-                    <li><a href="{{ path('mantenimiento') }}">Contactar</a></li>
+                    <li><a href="{{ path('fotoescuela') }}">Fotoescuela</a></li>
+                    <li><a href="{{ path('graduaciones') }}">Graduaciones</a></li>
+                    <li><a href="{{ path('estudio') }}">Estudio</a></li>
+                    <li><a href="{{ path('about') }}">Quienes Somos</a></li>
+                    <li><a href="{{ path('contactar') }}">Contactar</a></li>
                 {% endif %}
             </ul>
             <ul class="nav navbar-nav navbar-right">

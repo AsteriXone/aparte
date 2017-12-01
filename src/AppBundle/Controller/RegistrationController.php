@@ -26,6 +26,7 @@ class RegistrationController extends BaseController
         $dispatcher = $this->get('event_dispatcher');
 
         $user = $userManager->createUser();
+        $user->addRole("ROLE_USER");
         $user->setEnabled(true);
 
         $event = new GetResponseUserEvent($user, $request);
@@ -58,7 +59,6 @@ class RegistrationController extends BaseController
                     if ($grupo) {
                         $event = new FormEvent($form, $request);
                         $dispatcher->dispatch(FOSUserEvents::REGISTRATION_SUCCESS, $event);
-                        $user->addRole("ROLE_ADMIN");
                         $userManager->updateUser($user);
 
                         /*****************************************************

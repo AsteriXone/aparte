@@ -1,0 +1,53 @@
+{% extends 'layout.html.twig' %}
+{% block content %}
+    {#<h1 class="text-center">Muestras</h1>#}
+
+    {#<p>Id Grupo: {{ idGrupo }}</p>#}
+    {#{% for muestra in muestras %}#}
+        {#<p>{{ muestra.imageName }}</p>#}
+    {#{% endfor %}#}
+    {#{{ form_start(form) }}#}
+    {#{{ form_widget(form) }}#}
+
+    {#Hola <input type="checkbox" name="a" value="pepe" title="Hola">#}
+    {#<input type="submit" value="Create"#}
+           {#class="btn btn-success" />#}
+    {#{{ form_end(form) }}#}
+    {#<div><p>Método: {{ method }}</p></div>#}
+
+    <div class="container-fluid">
+        {% if (error) %}
+            <div class="text-center alert alert-danger">{{ error }}</div>
+        {% endif %}
+        <form action="{{ path('muestras') }}" method="post" name="usuario_muestra">
+            <div class="row">
+                {% for muestra in muestras %}
+                    <div style="height: 200px; margin-bottom: 10px;" class="col-sm-2">
+                        <div class="row">
+                            <div style=" max-height: 150px; min-height: 150px" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <img style="max-height: 150px;" class="img-responsive center-block" src="{{ asset('img/muestras/' ~ muestra.getImageName) }}">
+                            </div>
+                        </div>
+
+                        <div class="text-center">
+                            <label>
+                                <input type="checkbox" name="checkbox-{{ muestra.id }}" value="{{ muestra.id }}" {% if (muestra.getMuestraSeleccionada) %}checked{% endif %}> Seleccionar
+                                <hr style="width: 80px; margin: 2px auto" class="half-rule">
+                            </label>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            {% if not(error) %}
+            <input type="submit" value="Guardar Estado"
+                   class="btn btn-success center-block" />
+            {% endif %}
+
+        </form>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+{% endblock %}

@@ -47,3 +47,24 @@ services:
         tags:
             - { name: sonata.admin, manager_type: orm, group: Cuadrantes, label: Fechas Cuadrante }
         public: true
+
+    app.admin.muestra:
+        class: AppBundle\Admin\MuestraAdmin
+        arguments: [~, AppBundle\Entity\Muestra, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Muestras, label: Muestras }
+        public: true
+
+    app.admin.grupo_muestra:
+        class: AppBundle\Admin\GrupoMuestraAdmin
+        arguments: [~, AppBundle\Entity\GrupoMuestra, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Muestras, label: Grupo-Muestra }
+        public: true
+
+    app.admin.usuarios_muestras:
+        class: AppBundle\Admin\UsuariosMuestrasAdmin
+        arguments: [~, AppBundle\Entity\UsuariosMuestras, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Muestras, label: Usuarios-Muestras }
+        public: true

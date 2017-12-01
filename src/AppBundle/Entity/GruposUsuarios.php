@@ -33,7 +33,20 @@ class GruposUsuarios
      */
     private $user;
 
-    
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="user_id", type="integer", nullable=true)
+     */
+    private $usuarioId;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="grupo_id", type="integer", nullable=true)
+     */
+    private $grupoId;
+
     /**
      * Get id
      *
@@ -68,8 +81,6 @@ class GruposUsuarios
         return $this->usuarioId;
     }
 
-    
-
 
     /**
      * Set gruposUsuarios
@@ -95,29 +106,6 @@ class GruposUsuarios
         return $this->grupos_usuarios;
     }
 
-    /**
-     * Set grupoUsuario
-     *
-     * @param \AppBundle\Entity\Grupo $grupoUsuario
-     *
-     * @return GruposUsuarios
-     */
-    public function setGrupoUsuario(\AppBundle\Entity\Grupo $grupoUsuario = null)
-    {
-        $this->grupo_usuario = $grupoUsuario;
-
-        return $this;
-    }
-
-    /**
-     * Get grupoUsuario
-     *
-     * @return \AppBundle\Entity\Grupo
-     */
-    public function getGrupoUsuario()
-    {
-        return $this->grupo_usuario;
-    }
 
     /**
      * Set grupo
@@ -165,5 +153,29 @@ class GruposUsuarios
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Set grupoId
+     *
+     * @param integer $grupoId
+     *
+     * @return GruposUsuarios
+     */
+    public function setGrupoId($grupoId)
+    {
+        $this->grupoId = $grupoId;
+
+        return $this;
+    }
+
+    /**
+     * Get grupoId
+     *
+     * @return integer
+     */
+    public function getGrupoId()
+    {
+        return $this->grupoId;
     }
 }

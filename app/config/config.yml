@@ -8,6 +8,7 @@ imports:
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: es
+    app.path.muestras_images: /img/muestras
 
 framework:
     #esi: ~
@@ -81,3 +82,12 @@ fos_user:
     registration:
         form:
             type: AppBundle\Form\RegistrationType
+
+vich_uploader:
+    db_driver: orm
+
+    mappings:
+        muestra_image:
+            uri_prefix:         /img/muestras
+            upload_destination: '%kernel.root_dir%/../web/img/muestras'
+            inject_on_load: true
