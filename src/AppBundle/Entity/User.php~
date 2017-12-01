@@ -2,6 +2,7 @@
 // src/AppBundle/Entity/User.php
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -67,10 +68,223 @@ class User extends BaseUser
      */
     protected $mencion;
 
+    /**
+     * @ORM\OneToMany(targetEntity="GruposUsuarios", mappedBy="user")
+     */
+    private $grupos_usuarios;
+
+    /**
+     * @ORM\OneToMany(targetEntity="UsuariosMuestras", mappedBy="usuario")
+     */
+    private $usuarios_muestras;
 
     public function __construct()
     {
         parent::__construct();
         // your own logic
+        $this->grupos_usuarios = new ArrayCollection();
+        $this->usuarios_muestras = new ArrayCollection();
+    }
+
+    /**
+     * Set nombre
+     *
+     * @param string $nombre
+     *
+     * @return User
+     */
+    public function setNombre($nombre)
+    {
+        $this->nombre = $nombre;
+
+        return $this;
+    }
+
+    /**
+     * Get nombre
+     *
+     * @return string
+     */
+    public function getNombre()
+    {
+        return $this->nombre;
+    }
+
+    /**
+     * Set ape1
+     *
+     * @param string $ape1
+     *
+     * @return User
+     */
+    public function setApe1($ape1)
+    {
+        $this->ape_1 = $ape1;
+
+        return $this;
+    }
+
+    /**
+     * Get ape1
+     *
+     * @return string
+     */
+    public function getApe1()
+    {
+        return $this->ape_1;
+    }
+
+    /**
+     * Set ape2
+     *
+     * @param string $ape2
+     *
+     * @return User
+     */
+    public function setApe2($ape2)
+    {
+        $this->ape_2 = $ape2;
+
+        return $this;
+    }
+
+    /**
+     * Get ape2
+     *
+     * @return string
+     */
+    public function getApe2()
+    {
+        return $this->ape_2;
+    }
+
+    /**
+     * Set direccion
+     *
+     * @param string $direccion
+     *
+     * @return User
+     */
+    public function setDireccion($direccion)
+    {
+        $this->direccion = $direccion;
+
+        return $this;
+    }
+
+    /**
+     * Get direccion
+     *
+     * @return string
+     */
+    public function getDireccion()
+    {
+        return $this->direccion;
+    }
+
+    /**
+     * Set telefono
+     *
+     * @param string $telefono
+     *
+     * @return User
+     */
+    public function setTelefono($telefono)
+    {
+        $this->telefono = $telefono;
+
+        return $this;
+    }
+
+    /**
+     * Get telefono
+     *
+     * @return string
+     */
+    public function getTelefono()
+    {
+        return $this->telefono;
+    }
+
+    /**
+     * Set titulacion
+     *
+     * @param string $titulacion
+     *
+     * @return User
+     */
+    public function setTitulacion($titulacion)
+    {
+        $this->titulacion = $titulacion;
+
+        return $this;
+    }
+
+    /**
+     * Get titulacion
+     *
+     * @return string
+     */
+    public function getTitulacion()
+    {
+        return $this->titulacion;
+    }
+
+    /**
+     * Set mencion
+     *
+     * @param string $mencion
+     *
+     * @return User
+     */
+    public function setMencion($mencion)
+    {
+        $this->mencion = $mencion;
+
+        return $this;
+    }
+
+    /**
+     * Get mencion
+     *
+     * @return string
+     */
+    public function getMencion()
+    {
+        return $this->mencion;
+    }
+
+    /**
+     * Add gruposUsuario
+     *
+     * @param \AppBundle\Entity\GruposUsuarios $gruposUsuario
+     *
+     * @return User
+     */
+    public function addGruposUsuario(\AppBundle\Entity\GruposUsuarios $gruposUsuario)
+    {
+        $this->grupos_usuarios[] = $gruposUsuario;
+
+        return $this;
+    }
+
+    /**
+     * Remove gruposUsuario
+     *
+     * @param \AppBundle\Entity\GruposUsuarios $gruposUsuario
+     */
+    public function removeGruposUsuario(\AppBundle\Entity\GruposUsuarios $gruposUsuario)
+    {
+        $this->grupos_usuarios->removeElement($gruposUsuario);
+    }
+
+    /**
+     * Get gruposUsuarios
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getGruposUsuarios()
+    {
+        return $this->grupos_usuarios;
     }
 }

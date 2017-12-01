@@ -56,10 +56,14 @@ class Grupo
      */
     protected $cuadrantes;
 
-
+    /**
+     * @ORM\OneToMany(targetEntity="GrupoMuestra", mappedBy="grupo")
+     */
+    private $gruposMuestras;
 
     public function __construct()
     {
+        $this->gruposMuestras = new ArrayCollection();
         $this->grupos_usuarios = new ArrayCollection();
         $this->cuadrantes = new ArrayCollection();
     }
@@ -80,76 +84,6 @@ class Grupo
     }
 
 
-
-
-
-    /**
-     * Add user
-     *
-     * @param \AppBundle\Entity\Usuario $user
-     *
-     * @return Grupo
-     */
-    public function addUser(\AppBundle\Entity\Usuario $user)
-    {
-        $this->users[] = $user;
-
-        return $this;
-    }
-
-    /**
-     * Remove user
-     *
-     * @param \AppBundle\Entity\Usuario $user
-     */
-    public function removeUser(\AppBundle\Entity\Usuario $user)
-    {
-        $this->users->removeElement($user);
-    }
-
-    /**
-     * Get users
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getUsers()
-    {
-        return $this->users;
-    }
-
-    /**
-     * Add grupo
-     *
-     * @param \AppBundle\Entity\GruposUsuarios $grupo
-     *
-     * @return Grupo
-     */
-    public function addGrupo(\AppBundle\Entity\GruposUsuarios $grupo)
-    {
-        $this->grupos[] = $grupo;
-
-        return $this;
-    }
-
-    /**
-     * Remove grupo
-     *
-     * @param \AppBundle\Entity\GruposUsuarios $grupo
-     */
-    public function removeGrupo(\AppBundle\Entity\GruposUsuarios $grupo)
-    {
-        $this->grupos->removeElement($grupo);
-    }
-
-    /**
-     * Get grupos
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getGrupos()
-    {
-        return $this->grupos;
-    }
 
     /**
      * Set codigoGrupo
@@ -317,5 +251,39 @@ class Grupo
     public function getCuadrantes()
     {
         return $this->cuadrantes;
+    }
+
+    /**
+     * Add gruposMuestra
+     *
+     * @param \AppBundle\Entity\GrupoMuestra $gruposMuestra
+     *
+     * @return Grupo
+     */
+    public function addGruposMuestra(\AppBundle\Entity\GrupoMuestra $gruposMuestra)
+    {
+        $this->gruposMuestras[] = $gruposMuestra;
+
+        return $this;
+    }
+
+    /**
+     * Remove gruposMuestra
+     *
+     * @param \AppBundle\Entity\GrupoMuestra $gruposMuestra
+     */
+    public function removeGruposMuestra(\AppBundle\Entity\GrupoMuestra $gruposMuestra)
+    {
+        $this->gruposMuestras->removeElement($gruposMuestra);
+    }
+
+    /**
+     * Get gruposMuestras
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getGruposMuestras()
+    {
+        return $this->gruposMuestras;
     }
 }
