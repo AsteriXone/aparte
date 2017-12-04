@@ -52,20 +52,20 @@ class Grupo
     private $grupos_usuarios;
 
     /**
-     * @ORM\OneToMany(targetEntity="Cuadrante", mappedBy="grupo")
-     */
-    protected $cuadrantes;
-
-    /**
      * @ORM\OneToMany(targetEntity="GrupoMuestra", mappedBy="grupo")
      */
     private $gruposMuestras;
+
+    /**
+     * @ORM\OneToMany(targetEntity="CuadranteGrupo", mappedBy="grupo")
+     */
+    private $cuadranteGrupo;
+
 
     public function __construct()
     {
         $this->gruposMuestras = new ArrayCollection();
         $this->grupos_usuarios = new ArrayCollection();
-        $this->cuadrantes = new ArrayCollection();
     }
 
     public function __toString()
@@ -215,44 +215,6 @@ class Grupo
         return $this->anio;
     }
 
-//    public function getGupo()
-//    {
-//        return $this;
-//    }
-    /**
-     * Add cuadrante
-     *
-     * @param \AppBundle\Entity\Cuadrante $cuadrante
-     *
-     * @return Grupo
-     */
-    public function addCuadrante(\AppBundle\Entity\Cuadrante $cuadrante)
-    {
-        $this->cuadrantes[] = $cuadrante;
-
-        return $this;
-    }
-
-    /**
-     * Remove cuadrante
-     *
-     * @param \AppBundle\Entity\Cuadrante $cuadrante
-     */
-    public function removeCuadrante(\AppBundle\Entity\Cuadrante $cuadrante)
-    {
-        $this->cuadrantes->removeElement($cuadrante);
-    }
-
-    /**
-     * Get cuadrantes
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getCuadrantes()
-    {
-        return $this->cuadrantes;
-    }
-
     /**
      * Add gruposMuestra
      *
@@ -285,5 +247,39 @@ class Grupo
     public function getGruposMuestras()
     {
         return $this->gruposMuestras;
+    }
+
+    /**
+     * Add cuadranteGrupo
+     *
+     * @param \AppBundle\Entity\CuadranteGrupo $cuadranteGrupo
+     *
+     * @return Grupo
+     */
+    public function addCuadranteGrupo(\AppBundle\Entity\CuadranteGrupo $cuadranteGrupo)
+    {
+        $this->cuadranteGrupo[] = $cuadranteGrupo;
+
+        return $this;
+    }
+
+    /**
+     * Remove cuadranteGrupo
+     *
+     * @param \AppBundle\Entity\CuadranteGrupo $cuadranteGrupo
+     */
+    public function removeCuadranteGrupo(\AppBundle\Entity\CuadranteGrupo $cuadranteGrupo)
+    {
+        $this->cuadranteGrupo->removeElement($cuadranteGrupo);
+    }
+
+    /**
+     * Get cuadranteGrupo
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCuadranteGrupo()
+    {
+        return $this->cuadranteGrupo;
     }
 }

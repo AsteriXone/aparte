@@ -2,7 +2,6 @@
 
 namespace AppBundle\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -25,36 +24,37 @@ class Cuadrante
     /**
      * @var string
      *
-     * @ORM\Column(name="nombre_cuadrante", type="string", length=255, unique=true)
+     * @ORM\Column(name="nombre", type="string", length=255)
      */
-    private $nombreCuadrante;
+    private $nombre;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Grupo", inversedBy="cuadrantes")
-     * @ORM\JoinColumn(name="id_grupo", referencedColumnName="id")
+     * @var int
+     *
+     * @ORM\Column(name="numeroCitas", type="integer")
      */
-    protected $grupo;
+    private $numeroCitas;
 
     /**
-     * @ORM\OneToMany(targetEntity="CuadranteDia", mappedBy="cuadrante")
+     * @ORM\OneToMany(targetEntity="CuadranteGrupo", mappedBy="cuadrante")
      */
-    protected $cuadrante_dia;
+    private $cuadranteGrupo;
 
-    public function __construct()
-    {
-        $this->dias_cuadrante = new ArrayCollection();
-    }
+    /**
+     * @ORM\OneToMany(targetEntity="DiaCuadrante", mappedBy="cuadrante")
+     */
+    private $diaCuadrante;
 
     public function __toString()
     {
         // TODO: Implement __toString() method.
-        return (string) $this->nombreCuadrante." - ". $this -> getGrupo();
+        return (string) $this->nombre;
     }
 
     /**
      * Get id
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -62,84 +62,125 @@ class Cuadrante
     }
 
     /**
-     * Set nombreCuadrante
+     * Set nombre
      *
-     * @param string $nombreCuadrante
+     * @param string $nombre
      *
      * @return Cuadrante
      */
-    public function setNombreCuadrante($nombreCuadrante)
+    public function setNombre($nombre)
     {
-        $this->nombreCuadrante = $nombreCuadrante;
+        $this->nombre = $nombre;
 
         return $this;
     }
 
     /**
-     * Get nombreCuadrante
+     * Get nombre
      *
      * @return string
      */
-    public function getNombreCuadrante()
+    public function getNombre()
     {
-        return $this->nombreCuadrante;
+        return $this->nombre;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->cuadranteGrupo = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
-     * Set grupo
+     * Add cuadranteGrupo
      *
-     * @param \AppBundle\Entity\Grupo $grupo
+     * @param \AppBundle\Entity\CuadranteGrupo $cuadranteGrupo
      *
      * @return Cuadrante
      */
-    public function setGrupo(\AppBundle\Entity\Grupo $grupo = null)
+    public function addCuadranteGrupo(\AppBundle\Entity\CuadranteGrupo $cuadranteGrupo)
     {
-        $this->grupo = $grupo;
+        $this->cuadranteGrupo[] = $cuadranteGrupo;
 
         return $this;
     }
 
     /**
-     * Get grupo
+     * Remove cuadranteGrupo
      *
-     * @return \AppBundle\Entity\Grupo
+     * @param \AppBundle\Entity\CuadranteGrupo $cuadranteGrupo
      */
-    public function getGrupo()
+    public function removeCuadranteGrupo(\AppBundle\Entity\CuadranteGrupo $cuadranteGrupo)
     {
-        return $this->grupo;
+        $this->cuadranteGrupo->removeElement($cuadranteGrupo);
     }
 
     /**
-     * Add cuadranteDium
-     *
-     * @param \AppBundle\Entity\CuadranteDia $cuadranteDium
-     *
-     * @return Cuadrante
-     */
-    public function addCuadranteDium(\AppBundle\Entity\CuadranteDia $cuadranteDium)
-    {
-        $this->cuadrante_dia[] = $cuadranteDium;
-
-        return $this;
-    }
-
-    /**
-     * Remove cuadranteDium
-     *
-     * @param \AppBundle\Entity\CuadranteDia $cuadranteDium
-     */
-    public function removeCuadranteDium(\AppBundle\Entity\CuadranteDia $cuadranteDium)
-    {
-        $this->cuadrante_dia->removeElement($cuadranteDium);
-    }
-
-    /**
-     * Get cuadranteDia
+     * Get cuadranteGrupo
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getCuadranteDia()
+    public function getCuadranteGrupo()
     {
-        return $this->cuadrante_dia;
+        return $this->cuadranteGrupo;
+    }
+
+    /**
+     * Add diaCuadrante
+     *
+     * @param \AppBundle\Entity\DiaCuadrante $diaCuadrante
+     *
+     * @return Cuadrante
+     */
+    public function addDiaCuadrante(\AppBundle\Entity\DiaCuadrante $diaCuadrante)
+    {
+        $this->diaCuadrante[] = $diaCuadrante;
+
+        return $this;
+    }
+
+    /**
+     * Remove diaCuadrante
+     *
+     * @param \AppBundle\Entity\DiaCuadrante $diaCuadrante
+     */
+    public function removeDiaCuadrante(\AppBundle\Entity\DiaCuadrante $diaCuadrante)
+    {
+        $this->diaCuadrante->removeElement($diaCuadrante);
+    }
+
+    /**
+     * Get diaCuadrante
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getDiaCuadrante()
+    {
+        return $this->diaCuadrante;
+    }
+
+    /**
+     * Set numeroCitas
+     *
+     * @param integer $numeroCitas
+     *
+     * @return Cuadrante
+     */
+    public function setNumeroCitas($numeroCitas)
+    {
+        $this->numeroCitas = $numeroCitas;
+
+        return $this;
+    }
+
+    /**
+     * Get numeroCitas
+     *
+     * @return integer
+     */
+    public function getNumeroCitas()
+    {
+        return $this->numeroCitas;
     }
 }

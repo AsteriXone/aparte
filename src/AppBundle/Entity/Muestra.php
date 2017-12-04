@@ -57,6 +57,11 @@ class Muestra
      */
     private $muestraSeleccionada;
 
+    /**
+     * @var int
+     */
+    private $precioMuestraGrupo;
+
 
     /**
      * @ORM\OneToMany(targetEntity="GrupoMuestra", mappedBy="muestra", cascade={"persist", "remove"})
@@ -109,6 +114,26 @@ class Muestra
     public function setMuestraSeleccionada($accion)
     {
         $this->muestraSeleccionada = $accion;
+
+        return $this;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getPrecioMuestraGrupo()
+    {
+        return $this->precioMuestraGrupo;
+    }
+
+    /**
+     * @param int $precio
+     *
+     * @return Muestra
+     */
+    public function setPrecioMuestraGrupo($precio)
+    {
+        $this->precioMuestraGrupo = $precio;
 
         return $this;
     }

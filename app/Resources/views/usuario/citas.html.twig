@@ -1,0 +1,28 @@
+{% extends 'layout.html.twig' %}
+{% block content %}
+    <div class="container-fluid">
+        {% if (error) %}
+            <div class="text-center alert alert-danger">{{ error }}</div>
+        {% endif %}
+        <form action="{{ path('muestras') }}" method="post" name="usuario_muestra">
+            <table class="table table-striped table-hover table-responsive">
+                <tr>
+                    <th>Fecha</th>
+                    <th>Hora</th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <td>1/12/2017</td>
+                    <td>12:45</td>
+                    <td>
+                        <input type="submit" value="Coger cita" class="btn btn-xs btn-success center-block" />
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}

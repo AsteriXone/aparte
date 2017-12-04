@@ -11,6 +11,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Grupo;
 use AppBundle\Entity\GrupoMuestra;
 use AppBundle\Entity\GruposUsuarios;
+use AppBundle\Entity\User;
 use AppBundle\Entity\UsuariosMuestras;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -30,6 +31,7 @@ class MuestrasController extends Controller
     public function muestrasAction(Request $request)
     {
         $error = false;
+        $mensaje = false;
 
         if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
             /*
@@ -37,7 +39,8 @@ class MuestrasController extends Controller
              */
 
             // userId = Id de Usuario
-            $userId = $this->get('security.token_storage')->getToken()->getUser()->getId();
+            $user = $this->get('security.token_storage')->getToken()->getUser();
+            $userId = $user->getId();
 
             // Busca grupo usuario
             $em = $this->getDoctrine()->getManager();
@@ -61,15 +64,14 @@ class MuestrasController extends Controller
                 if ($grupoMuestra){
                     // Obtener muestras y renderizar formulario
 
-                    // Muestras = array de objetos muestra
-                    $muestras = new ArrayCollection();
-                    foreach ($grupoMuestra as $lineaGrupoMuestra){
-                        $muestraId = $lineaGrupoMuestra->getMuestraId();
-                        $muestraAux = $this->getDoctrine()
-                            ->getManager()
-                            ->getRepository(Muestra::class)
-                            ->find($muestraId);
-                        // dump($muestraAux);
+                    // usuariosMuestras = array de objetos usuariosMuestra
+                    $usuariosMuestras = new ArrayCollection();
+                     foreach ($grupoMuestra as $lineaGrupoMuestra){
+                        // Obtener Ids Muestra para Grupo
+                        $usuariosMuestrasAux = new UsuariosMuestras();
+
+                        $muestra = $lineaGrupoMuestra->getMuestra();
+
                         // Comprueba si existe usuarioMuestra con muestraId y UserId
                         $repository = $this->getDoctrine()
                             ->getRepository(UsuariosMuestras::class);
@@ -78,26 +80,140 @@ class MuestrasController extends Controller
                             ->where('c.usuarioId = :userId')
                             ->andwhere('c.muestraId = :muestraId')
                             ->setParameter('userId', $userId)
-                            ->setParameter('muestraId', $muestraId)
+                            ->setParameter('muestraId', $muestra->getId())
                             ->getQuery();
 
                         $usuarioMuestra = $query->getResult();
+
                         if($usuarioMuestra){
-                            // Si existe setMuestraSeleccionada(1) (true)
-                            $muestraAux->setMuestraSeleccionada(1);
+                            // Si existe (true)
+                            $usuariosMuestrasAux = $usuarioMuestra[0];
                         } else {
                             // Si no existe setMuestraSeleccionada(0) (false)
-                            $muestraAux->setMuestraSeleccionada(0);
+                            $usuariosMuestrasAux->setUsuario($user);
+                            $usuariosMuestrasAux->setMuestra($muestra);
+                            $usuariosMuestrasAux->setPrecio($lineaGrupoMuestra->getPrecio());
+                            $usuariosMuestrasAux->setCantidad(0);
                         }
-                        $muestras[] = $muestraAux;
+                         $usuariosMuestras[] = $usuariosMuestrasAux;
                     }
 
                     // Renderiza Formulario
 
                     return $this->render('usuario/muestras.html.twig', [
                         'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
-                        'muestras' => $muestras,
+                        'muestras' => $usuariosMuestras,
+                        'mensaje' => $mensaje,
                         'error' => $error,
+                    ]);
+                } else {
+                    // No Muestras disponibles para Grupo
+                    return $this->render('usuario/muestras.html.twig', [
+                        'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
+                        'muestras' => false,
+                        'error' => ':( No hay muestras para tu grupo ):',
+                        'mensaje' => $mensaje,
+                    ]);
+                }
+            } else {
+                // Method = POST
+                // Comprobamos los índices que tenemos
+                // de muestras a comprobar
+                if ($grupoMuestra){
+                    // Obtener muestras
+
+                    // Muestras = array de objetos muestra
+                    foreach ($grupoMuestra as $lineaGrupoMuestra){
+                        $muestra = $lineaGrupoMuestra->getMuestra();
+
+                        // Comprueba si existe usuarioMuestra con muestraId y UserId
+                        $repository = $this->getDoctrine()
+                            ->getRepository(UsuariosMuestras::class);
+
+                        $query = $repository->createQueryBuilder('c')
+                            ->where('c.usuarioId = :userId')
+                            ->andwhere('c.muestraId = :muestraId')
+                            ->setParameter('userId', $userId)
+                            ->setParameter('muestraId', $muestra->getId())
+                            ->getQuery();
+
+                        $usuarioMuestra = $query->getResult();
+
+                        // Obtiene de request el conjunto checkbox-idMuestra
+                        $indexSelected = $request->request->get('checkbox-'.$muestra->getId().'');
+                        $cantidadSelected = $request->request->get('cant-'.$muestra->getId().'');
+
+                        // UsuarioMuestra encontrada en DB
+                        if($usuarioMuestra){
+                            // Si existe usuarioMuestra significa que ya esta en DB
+
+                            // ¿Viene seleccionada de View?
+
+                            // No -> Elimina MuestraUsuario con
+                            // userId + muestraId
+                            // $error = "Elimina de DB!";
+                            if (!$indexSelected){
+                                $em = $this->getDoctrine()->getManager();
+                                $qb = $em->createQueryBuilder();
+                                $query = $qb->delete('AppBundle:UsuariosMuestras', 'um')
+                                    ->where('um.usuarioId = :userId')
+                                    ->andwhere('um.muestraId = :muestraId')
+                                    ->setParameter('userId', $userId)
+                                    ->setParameter('muestraId', $muestra->getId())
+                                    ->getQuery();
+                                $query->execute();
+                            } else {
+                                // Si -> (Revisar cambios de estado)
+                                if ($cantidadSelected > 0){
+                                    $usuarioMuestraActualizar = $usuarioMuestra[0];
+                                    $usuarioMuestraActualizar->setCantidad($cantidadSelected);
+                                    $usuarioMuestraActualizar->setPrecio($lineaGrupoMuestra->getPrecio());
+
+                                    $em = $this->getDoctrine()->getEntityManager();
+                                    $em->persist($usuarioMuestraActualizar);
+                                    $em->flush();
+                                } else {
+                                    $em = $this->getDoctrine()->getManager();
+                                    $qb = $em->createQueryBuilder();
+                                    $query = $qb->delete('AppBundle:UsuariosMuestras', 'um')
+                                        ->where('um.usuarioId = :userId')
+                                        ->andwhere('um.muestraId = :muestraId')
+                                        ->setParameter('userId', $userId)
+                                        ->setParameter('muestraId', $muestra->getId())
+                                        ->getQuery();
+                                    $query->execute();
+                                }
+
+                            }
+
+                        } else {
+                            // No existe usuarioMuestra
+
+                            // ¿Viene seleccionada de View?
+                            // Si -> guarda userId + muestraId
+                            if ($indexSelected){
+                                // Si -> guarda userId + muestraId
+                                if ($cantidadSelected>0){
+                                    $usuarioMuestraGuardar = new UsuariosMuestras();
+                                    $usuarioMuestraGuardar->setPrecio($lineaGrupoMuestra->getPrecio());
+                                    $usuarioMuestraGuardar->setCantidad($cantidadSelected);
+                                    $usuarioMuestraGuardar->setUsuario($user);
+                                    $usuarioMuestraGuardar->setMuestra($muestra);
+                                    $usuarioMuestraGuardar->setEstado('seleccionada');
+                                    // $error = "Gu de DB!";
+                                    $em = $this->getDoctrine()->getEntityManager();
+                                    $em->persist($usuarioMuestraGuardar);
+                                    $em->flush();
+                                }
+                            }
+                        }
+                    }
+                    $mensaje = "Se han guardado los cambios correctamente!";
+                    return $this->render('usuario/muestras.html.twig', [
+                        'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
+                        'muestras' => false,
+                        'error' => $error,
+                        'mensaje' => $mensaje,
                     ]);
                 } else {
                     // No Muestras disponibles para Grupo
@@ -108,97 +224,11 @@ class MuestrasController extends Controller
                     ]);
                 }
 
-            } else {
-                // Method = POST
-                // Comprobamos los índices que tenemos
-                // de muestras a comprobar
-                if ($grupoMuestra){
-                    // Obtener muestras
-
-                    // Muestras = array de objetos muestra
-                    $muestras = new ArrayCollection();
-                    foreach ($grupoMuestra as $lineaGrupoMuestra){
-                        $muestraId = $lineaGrupoMuestra->getMuestraId();
-                        $muestraAux = $this->getDoctrine()
-                            ->getManager()
-                            ->getRepository(Muestra::class)
-                            ->find($muestraId);
-                        // dump($muestraAux);
-
-                        // Comprueba si existe usuarioMuestra con muestraId y UserId
-                        $repository = $this->getDoctrine()
-                            ->getRepository(UsuariosMuestras::class);
-
-                        $query = $repository->createQueryBuilder('c')
-                            ->where('c.usuarioId = :userId')
-                            ->andwhere('c.muestraId = :muestraId')
-                            ->setParameter('userId', $userId)
-                            ->setParameter('muestraId', $muestraId)
-                            ->getQuery();
-
-                        $usuarioMuestra = $query->getResult();
-
-                        $indAux = 'checkbox-'.$muestraId.'';
-                        $indexSelected = $request->request->get($indAux);
-
-                        if($usuarioMuestra){
-                            // Si existe MuestraSeleccionada
-
-                            // ¿Viene seleccionada de View?
-                            // Si -> no hace nada porque ya esta en DB
-                            if (!$indexSelected){
-                                // No -> Elimina MuestraUsuario con
-                                // userId + muestraId
-                                // $error = "Elimina de DB!";
-//                                $em = $this->getDoctrine()->getEntityManager();
-//                                $usuarioMuestraEliminar = new UsuariosMuestras();
-//                                $usuarioMuestraEliminar->setMuestra($muestraAux);
-//                                $usuarioMuestraEliminar->setUsuario($this->get('security.token_storage')->getToken()->getUser());
-//
-                                $ema = $this->getDoctrine()->getManager();
-                                $qb = $ema->createQueryBuilder();
-                                $query = $qb->delete('AppBundle:UsuariosMuestras', 'um')
-                                    ->where('um.usuarioId = :userId')
-                                    ->andwhere('um.muestraId = :muestraId')
-                                    ->setParameter('userId', $userId)
-                                    ->setParameter('muestraId', $muestraId)
-                                    ->getQuery();
-
-                                $query->execute();
-                            }
-
-                        } else {
-                            // No existe MuestraSeleccionada
-
-                            // ¿Viene seleccionada de View?
-                            // Si -> guarda userId + muestraId
-                            if ($indexSelected){
-                                // Si -> guarda userId + muestraId
-                                $usuarioMuestraGuardar = new UsuariosMuestras();
-                                $usuarioMuestraGuardar->setUsuario($this->get('security.token_storage')->getToken()->getUser());
-                                $usuarioMuestraGuardar->setMuestra($muestraAux);
-                                // $error = "Gu de DB!";
-                                $em = $this->getDoctrine()->getEntityManager();
-                                $em->persist($usuarioMuestraGuardar);
-                                $em->flush();
-                            }
-                            // No -> No hace nada
-                        }
-//                        $muestras[] = $muestraAux;
-                    }
-
-                    // Renderiza Formulario
-
-                    return $this->redirectToRoute('homepage');
-                }
-
-                $indexSelected = $request->request->get('checkbox-10');
-
-                return $this->render('usuario/muestras.html.twig', [
-                    'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
-                    'muestras' => null,
-                    'error' => $indexSelected,
-                ]);
+//                return $this->render('usuario/muestras.html.twig', [
+//                    'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
+//                    'muestras' => false,
+//                    'error' => $error,
+//                ]);
             }
         }
         return $this->render('default/index.html.twig', [

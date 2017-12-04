@@ -34,20 +34,6 @@ services:
             - { name: sonata.admin, manager_type: orm, group: Usuarios, label: Usuarios }
         public: true
 
-    app.admin.cuadrante:
-        class: AppBundle\Admin\CuadranteAdmin
-        arguments: [~, AppBundle\Entity\Cuadrante, SonataAdminBundle:CRUD]
-        tags:
-            - { name: sonata.admin, manager_type: orm, group: Cuadrantes, label: Cuadrante }
-        public: true
-
-    app.admin.cuadrante_dia:
-        class: AppBundle\Admin\CuadranteDiaAdmin
-        arguments: [~, AppBundle\Entity\CuadranteDia, SonataAdminBundle:CRUD]
-        tags:
-            - { name: sonata.admin, manager_type: orm, group: Cuadrantes, label: Fechas Cuadrante }
-        public: true
-
     app.admin.muestra:
         class: AppBundle\Admin\MuestraAdmin
         arguments: [~, AppBundle\Entity\Muestra, SonataAdminBundle:CRUD]
@@ -67,4 +53,32 @@ services:
         arguments: [~, AppBundle\Entity\UsuariosMuestras, SonataAdminBundle:CRUD]
         tags:
             - { name: sonata.admin, manager_type: orm, group: Muestras, label: Usuarios-Muestras }
+        public: true
+
+    app.admin.cuadrante:
+        class: AppBundle\Admin\CuadranteAdmin
+        arguments: [~, AppBundle\Entity\Cuadrante, AppBundle:CuadranteAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Cuadrantes, label: Cuadrante }
+        public: true
+
+    app.admin.cuadrante_grupo:
+        class: AppBundle\Admin\CuadranteGrupoAdmin
+        arguments: [~, AppBundle\Entity\CuadranteGrupo, AppBundle:CuadranteGrupoAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Cuadrantes, label: Cuadrante-Grupo }
+        public: true
+
+    app.admin.dia_cuadrante:
+        class: AppBundle\Admin\DiaCuadranteAdmin
+        arguments: [~, AppBundle\Entity\DiaCuadrante, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Cuadrantes, label: Dia-Cuadrante }
+        public: true
+
+    app.admin.descanso_dia:
+        class: AppBundle\Admin\DescansoDiaAdmin
+        arguments: [~, AppBundle\Entity\DescansoDia, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Cuadrantes, label: DescansoDia }
         public: true

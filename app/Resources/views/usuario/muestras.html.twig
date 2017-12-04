@@ -19,35 +19,61 @@
         {% if (error) %}
             <div class="text-center alert alert-danger">{{ error }}</div>
         {% endif %}
+
+        {% if (mensaje) %}
+            <div class="text-center alert alert-success">{{ mensaje }}</div>
+        {% endif %}
         <form action="{{ path('muestras') }}" method="post" name="usuario_muestra">
             <div class="row">
                 {% for muestra in muestras %}
-                    <div style="height: 200px; margin-bottom: 10px;" class="col-sm-2">
-                        <div class="row">
-                            <div style=" max-height: 150px; min-height: 150px" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                <img style="max-height: 150px;" class="img-responsive center-block" src="{{ asset('img/muestras/' ~ muestra.getImageName) }}">
+                    <div style="height: 285px; padding: 5px;" class="col-sm-2">
+                        <div class="sombrear" style="box-shadow: 1px 1px 2px #888; border-radius: 15px; border: 1px solid rgba(125,125,125, 0.1); padding: 7px; margin-bottom: 15px">
+                            <div class="row">
+                                <div style=" max-height: 150px; min-height: 150px" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <img style="max-height: 150px;" class="img-responsive center-block" src="{{ asset('img/muestras/' ~ muestra.getMuestra.getImageName) }}">
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="text-center">
-                            <label>
-                                <input type="checkbox" name="checkbox-{{ muestra.id }}" value="{{ muestra.id }}" {% if (muestra.getMuestraSeleccionada) %}checked{% endif %}> Seleccionar
-                                <hr style="width: 80px; margin: 2px auto" class="half-rule">
-                            </label>
+                            <div>
+                                <div>
+                                    <h4>Precio: {{ muestra.getPrecio }}€</h4>
+                                </div>
+                                <div style="margin-bottom: 10px;" class="row">
+                                    <div style="padding-top: 5px;" class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                        <strong>Cantidad:</strong>
+                                    </div>
+                                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                        <input min="0" max="25"  type="number" class="form-control" name="cant-{{ muestra.getMuestra.getId }}" value="{{ muestra.getCantidad }}">
+                                    </div>
+                                </div>
+                                <div class="text-center" style="margin-top: 5px">
+                                    <label>
+                                        <input type="checkbox" name="checkbox-{{ muestra.getMuestra.getId }}" value="{{ muestra.getMuestra.getId }}" {% if (muestra.getEstado == 'seleccionada') %}checked{% endif %}> Seleccionar
+                                    </label>
+                                    {#<hr style="width: 80px; margin: 6px auto" class="half-rule">#}
+                                </div>
+                            </div>
                         </div>
                     </div>
                 {% endfor %}
             </div>
-            {% if not(error) %}
-            <input type="submit" value="Guardar Estado"
-                   class="btn btn-success center-block" />
+            {% if (mensaje) %}
+                <a style="width: 100px" href="{{ path('muestras') }}" role="button" class="btn btn-success center-block">Continuar</a>
             {% endif %}
-
+            <br/>
+            {% if not(error) and not(mensaje) %}
+                <input type="submit" value="Guardar Estado"
+                       class="btn btn-success center-block" />
+            {% endif %}
         </form>
     </div>
 {% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
-
+<style>
+    .sombrear:hover{
+        background-color: #eeeeee;
+    }
+</style>
 {% endblock %}
