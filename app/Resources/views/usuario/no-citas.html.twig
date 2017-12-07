@@ -1,0 +1,14 @@
+{% extends 'layout.html.twig' %}
+{% block content %}
+    <div class="container-fluid">
+        <h1 class="text-center">Citas</h1>
+        <div class="jumbotron text-center alert alert-info">
+            <p>Actualmente no hay citas disponibles para ti, posiblemente no se haya abierto el plazo!</p>
+            <p>Muchas gracias, hasta pronto...</p>
+        </div>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}

@@ -17,7 +17,8 @@
                     <td>{{ cita.getHora()|date('H:i') }}</td>
                     <td>
                         {% if (cita.getUser()) %}
-                            <a style="width: 70px" href="#" type="button" value="Coger cita" class="btn btn-xs btn-danger disabled center-block">Ocupada</a>
+                            <a style="width: 70px" href="#" type="button" value="Coger cita" class="btn btn-xs btn-danger disabled center-block">Ocupada</a>      {#<input type="submit" value="Coger cita" class="btn btn-xs btn-success center-block" />#}
+                        {% else %}
                         <form action="{{ path('usuario_cita') }}" method="post" name="usuario_muestra">
                             <input type="submit" value="Coger cita"
                             class="btn btn-xs btn-success center-block" />

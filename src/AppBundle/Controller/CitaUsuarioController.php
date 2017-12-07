@@ -33,7 +33,6 @@ class CitaUsuarioController extends Controller
             $isCita = $em->getRepository(Citas::class)->findBy(array('user'=>$user));
 
             if(!$isCita) {
-
                 // Grupo al que pertenece usuario
                 $em = $this->getDoctrine()->getManager();
                 $grupoUsuario = $em->getRepository(GruposUsuarios::class)->findBy(array('usuarioId' => $userId));
@@ -76,7 +75,13 @@ class CitaUsuarioController extends Controller
                         $citas[] = $cita;
                     }
                 }
+                if (count($citas)<1){
+                    return $this->render('usuario/no-citas.html.twig', [
+                        // Enviar fecha, hora, cuadrante, usuario para usar en view
 
+                        'base_dir' => realpath($this->getParameter('kernel.project_dir')) . DIRECTORY_SEPARATOR,
+                    ]);
+                }
 //            dump($citas);
                 // Methodo GET
                 if ($request->getMethod() === 'GET') {
@@ -118,7 +123,7 @@ class CitaUsuarioController extends Controller
             }
         } else {
             // Usuario NO logueado
-            return $this->render('usuario/citas.html.twig', [
+            return $this->render('default/index.html.twig', [
                 'base_dir' => realpath($this->getParameter('kernel.project_dir')) . DIRECTORY_SEPARATOR,
                 'error' => 'Ops! Estamos trabajando para solucionarlo pronto...',
 //            '' =>
