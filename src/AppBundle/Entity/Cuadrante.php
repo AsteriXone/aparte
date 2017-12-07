@@ -2,6 +2,8 @@
 
 namespace AppBundle\Entity;
 
+
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -36,19 +38,34 @@ class Cuadrante
     private $numeroCitas;
 
     /**
-     * @ORM\OneToMany(targetEntity="CuadranteGrupo", mappedBy="cuadrante")
+     * @ORM\OneToMany(targetEntity="CuadranteGrupo", mappedBy="cuadrante", cascade={"persist", "remove"})
      */
     private $cuadranteGrupo;
 
     /**
-     * @ORM\OneToMany(targetEntity="DiaCuadrante", mappedBy="cuadrante")
+     * @ORM\OneToMany(targetEntity="DiaCuadrante", mappedBy="cuadrante", cascade={"persist", "remove"})
      */
     private $diaCuadrante;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Citas", mappedBy="cuadrante", cascade={"persist", "remove"})
+     */
+    private $citas;
 
     public function __toString()
     {
         // TODO: Implement __toString() method.
         return (string) $this->nombre;
+    }
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->cuadranteGrupo = new ArrayCollection();
+        $this->cita = new ArrayCollection();
+        $this->diaCuadrante = new ArrayCollection();
     }
 
     /**
@@ -83,13 +100,6 @@ class Cuadrante
     public function getNombre()
     {
         return $this->nombre;
-    }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->cuadranteGrupo = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -182,5 +192,39 @@ class Cuadrante
     public function getNumeroCitas()
     {
         return $this->numeroCitas;
+    }
+
+    /**
+     * Add cita
+     *
+     * @param \AppBundle\Entity\Citas $cita
+     *
+     * @return Cuadrante
+     */
+    public function addCita(\AppBundle\Entity\Citas $cita)
+    {
+        $this->citas[] = $cita;
+
+        return $this;
+    }
+
+    /**
+     * Remove cita
+     *
+     * @param \AppBundle\Entity\Citas $cita
+     */
+    public function removeCita(\AppBundle\Entity\Citas $cita)
+    {
+        $this->citas->removeElement($cita);
+    }
+
+    /**
+     * Get citas
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCitas()
+    {
+        return $this->citas;
     }
 }

@@ -53,6 +53,12 @@ class Muestra
     private $updatedAt;
 
     /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @var string
+     */
+    private $descripcion;
+
+    /**
      * @var int
      */
     private $muestraSeleccionada;
@@ -270,5 +276,29 @@ class Muestra
     public function getUsuariosMuestras()
     {
         return $this->usuarios_muestras;
+    }
+
+    /**
+     * Set descripcion
+     *
+     * @param string $descripcion
+     *
+     * @return Muestra
+     */
+    public function setDescripcion($descripcion)
+    {
+        $this->descripcion = $descripcion;
+
+        return $this;
+    }
+
+    /**
+     * Get descripcion
+     *
+     * @return string
+     */
+    public function getDescripcion()
+    {
+        return $this->descripcion;
     }
 }

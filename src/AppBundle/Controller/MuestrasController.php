@@ -52,6 +52,7 @@ class MuestrasController extends Controller
             // Obtener id muestras asignadas a grupo
             $em2 = $this->getDoctrine()->getManager();
             $grupoMuestra = $em2->getRepository(GrupoMuestra::class)->findBy(array('grupoId'=>$idGrupo));
+
             /*
              * Fin Recopilacion de datos
              */
@@ -88,12 +89,16 @@ class MuestrasController extends Controller
                         if($usuarioMuestra){
                             // Si existe (true)
                             $usuariosMuestrasAux = $usuarioMuestra[0];
+                            $descripcion = $muestra->getDescripcion();
+                            $usuariosMuestrasAux->setDescripcion($descripcion);
                         } else {
                             // Si no existe setMuestraSeleccionada(0) (false)
                             $usuariosMuestrasAux->setUsuario($user);
                             $usuariosMuestrasAux->setMuestra($muestra);
                             $usuariosMuestrasAux->setPrecio($lineaGrupoMuestra->getPrecio());
                             $usuariosMuestrasAux->setCantidad(0);
+                            $descripcion = $muestra->getDescripcion();
+                            $usuariosMuestrasAux->setDescripcion($descripcion);
                         }
                          $usuariosMuestras[] = $usuariosMuestrasAux;
                     }

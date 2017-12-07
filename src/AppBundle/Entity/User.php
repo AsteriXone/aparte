@@ -78,6 +78,12 @@ class User extends BaseUser
      */
     private $usuarios_muestras;
 
+    /**
+     * One User has One Cita.
+     * @ORM\OneToOne(targetEntity="Citas", mappedBy="user")
+     */
+    private $cita;
+
     public function __construct()
     {
         parent::__construct();
@@ -326,5 +332,29 @@ class User extends BaseUser
     public function getUsuariosMuestras()
     {
         return $this->usuarios_muestras;
+    }
+
+    /**
+     * Set cita
+     *
+     * @param \AppBundle\Entity\Citas $cita
+     *
+     * @return User
+     */
+    public function setCita(\AppBundle\Entity\Citas $cita = null)
+    {
+        $this->cita = $cita;
+
+        return $this;
+    }
+
+    /**
+     * Get cita
+     *
+     * @return \AppBundle\Entity\Citas
+     */
+    public function getCita()
+    {
+        return $this->cita;
     }
 }

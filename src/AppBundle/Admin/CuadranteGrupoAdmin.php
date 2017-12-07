@@ -2,15 +2,13 @@
 
 namespace AppBundle\Admin;
 
-use AppBundle\Entity\Grupo;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
 
-class MuestraAdmin extends AbstractAdmin
+class CuadranteGrupoAdmin extends AbstractAdmin
 {
     /**
      * @param DatagridMapper $datagridMapper
@@ -19,8 +17,8 @@ class MuestraAdmin extends AbstractAdmin
     {
         $datagridMapper
             ->add('id')
-            ->add('imageName')
-            ->add('descripcion')
+            ->add('grupo')
+            ->add('cuadrante')
         ;
     }
 
@@ -31,13 +29,8 @@ class MuestraAdmin extends AbstractAdmin
     {
         $listMapper
             ->add('id')
-            ->add('imageName', null, array('label' => "Nombre"))
-            ->add('imagen' ,null, array(
-                'base_path' => '%app.path.muestras_images%',
-                'template' => 'vich_uploader_image.html.twig',
-                    )
-                )
-            ->add('descripcion')
+            ->add('grupo')
+            ->add('cuadrante')
             ->add('_action', null, array(
                 'actions' => array(
                     'show' => array(),
@@ -54,9 +47,9 @@ class MuestraAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-//            ->add('imageFile', FileType::class, array('label' => 'Subir imagen'))
-            ->add('descripcion')
-
+//            ->add('id')
+            ->add('grupo')
+            ->add('cuadrante')
         ;
     }
 
@@ -67,14 +60,8 @@ class MuestraAdmin extends AbstractAdmin
     {
         $showMapper
             ->add('id')
-            ->add('imageName', null, array('label' => "Nombre"))
-            ->add('imagen' ,null, array(
-                    'base_path' => '%app.path.muestras_images%',
-                    'template' => 'vich_uploader_image.html.twig',
-                )
-            )
-            ->add('descripcion')
-
+            ->add('grupo')
+            ->add('cuadrante')
         ;
     }
 }

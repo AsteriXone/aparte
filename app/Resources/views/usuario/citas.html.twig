@@ -4,22 +4,41 @@
         {% if (error) %}
             <div class="text-center alert alert-danger">{{ error }}</div>
         {% endif %}
-        <form action="{{ path('muestras') }}" method="post" name="usuario_muestra">
-            <table class="table table-striped table-hover table-responsive">
+        <h1 class="text-center">Cuadrante Citas</h1>
+        <table class="table table-striped table-hover table-responsive">
+            <tr>
+                <th>Fecha</th>
+                <th>Hora</th>
+                <th></th>
+            </tr>
+            {% for cita in citas %}
                 <tr>
-                    <th>Fecha</th>
-                    <th>Hora</th>
-                    <th></th>
-                </tr>
-                <tr>
-                    <td>1/12/2017</td>
-                    <td>12:45</td>
+                    <td>{{ cita.getFecha()|date('d/m/Y') }}</td>
+                    <td>{{ cita.getHora()|date('H:i') }}</td>
                     <td>
-                        <input type="submit" value="Coger cita" class="btn btn-xs btn-success center-block" />
+                        {% if (cita.getUser()) %}
+                            <a style="width: 70px" href="#" type="button" value="Coger cita" class="btn btn-xs btn-danger disabled center-block">Ocupada</a>
+                        <form action="{{ path('usuario_cita') }}" method="post" name="usuario_muestra">
+                            <input type="submit" value="Coger cita"
+                            class="btn btn-xs btn-success center-block" />
+                            <input type="hidden" name="cita" value="{{ cita.id }}">
+                        </form>
+                        {#<a style="width: 70px" href="#" type="button" value="Coger cita" class="btn btn-xs btn-success center-block">Coger cita</a>#}
+                        {% endif %}
                     </td>
                 </tr>
-            </table>
-        </form>
+            {% endfor %}
+            {# Bucle #}
+            {#<tr>#}
+                {#<td>1/12/2017</td>#}
+                {#<td>12:45</td>#}
+                {#<td>#}
+                    {#<input type="submit" value="Coger cita" class="btn btn-xs btn-success center-block" />#}
+                    {#<a style="width: 70px" href="#" type="button" value="Coger cita" class="btn btn-xs btn-success center-block">Coger cita</a>#}
+                {#</td>#}
+            {#</tr>#}
+            {# Fin Bucle #}
+        </table>
     </div>
 {% endblock %}
 

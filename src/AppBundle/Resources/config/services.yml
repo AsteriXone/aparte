@@ -82,3 +82,10 @@ services:
         tags:
             - { name: sonata.admin, manager_type: orm, group: Cuadrantes, label: DescansoDia }
         public: true
+
+    app.admin.citas:
+        class: AppBundle\Admin\CitasAdmin
+        arguments: [~, AppBundle\Entity\Citas, AppBundle:CitasAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Citas, label: Citas }
+        public: true

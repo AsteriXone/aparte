@@ -2,15 +2,13 @@
 
 namespace AppBundle\Admin;
 
-use AppBundle\Entity\Grupo;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
 
-class MuestraAdmin extends AbstractAdmin
+class DiaCuadranteAdmin extends AbstractAdmin
 {
     /**
      * @param DatagridMapper $datagridMapper
@@ -19,8 +17,10 @@ class MuestraAdmin extends AbstractAdmin
     {
         $datagridMapper
             ->add('id')
-            ->add('imageName')
-            ->add('descripcion')
+            ->add('cuadrante')
+            ->add('fecha')
+            ->add('horaInicio')
+            ->add('horaFin')
         ;
     }
 
@@ -30,14 +30,11 @@ class MuestraAdmin extends AbstractAdmin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->add('id')
-            ->add('imageName', null, array('label' => "Nombre"))
-            ->add('imagen' ,null, array(
-                'base_path' => '%app.path.muestras_images%',
-                'template' => 'vich_uploader_image.html.twig',
-                    )
-                )
-            ->add('descripcion')
+//            ->add('id')
+            ->add('cuadrante')
+            ->add('fecha')
+            ->add('horaInicio')
+            ->add('horaFin')
             ->add('_action', null, array(
                 'actions' => array(
                     'show' => array(),
@@ -54,9 +51,11 @@ class MuestraAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-//            ->add('imageFile', FileType::class, array('label' => 'Subir imagen'))
-            ->add('descripcion')
-
+//            ->add('id')
+            ->add('cuadrante')
+            ->add('fecha')
+            ->add('horaInicio')
+            ->add('horaFin')
         ;
     }
 
@@ -67,14 +66,20 @@ class MuestraAdmin extends AbstractAdmin
     {
         $showMapper
             ->add('id')
-            ->add('imageName', null, array('label' => "Nombre"))
-            ->add('imagen' ,null, array(
-                    'base_path' => '%app.path.muestras_images%',
-                    'template' => 'vich_uploader_image.html.twig',
-                )
-            )
-            ->add('descripcion')
-
+            ->add('cuadrante')
+            ->add('fecha')
+            ->add('horaInicio')
+            ->add('horaFin')
         ;
+    }
+
+    public function getExportFields(){
+//        $results = $this->getModelManager()->getExportFields($this->getClass());
+        $results[] = 'cuadrante';
+        $results[] = 'fecha';
+        $results[] = 'horaInicio';
+        $results[] = 'horaFin';
+
+        return $results;
     }
 }

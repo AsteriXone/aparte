@@ -56,6 +56,8 @@ class UsuariosMuestras
      */
     protected $estado;
 
+
+
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="usuarios_muestras")
      */
@@ -127,6 +129,36 @@ class UsuariosMuestras
     public function setMuestraSeleccionada($muestraSeleccionada)
     {
         $this->muestraSeleccionada = $muestraSeleccionada;
+
+        return $this;
+    }
+
+    /**
+     * @var string
+     *
+     */
+    protected $descripcion;
+
+    /**
+     * Get descripcion
+     *
+     * @return int
+     */
+    public function getDescripcion()
+    {
+        return $this->descripcion;
+    }
+
+    /**
+     * Set muestraSeleccionada
+     *
+     * @param integer $texto
+     *
+     * @return UsuariosMuestras
+     */
+    public function setDescripcion($texto)
+    {
+        $this->descripcion = $texto;
 
         return $this;
     }

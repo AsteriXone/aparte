@@ -104,4 +104,15 @@ class UserAdmin extends AbstractAdmin
             ->add('telefono')
         ;
     }
+    public function getExportFields(){
+
+
+        $results[]='nombre';
+        $results[]='ape_1';
+        $results[]='ape_2';
+        $results[]='email';
+        $results[]='telefono';
+
+        return $results;
+    }
 }

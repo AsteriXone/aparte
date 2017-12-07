@@ -35,6 +35,10 @@
                             </div>
 
                             <div>
+
+                                {#<div class="descripción {% if (muestra.getDescripcion) %}alert alert-danger{% endif %}">#}
+                                    {#<p>{{ muestra.getDescripcion }}</p>#}
+                                {#</div>#}
                                 <div>
                                     <h4>Precio: {{ muestra.getPrecio }}€</h4>
                                 </div>

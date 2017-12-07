@@ -66,6 +66,7 @@ class Grupo
     {
         $this->gruposMuestras = new ArrayCollection();
         $this->grupos_usuarios = new ArrayCollection();
+        $this->cuadranteGrupo = new ArrayCollection();
     }
 
     public function __toString()

@@ -53,9 +53,20 @@ class Muestra
     private $updatedAt;
 
     /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @var string
+     */
+    private $descripcion;
+
+    /**
      * @var int
      */
     private $muestraSeleccionada;
+
+    /**
+     * @var int
+     */
+    private $precioMuestraGrupo;
 
 
     /**
@@ -109,6 +120,26 @@ class Muestra
     public function setMuestraSeleccionada($accion)
     {
         $this->muestraSeleccionada = $accion;
+
+        return $this;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getPrecioMuestraGrupo()
+    {
+        return $this->precioMuestraGrupo;
+    }
+
+    /**
+     * @param int $precio
+     *
+     * @return Muestra
+     */
+    public function setPrecioMuestraGrupo($precio)
+    {
+        $this->precioMuestraGrupo = $precio;
 
         return $this;
     }
@@ -245,5 +276,29 @@ class Muestra
     public function getUsuariosMuestras()
     {
         return $this->usuarios_muestras;
+    }
+
+    /**
+     * Set descripcion
+     *
+     * @param string $descripcion
+     *
+     * @return Muestra
+     */
+    public function setDescripcion($descripcion)
+    {
+        $this->descripcion = $descripcion;
+
+        return $this;
+    }
+
+    /**
+     * Get descripcion
+     *
+     * @return string
+     */
+    public function getDescripcion()
+    {
+        return $this->descripcion;
     }
 }
