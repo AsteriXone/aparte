@@ -4,18 +4,19 @@
 
     {#<p>Id Grupo: {{ idGrupo }}</p>#}
     {#{% for muestra in muestras %}#}
-        {#<p>{{ muestra.imageName }}</p>#}
+    {#<p>{{ muestra.imageName }}</p>#}
     {#{% endfor %}#}
     {#{{ form_start(form) }}#}
     {#{{ form_widget(form) }}#}
 
     {#Hola <input type="checkbox" name="a" value="pepe" title="Hola">#}
     {#<input type="submit" value="Create"#}
-           {#class="btn btn-success" />#}
+    {#class="btn btn-success" />#}
     {#{{ form_end(form) }}#}
     {#<div><p>Método: {{ method }}</p></div>#}
 
     <div class="container-fluid">
+        <div id="confirmDialog">Pedido Actual</div>
 
         {% if (error) %}
             <div class="text-center alert alert-danger">{{ error }}</div>
@@ -38,7 +39,7 @@
                             <div>
 
                                 {#<div class="descripción {% if (muestra.getDescripcion) %}alert alert-danger{% endif %}">#}
-                                    {#<p>{{ muestra.getDescripcion }}</p>#}
+                                {#<p>{{ muestra.getDescripcion }}</p>#}
                                 {#</div>#}
                                 <div>
                                     <h4>Precio: {{ muestra.getPrecio }}€</h4>
@@ -66,25 +67,20 @@
                 <a style="width: 100px" href="{{ path('muestras') }}" role="button" class="btn btn-success center-block">Continuar</a>
             {% endif %}
             <br/>
-            {% if not(error) and not(mensaje) %}
-                <div class="text-center">
-                    <input type="submit" value="Guardar Estado" class="btn btn-success" />
-                    {#<a href="{{ path('pedido') }}" class="btn btn-danger">Realizar Pedido</a>#}
-                    <a id="botonPedido" class="btn btn-danger">Realizar Pedido</a>
 
-                </div>
-            {% endif %}
         </form>
     </div>
-    {#<script>#}
-        {#document.getElementById('botonPedido').onclick = function (e) {#}
-            {#if (confirm('Vas a realizar tu pedido, te mandaremos\n un correo con las instrucciones\n¿Quieres continuar?')){#}
-                {#location.href = '{{ path('pedido') }}';#}
-            {#} else {#}
-                {#e.preventDefault();#}
-            {#}#}
-        {#};#}
-    {#</script>#}
+    <script>
+        document.getElementById('botonPedido').onclick = function (e) {
+            if (confirm('¿Esta seguro?')){
+                    $('#confirmDialog').append('<h1>Si</h1>');
+                    location.href = '{{ path('pedido') }}';
+                } else {
+                    $('#confirmDialog').append('<h1>No</h1>');
+                    e.preventDefault();
+                }
+            };
+    </script>
 {% endblock %}
 
 {% block stylesheets %}
@@ -94,4 +90,5 @@
             background-color: #eeeeee;
         }
     </style>
+
 {% endblock %}

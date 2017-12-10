@@ -10,9 +10,12 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Grupo;
 use AppBundle\Entity\GrupoMuestra;
+use AppBundle\Entity\GrupoProfesor;
 use AppBundle\Entity\GruposUsuarios;
+use AppBundle\Entity\Profesor;
 use AppBundle\Entity\User;
 use AppBundle\Entity\UsuariosMuestras;
+use AppBundle\Entity\UsuariosProfes;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Routing\Annotation\Route;
@@ -23,12 +26,12 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
 
-class MuestrasController extends Controller
+class VotoProfesorController extends Controller
 {
     /**
-     * @Route("/muestras", name="muestras")
+     * @Route("/votar-profe", name="votar-profe")
      */
-    public function muestrasAction(Request $request)
+    public function votarProfeAction(Request $request)
     {
         $error = false;
         $mensaje = false;
@@ -37,7 +40,7 @@ class MuestrasController extends Controller
             /*
              * Recopilación de datos
              */
-
+dump($error);
             // userId = Id de Usuario
             $user = $this->get('security.token_storage')->getToken()->getUser();
             $userId = $user->getId();
@@ -49,9 +52,10 @@ class MuestrasController extends Controller
             // Revisar... más adelante un usuario pertenece a varios grupos
             $idGrupo = $grupoUsuario[0]->getGrupoId(); // Id del grupo
 
-            // Obtener id muestras asignadas a grupo
+            // Obtener id profes asignados a grupo
             $em2 = $this->getDoctrine()->getManager();
-            $grupoMuestra = $em2->getRepository(GrupoMuestra::class)->findBy(array('grupoId'=>$idGrupo));
+            $gruposProfes = $em2->getRepository(GrupoProfesor::class)->findBy(array('grupoId'=>$idGrupo));
+
 
             /*
              * Fin Recopilacion de datos
@@ -61,62 +65,56 @@ class MuestrasController extends Controller
             if ($request->getMethod()=== 'GET'){
 //                $method = $request->getMethod();
 
-                // Comprueba si existen muestras para grupo
-                if ($grupoMuestra){
-                    // Obtener muestras y renderizar formulario
+                // Comprueba si existen profes para grupo
+                if ($gruposProfes){
+                    // Obtener profes para usuario y renderizar formulario
 
-                    // usuariosMuestras = array de objetos usuariosMuestra
-                    $usuariosMuestras = new ArrayCollection();
-                     foreach ($grupoMuestra as $lineaGrupoMuestra){
-                        // Obtener Ids Muestra para Grupo
-                        $usuariosMuestrasAux = new UsuariosMuestras();
+                    // usuariosProfes = array de objetos usuariosProfes
+                    $profes = new ArrayCollection();
+                     foreach ($gruposProfes as $lineaGruposProfes){
+//                         $profeAux = new Profesor(); // Aniadira un usuario-profe aunque no este votado
 
-                        $muestra = $lineaGrupoMuestra->getMuestra();
+                         // Obtener Ids Profes para Grupo
+                         $profe = $lineaGruposProfes->getProfesor();
 
-                        // Comprueba si existe usuarioMuestra con muestraId y UserId
+//                       dump($profe->getId());
+
+                        // Comprueba si existe usuarioProfe con profeId y UserId
                         $repository = $this->getDoctrine()
-                            ->getRepository(UsuariosMuestras::class);
+                            ->getRepository(UsuariosProfes::class);
 
                         $query = $repository->createQueryBuilder('c')
                             ->where('c.usuarioId = :userId')
-                            ->andwhere('c.muestraId = :muestraId')
+                            ->andwhere('c.profesorId = :profeId')
                             ->setParameter('userId', $userId)
-                            ->setParameter('muestraId', $muestra->getId())
+                            ->setParameter('profeId', $profe->getId())
                             ->getQuery();
 
-                        $usuarioMuestra = $query->getResult();
-
-                        if($usuarioMuestra){
-                            // Si existe (true)
-                            $usuariosMuestrasAux = $usuarioMuestra[0];
-                            $descripcion = $muestra->getDescripcion();
-                            $usuariosMuestrasAux->setDescripcion($descripcion);
+                        $usuarioProfe = $query->getResult();
+//                        dump($usuarioProfe);
+                        if($usuarioProfe){
+                            // Si existe setProfeSeleccionado(1) (true)
+                            $profes[] = $profe;
                         } else {
-                            // Si no existe setMuestraSeleccionada(0) (false)
-                            $usuariosMuestrasAux->setUsuario($user);
-                            $usuariosMuestrasAux->setMuestra($muestra);
-                            $usuariosMuestrasAux->setPrecio($lineaGrupoMuestra->getPrecio());
-                            $usuariosMuestrasAux->setCantidad(0);
-                            $descripcion = $muestra->getDescripcion();
-                            $usuariosMuestrasAux->setDescripcion($descripcion);
+                            // Si no existe setProfeSeleccionado(0) (false)
+                            $profes[] = $profe;
                         }
-                         $usuariosMuestras[] = $usuariosMuestrasAux;
                     }
 
                     // Renderiza Formulario
 
-                    return $this->render('usuario/muestras.html.twig', [
+                    return $this->render('usuario/votos-profe.html.twig', [
                         'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
-                        'muestras' => $usuariosMuestras,
+                        'profes' => $profes,
                         'mensaje' => $mensaje,
                         'error' => $error,
                     ]);
                 } else {
-                    // No Muestras disponibles para Grupo
-                    return $this->render('usuario/no-muestras.html.twig', [
+                    // No Profes disponibles para Grupo
+                    return $this->render('usuario/no-profes.html.twig', [
                         'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
                         'muestras' => false,
-                        'error' => ':( No hay muestras para tu grupo ):',
+                        'error' => ':( Aún no hay profesores registrados para tu grupo ):',
                         'mensaje' => $mensaje,
                     ]);
                 }
@@ -124,12 +122,12 @@ class MuestrasController extends Controller
                 // Method = POST
                 // Comprobamos los índices que tenemos
                 // de muestras a comprobar
-                if ($grupoMuestra){
+                if ($gruposProfes){
                     // Obtener muestras
 
                     // Muestras = array de objetos muestra
-                    foreach ($grupoMuestra as $lineaGrupoMuestra){
-                        $muestra = $lineaGrupoMuestra->getMuestra();
+                    foreach ($gruposProfes as $lineaGrupoProfe){
+                        $muestra = $lineaGrupoProfe->getMuestra();
 
                         // Comprueba si existe usuarioMuestra con muestraId y UserId
                         $repository = $this->getDoctrine()
@@ -172,7 +170,7 @@ class MuestrasController extends Controller
                                 if ($cantidadSelected > 0){
                                     $usuarioMuestraActualizar = $usuarioMuestra[0];
                                     $usuarioMuestraActualizar->setCantidad($cantidadSelected);
-                                    $usuarioMuestraActualizar->setPrecio($lineaGrupoMuestra->getPrecio());
+                                    $usuarioMuestraActualizar->setPrecio($lineaGrupoProfe->getPrecio());
 
                                     $em = $this->getDoctrine()->getEntityManager();
                                     $em->persist($usuarioMuestraActualizar);
@@ -200,7 +198,7 @@ class MuestrasController extends Controller
                                 // Si -> guarda userId + muestraId
                                 if ($cantidadSelected>0){
                                     $usuarioMuestraGuardar = new UsuariosMuestras();
-                                    $usuarioMuestraGuardar->setPrecio($lineaGrupoMuestra->getPrecio());
+                                    $usuarioMuestraGuardar->setPrecio($lineaGrupoProfe->getPrecio());
                                     $usuarioMuestraGuardar->setCantidad($cantidadSelected);
                                     $usuarioMuestraGuardar->setUsuario($user);
                                     $usuarioMuestraGuardar->setMuestra($muestra);
@@ -222,7 +220,7 @@ class MuestrasController extends Controller
                     ]);
                 } else {
                     // No Muestras disponibles para Grupo
-                    return $this->render('usuario/no-muestras.html.twig', [
+                    return $this->render('usuario/no-profes.html.twig', [
                         'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
                         'muestras' => false,
                         'error' => ':( No hay muestras para tu grupo ):',
@@ -241,31 +239,5 @@ class MuestrasController extends Controller
         ]);
     }
 
-    /**
-     * @Route("/muestra/new", name="muestra_new")
-     */
-    public function newAction(Request $request)
-    {
-        $muestra = new Muestra();
-        $form = $this->createForm(MuestraType::class, $muestra);
-        $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-
-            $muestra = $form->getData();
-
-            // ... perform some action, such as saving the task to the database
-            // for example, if Task is a Doctrine entity, save it!
-             $em = $this->getDoctrine()->getManager();
-             $em->persist($muestra);
-             $em->flush();
-
-
-            return $this->redirect($this->generateUrl('homepage'));
-        }
-
-        return $this->render('muestra/nueva.html.twig', array(
-            'form' => $form->createView(),
-        ));
-    }
 }

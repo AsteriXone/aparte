@@ -79,6 +79,11 @@ class User extends BaseUser
     private $usuarios_muestras;
 
     /**
+     * @ORM\OneToMany(targetEntity="UsuariosProfes", mappedBy="usuario")
+     */
+    private $usuarios_profes;
+
+    /**
      * One User has One Cita.
      * @ORM\OneToOne(targetEntity="Citas", mappedBy="user")
      */
@@ -90,6 +95,7 @@ class User extends BaseUser
         // your own logic
         $this->grupos_usuarios = new ArrayCollection();
         $this->usuarios_muestras = new ArrayCollection();
+        $this->usuarios_profes = new ArrayCollection();
     }
 
     public function __toString()
@@ -356,5 +362,39 @@ class User extends BaseUser
     public function getCita()
     {
         return $this->cita;
+    }
+
+    /**
+     * Add usuariosProfe
+     *
+     * @param \AppBundle\Entity\UsuariosProfes $usuariosProfe
+     *
+     * @return User
+     */
+    public function addUsuariosProfe(\AppBundle\Entity\UsuariosProfes $usuariosProfe)
+    {
+        $this->usuarios_profes[] = $usuariosProfe;
+
+        return $this;
+    }
+
+    /**
+     * Remove usuariosProfe
+     *
+     * @param \AppBundle\Entity\UsuariosProfes $usuariosProfe
+     */
+    public function removeUsuariosProfe(\AppBundle\Entity\UsuariosProfes $usuariosProfe)
+    {
+        $this->usuarios_profes->removeElement($usuariosProfe);
+    }
+
+    /**
+     * Get usuariosProfes
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getUsuariosProfes()
+    {
+        return $this->usuarios_profes;
     }
 }

@@ -61,12 +61,18 @@ class Grupo
      */
     private $cuadranteGrupo;
 
+    /**
+     * @ORM\OneToMany(targetEntity="GrupoProfesor", mappedBy="grupo")
+     */
+    private $grupos_profesores;
+
 
     public function __construct()
     {
         $this->gruposMuestras = new ArrayCollection();
         $this->grupos_usuarios = new ArrayCollection();
         $this->cuadranteGrupo = new ArrayCollection();
+        $this->grupos_profesores = new ArrayCollection();
     }
 
     public function __toString()
@@ -282,5 +288,39 @@ class Grupo
     public function getCuadranteGrupo()
     {
         return $this->cuadranteGrupo;
+    }
+
+    /**
+     * Add gruposProfesore
+     *
+     * @param \AppBundle\Entity\GrupoProfesor $gruposProfesore
+     *
+     * @return Grupo
+     */
+    public function addGruposProfesore(\AppBundle\Entity\GrupoProfesor $gruposProfesore)
+    {
+        $this->grupos_profesores[] = $gruposProfesore;
+
+        return $this;
+    }
+
+    /**
+     * Remove gruposProfesore
+     *
+     * @param \AppBundle\Entity\GrupoProfesor $gruposProfesore
+     */
+    public function removeGruposProfesore(\AppBundle\Entity\GrupoProfesor $gruposProfesore)
+    {
+        $this->grupos_profesores->removeElement($gruposProfesore);
+    }
+
+    /**
+     * Get gruposProfesores
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getGruposProfesores()
+    {
+        return $this->grupos_profesores;
     }
 }

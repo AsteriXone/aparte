@@ -66,7 +66,6 @@ class Cuadrante
         $this->cuadranteGrupo = new ArrayCollection();
         $this->cita = new ArrayCollection();
         $this->diaCuadrante = new ArrayCollection();
-
     }
 
     /**

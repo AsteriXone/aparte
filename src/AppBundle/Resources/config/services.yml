@@ -89,3 +89,24 @@ services:
         tags:
             - { name: sonata.admin, manager_type: orm, group: Citas, label: Citas }
         public: true
+
+    app.admin.profesor:
+        class: AppBundle\Admin\ProfesorAdmin
+        arguments: [~, AppBundle\Entity\Profesor, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Profesores, label: Profesores }
+        public: true
+
+    app.admin.grupo_profesor:
+        class: AppBundle\Admin\GrupoProfesorAdmin
+        arguments: [~, AppBundle\Entity\GrupoProfesor, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Profesores, label: Grupo-Profesor }
+        public: true
+
+    app.admin.usuarios_profes:
+        class: AppBundle\Admin\UsuariosProfesAdmin
+        arguments: [~, AppBundle\Entity\UsuariosProfes, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Profesores, label: UsuariosProfes }
+        public: true
