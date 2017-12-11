@@ -44,6 +44,12 @@ class Profesor
     private $apellido2;
 
     /**
+     * @var int
+     *
+     */
+    private $estado;
+
+    /**
      * @ORM\OneToMany(targetEntity="GrupoProfesor", mappedBy="profesor")
      */
     private $grupos_profesores;
@@ -145,6 +151,30 @@ class Profesor
     public function getApellido2()
     {
         return $this->apellido2;
+    }
+
+    /**
+     * Set estado
+     *
+     * @param int $estado
+     *
+     * @return Profesor
+     */
+    public function setEstado($estado)
+    {
+        $this->estado = $estado;
+
+        return $this;
+    }
+
+    /**
+     * Get estado
+     *
+     * @return int
+     */
+    public function getEstado()
+    {
+        return $this->estado;
     }
 
     /**

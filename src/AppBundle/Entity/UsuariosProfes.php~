@@ -36,6 +36,15 @@ class UsuariosProfes
     private $profesorId;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(name="grupo_id", type="integer")
+     */
+    private $grupoPerteneciente;
+
+
+
+    /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="usuarios_profes")
      */
     private $usuario;

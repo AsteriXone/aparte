@@ -36,6 +36,15 @@ class UsuariosProfes
     private $profesorId;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(name="grupo_id", type="integer")
+     */
+    private $grupoPerteneciente;
+
+
+
+    /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="usuarios_profes")
      */
     private $usuario;
@@ -174,5 +183,29 @@ class UsuariosProfes
     public function getUsuarioId()
     {
         return $this->usuarioId;
+    }
+
+    /**
+     * Set grupoPerteneciente
+     *
+     * @param integer $grupoPerteneciente
+     *
+     * @return UsuariosProfes
+     */
+    public function setGrupoPerteneciente($grupoPerteneciente)
+    {
+        $this->grupoPerteneciente = $grupoPerteneciente;
+
+        return $this;
+    }
+
+    /**
+     * Get grupoPerteneciente
+     *
+     * @return integer
+     */
+    public function getGrupoPerteneciente()
+    {
+        return $this->grupoPerteneciente;
     }
 }

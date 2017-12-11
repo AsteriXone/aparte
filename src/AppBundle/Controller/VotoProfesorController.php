@@ -40,7 +40,7 @@ class VotoProfesorController extends Controller
             /*
              * Recopilación de datos
              */
-dump($error);
+//            dump($error);
             // userId = Id de Usuario
             $user = $this->get('security.token_storage')->getToken()->getUser();
             $userId = $user->getId();
@@ -94,9 +94,11 @@ dump($error);
 //                        dump($usuarioProfe);
                         if($usuarioProfe){
                             // Si existe setProfeSeleccionado(1) (true)
+                            $profe->setEstado(1);
                             $profes[] = $profe;
                         } else {
                             // Si no existe setProfeSeleccionado(0) (false)
+                            $profe->setEstado(0);
                             $profes[] = $profe;
                         }
                     }
@@ -118,96 +120,133 @@ dump($error);
                         'mensaje' => $mensaje,
                     ]);
                 }
-            } else {
-                // Method = POST
-                // Comprobamos los índices que tenemos
-                // de muestras a comprobar
+            }
+        }
+        return $this->render('Security/login.html.twig', [
+            'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
+        ]);
+    }
+
+    /**
+     * @Route("/votacion", name="votacion")
+     */
+    public function votacionAction(Request $request)
+    {
+        $error = false;
+        $mensaje = false;
+
+        if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            /*
+             * Recopilación de datos
+             */
+//            dump($error);
+            // userId = Id de Usuario
+            $user = $this->get('security.token_storage')->getToken()->getUser();
+            $userId = $user->getId();
+
+            // Busca grupo usuario
+            $em = $this->getDoctrine()->getManager();
+            $grupoUsuario = $em->getRepository(GruposUsuarios::class)->findBy(array('usuarioId' => $userId));
+
+            // Revisar... más adelante un usuario pertenece a varios grupos
+            $idGrupo = $grupoUsuario[0]->getGrupoId(); // Id del grupo
+
+            // Obtener id profes asignados a grupo
+            $em2 = $this->getDoctrine()->getManager();
+            $gruposProfes = $em2->getRepository(GrupoProfesor::class)->findBy(array('grupoId' => $idGrupo));
+
+
+            /*
+             * Fin Recopilacion de datos
+             */
+
+            // Comprobar metodo POST
+            if ($request->getMethod() === 'POST') {
                 if ($gruposProfes){
-                    // Obtener muestras
+                    // Obtener profes
 
                     // Muestras = array de objetos muestra
                     foreach ($gruposProfes as $lineaGrupoProfe){
-                        $muestra = $lineaGrupoProfe->getMuestra();
+                        $profe = $lineaGrupoProfe->getProfesor();
 
-                        // Comprueba si existe usuarioMuestra con muestraId y UserId
+                        // Comprueba si existe usuarioProfe con profeId y UserId
                         $repository = $this->getDoctrine()
-                            ->getRepository(UsuariosMuestras::class);
+                            ->getRepository(UsuariosProfes::class);
 
                         $query = $repository->createQueryBuilder('c')
                             ->where('c.usuarioId = :userId')
-                            ->andwhere('c.muestraId = :muestraId')
+                            ->andwhere('c.profesorId = :profeId')
                             ->setParameter('userId', $userId)
-                            ->setParameter('muestraId', $muestra->getId())
+                            ->setParameter('profeId', $profe->getId())
                             ->getQuery();
 
-                        $usuarioMuestra = $query->getResult();
+                        $usuarioProfe = $query->getResult();
 
-                        // Obtiene de request el conjunto checkbox-idMuestra
-                        $indexSelected = $request->request->get('checkbox-'.$muestra->getId().'');
-                        $cantidadSelected = $request->request->get('cant-'.$muestra->getId().'');
+                        // Obtiene de request el conjunto
+                        $indexSelected = $request->request->get('profe-'.$profe->getId().'');
+//                        $cantidadSelected = $request->request->get('cant-'.$profe->getId().'');
+                        dump($indexSelected);
+//                        dump($cantidadSelected);
 
-                        // UsuarioMuestra encontrada en DB
-                        if($usuarioMuestra){
-                            // Si existe usuarioMuestra significa que ya esta en DB
 
-                            // ¿Viene seleccionada de View?
+                        // UsuarioProfe encontrada en DB
+                        if($usuarioProfe){
+                            // Si existe usuarioProfe significa que ya esta en DB
 
-                            // No -> Elimina MuestraUsuario con
+                            // ¿Viene seleccionado de View?
+
+                            // No -> Elimina ProfeUsuario con
                             // userId + muestraId
                             // $error = "Elimina de DB!";
+
                             if (!$indexSelected){
                                 $em = $this->getDoctrine()->getManager();
                                 $qb = $em->createQueryBuilder();
-                                $query = $qb->delete('AppBundle:UsuariosMuestras', 'um')
+                                $query = $qb->delete('AppBundle:UsuariosProfes', 'um')
                                     ->where('um.usuarioId = :userId')
-                                    ->andwhere('um.muestraId = :muestraId')
+                                    ->andwhere('um.profesorId = :profesorId')
                                     ->setParameter('userId', $userId)
-                                    ->setParameter('muestraId', $muestra->getId())
+                                    ->setParameter('profesorId', $profe->getId())
                                     ->getQuery();
                                 $query->execute();
                             } else {
                                 // Si -> (Revisar cambios de estado)
-                                if ($cantidadSelected > 0){
-                                    $usuarioMuestraActualizar = $usuarioMuestra[0];
-                                    $usuarioMuestraActualizar->setCantidad($cantidadSelected);
-                                    $usuarioMuestraActualizar->setPrecio($lineaGrupoProfe->getPrecio());
-
-                                    $em = $this->getDoctrine()->getEntityManager();
-                                    $em->persist($usuarioMuestraActualizar);
-                                    $em->flush();
-                                } else {
-                                    $em = $this->getDoctrine()->getManager();
-                                    $qb = $em->createQueryBuilder();
-                                    $query = $qb->delete('AppBundle:UsuariosMuestras', 'um')
-                                        ->where('um.usuarioId = :userId')
-                                        ->andwhere('um.muestraId = :muestraId')
-                                        ->setParameter('userId', $userId)
-                                        ->setParameter('muestraId', $muestra->getId())
-                                        ->getQuery();
-                                    $query->execute();
-                                }
+//                                if ($cantidadSelected > 0){
+//                                    $usuarioMuestraActualizar = $usuarioMuestra[0];
+//                                    $usuarioMuestraActualizar->setCantidad($cantidadSelected);
+//                                    $usuarioMuestraActualizar->setPrecio($lineaGrupoMuestra->getPrecio());
+//
+//                                    $em = $this->getDoctrine()->getEntityManager();
+//                                    $em->persist($usuarioMuestraActualizar);
+//                                    $em->flush();
+//                                } else {
+//                                    $em = $this->getDoctrine()->getManager();
+//                                    $qb = $em->createQueryBuilder();
+//                                    $query = $qb->delete('AppBundle:UsuariosMuestras', 'um')
+//                                        ->where('um.usuarioId = :userId')
+//                                        ->andwhere('um.muestraId = :muestraId')
+//                                        ->setParameter('userId', $userId)
+//                                        ->setParameter('muestraId', $muestra->getId())
+//                                        ->getQuery();
+//                                    $query->execute();
+//                                }
 
                             }
 
                         } else {
-                            // No existe usuarioMuestra
+                            // No existe usuarioProfe
 
-                            // ¿Viene seleccionada de View?
-                            // Si -> guarda userId + muestraId
+                            // ¿Viene seleccionado de View?
+                            // Si -> guarda userId + profeId
                             if ($indexSelected){
-                                // Si -> guarda userId + muestraId
-                                if ($cantidadSelected>0){
-                                    $usuarioMuestraGuardar = new UsuariosMuestras();
-                                    $usuarioMuestraGuardar->setPrecio($lineaGrupoProfe->getPrecio());
-                                    $usuarioMuestraGuardar->setCantidad($cantidadSelected);
-                                    $usuarioMuestraGuardar->setUsuario($user);
-                                    $usuarioMuestraGuardar->setMuestra($muestra);
-                                    $usuarioMuestraGuardar->setEstado('seleccionada');
+                                   $usuarioProfeGuardar = new UsuariosProfes();
+                                    $usuarioProfeGuardar->setUsuario($user);
+                                    $usuarioProfeGuardar->setProfesor($profe);
+                                    $usuarioProfeGuardar->setGrupoPerteneciente($idGrupo);
                                     // $error = "Gu de DB!";
                                     $em = $this->getDoctrine()->getEntityManager();
-                                    $em->persist($usuarioMuestraGuardar);
+                                    $em->persist($usuarioProfeGuardar);
                                     $em->flush();
-                                }
                             }
                         }
                     }
@@ -220,24 +259,13 @@ dump($error);
                     ]);
                 } else {
                     // No Muestras disponibles para Grupo
-                    return $this->render('usuario/no-profes.html.twig', [
+                    return $this->render('usuario/no-muestras.html.twig', [
                         'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
                         'muestras' => false,
                         'error' => ':( No hay muestras para tu grupo ):',
                     ]);
                 }
-
-//                return $this->render('usuario/muestras.html.twig', [
-//                    'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
-//                    'muestras' => false,
-//                    'error' => $error,
-//                ]);
             }
         }
-        return $this->render('default/index.html.twig', [
-            'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
-        ]);
     }
-
-
 }

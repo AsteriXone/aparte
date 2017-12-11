@@ -10,22 +10,52 @@
                 <table class="table table-striped table-hover table-responsive">
                     <tr>
                         <th style="padding-left: 10px">Profesor</th>
-                        <th></th>
+                        <th class="text-center">Votar</th>
                     </tr>
                     {% for profe in profes %}
                         <tr>
                             <td style="padding-left: 10px">{{ profe.nombre }} {{ profe.apellido1 }} {{ profe.apellido2 }}</td>
-                            <td class="text-right">
-                                <form action="" method="post" name="usuario_muestra">
-                                    <a style="margin-right: 10px" class="btn btn-success btn-xs">Votar</a>
+                            <td class="text-center">
+                                {#<form action="" method="post" name="usuario_muestra">#}
+                                {% if (profe.estado) %}
+                                <button id="{{ profe.id }}" value="{{ profe.id }}" style="width: 40px;" status="selected" style="margin-right: 10px" class="voto btn btn-success btn-xs">Si</button>
                                     {#<input style="margin-right: 10px" type="submit" value="Votar"#}
                                     {#class="btn btn-xs btn-success" />#}
                                     {#<input type="hidden" name="cita" value="{{ cita.id }}">#}
-                                </form>
+                                {#</form>#}
+                                {% else %}
+                                <button id="{{ profe.id }}" value="{{ profe.id }}" style="width: 40px;" status="unselected" style="margin-right: 10px" class="voto btn btn-danger btn-xs">No</button>
+                                {% endif %}
                             </td>
                         </tr>
                     {% endfor %}
                 </table>
+                <form action="{{ path('votacion') }}" method="post" name="votacion">
+                    <div id="formulario" class="text-center">
+                        <input type="submit" value="Guardar Votación" class="btn btn-primary" />
+                        {% for profe in profes %}
+                            <input id="profe-{{ profe.id }}" type="hidden" name="profe-{{ profe.id }}" value="{{ profe.estado }}">
+                        {% endfor %}
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Votaciones</h4>
+                </div>
+                <div class="modal-body">
+                    No puedes votar a más profesores!
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Continuar</button>
+                </div>
             </div>
         </div>
     </div>
@@ -33,4 +63,9 @@
 
 {% block stylesheets %}
     {{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/votos_profe.js') }}"></script>
 {% endblock %}

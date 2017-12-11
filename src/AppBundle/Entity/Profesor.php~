@@ -44,6 +44,12 @@ class Profesor
     private $apellido2;
 
     /**
+     * @var string
+     *
+     */
+    private $estado;
+
+    /**
      * @ORM\OneToMany(targetEntity="GrupoProfesor", mappedBy="profesor")
      */
     private $grupos_profesores;
