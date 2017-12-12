@@ -242,6 +242,15 @@ class MuestrasController extends Controller
     }
 
     /**
+     * @Route("/usuario/pedido", name="pedido-muestras")
+     */
+    public function pedidoAction(){
+        return $this->render('usuario/pedido.html.twig', [
+            'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
+        ]);
+    }
+
+    /**
      * @Route("/muestra/new", name="muestra_new")
      */
     public function newAction(Request $request)

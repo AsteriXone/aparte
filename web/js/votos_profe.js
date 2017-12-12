@@ -13,7 +13,7 @@
                 $('#myModal').modal('toggle')
             } else {
                 var profe = $(this).attr('id');
-                alert(profe);
+                // alert(profe);
                 if ($(this).attr('status') === 'unselected'){
                     $(this).removeClass('btn-danger');
                     $(this).addClass('btn-success');

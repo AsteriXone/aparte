@@ -1,0 +1,27 @@
+{% extends 'layout.html.twig' %}
+{% block content %}
+    <div class="container-fluid">
+
+        {% if (error) %}
+            <div class="text-center alert alert-danger">{{ error }}</div>
+        {% endif %}
+
+        {% if (mensaje) %}
+            <div class="text-center alert alert-success">{{ mensaje }}</div>
+        {% endif %}
+
+            {% if (mensaje) %}
+                <a style="width: 100px" href="{{ path('votar-profe') }}" role="button" class="btn btn-success center-block">Continuar</a>
+            {% endif %}
+
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .sombrear:hover{
+            background-color: #eeeeee;
+        }
+    </style>
+{% endblock %}

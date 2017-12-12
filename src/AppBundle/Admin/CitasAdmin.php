@@ -32,7 +32,7 @@ class CitasAdmin extends AbstractAdmin
         $listMapper
             ->add('id')
             ->add('cuadrante')
-            ->add('user')
+            ->add('user', null, array('sortable' => true, 'label' => 'Usuario'))
             ->add('fecha')
             ->add('hora')
             ->add('_action', null, array(
@@ -53,7 +53,7 @@ class CitasAdmin extends AbstractAdmin
         $formMapper
 //            ->add('id')
             ->add('cuadrante')
-            ->add('user')
+            ->add('user', null, array('label' => 'Usuario'))
             ->add('fecha')
             ->add('hora')
         ;
@@ -67,9 +67,18 @@ class CitasAdmin extends AbstractAdmin
         $showMapper
             ->add('id')
             ->add('cuadrante')
-            ->add('user')
+            ->add('user', null, array('label' => 'Usuario'))
             ->add('fecha')
             ->add('hora')
         ;
+    }
+
+    public function getExportFields(){
+//        $results = $this->getModelManager()->getExportFields($this->getClass());
+        $results[] = 'user';
+        $results[] = 'fecha';
+        $results[] = 'hora';
+
+        return $results;
     }
 }

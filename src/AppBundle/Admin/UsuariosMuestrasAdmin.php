@@ -31,6 +31,9 @@ class UsuariosMuestrasAdmin extends AbstractAdmin
             ->add('id')
             ->add('usuario')
             ->add('muestra')
+            ->add('cantidad')
+            ->add('precio')
+            ->add('estado')
             ->add('_action', null, array(
                 'actions' => array(
                     'show' => array(),
@@ -50,6 +53,8 @@ class UsuariosMuestrasAdmin extends AbstractAdmin
 //            ->add('id')
             ->add('usuario')
             ->add('muestra')
+            ->add('cantidad')
+            ->add('precio')
         ;
     }
 
@@ -62,6 +67,8 @@ class UsuariosMuestrasAdmin extends AbstractAdmin
             ->add('id')
             ->add('usuario')
             ->add('muestra')
+            ->add('cantidad')
+            ->add('precio')
         ;
     }
 }

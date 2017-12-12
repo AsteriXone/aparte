@@ -1,20 +1,5 @@
 {% extends 'layout.html.twig' %}
 {% block content %}
-    {#<h1 class="text-center">Muestras</h1>#}
-
-    {#<p>Id Grupo: {{ idGrupo }}</p>#}
-    {#{% for muestra in muestras %}#}
-        {#<p>{{ muestra.imageName }}</p>#}
-    {#{% endfor %}#}
-    {#{{ form_start(form) }}#}
-    {#{{ form_widget(form) }}#}
-
-    {#Hola <input type="checkbox" name="a" value="pepe" title="Hola">#}
-    {#<input type="submit" value="Create"#}
-           {#class="btn btn-success" />#}
-    {#{{ form_end(form) }}#}
-    {#<div><p>Método: {{ method }}</p></div>#}
-
     <div class="container-fluid">
 
         {% if (error) %}
@@ -36,10 +21,6 @@
                             </div>
 
                             <div>
-
-                                {#<div class="descripción {% if (muestra.getDescripcion) %}alert alert-danger{% endif %}">#}
-                                    {#<p>{{ muestra.getDescripcion }}</p>#}
-                                {#</div>#}
                                 <div>
                                     <h4>Precio: {{ muestra.getPrecio }}€</h4>
                                 </div>
@@ -55,7 +36,6 @@
                                     <label>
                                         <input type="checkbox" name="checkbox-{{ muestra.getMuestra.getId }}" value="{{ muestra.getMuestra.getId }}" {% if (muestra.getEstado == 'seleccionada') %}checked{% endif %}> Seleccionar
                                     </label>
-                                    {#<hr style="width: 80px; margin: 6px auto" class="half-rule">#}
                                 </div>
                             </div>
                         </div>
@@ -70,21 +50,11 @@
                 <div class="text-center">
                     <input type="submit" value="Guardar Estado" class="btn btn-success" />
                     {#<a href="{{ path('pedido') }}" class="btn btn-danger">Realizar Pedido</a>#}
-                    <a id="botonPedido" class="btn btn-danger">Realizar Pedido</a>
-
+                    <a href="{{ path('pedido-muestras') }}" id="botonPedido" class="btn btn-danger">Realizar Pedido</a>
                 </div>
             {% endif %}
         </form>
     </div>
-    {#<script>#}
-        {#document.getElementById('botonPedido').onclick = function (e) {#}
-            {#if (confirm('Vas a realizar tu pedido, te mandaremos\n un correo con las instrucciones\n¿Quieres continuar?')){#}
-                {#location.href = '{{ path('pedido') }}';#}
-            {#} else {#}
-                {#e.preventDefault();#}
-            {#}#}
-        {#};#}
-    {#</script>#}
 {% endblock %}
 
 {% block stylesheets %}

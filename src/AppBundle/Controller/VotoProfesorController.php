@@ -250,8 +250,8 @@ class VotoProfesorController extends Controller
                             }
                         }
                     }
-                    $mensaje = "Se han guardado los cambios correctamente!";
-                    return $this->render('usuario/muestras.html.twig', [
+                    $mensaje = "Se ha guardado tu votación correctamente!";
+                    return $this->render('usuario/votacion.html.twig', [
                         'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
                         'muestras' => false,
                         'error' => $error,

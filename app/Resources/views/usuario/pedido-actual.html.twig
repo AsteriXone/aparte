@@ -1,20 +1,5 @@
 {% extends 'layout.html.twig' %}
 {% block content %}
-    {#<h1 class="text-center">Muestras</h1>#}
-
-    {#<p>Id Grupo: {{ idGrupo }}</p>#}
-    {#{% for muestra in muestras %}#}
-    {#<p>{{ muestra.imageName }}</p>#}
-    {#{% endfor %}#}
-    {#{{ form_start(form) }}#}
-    {#{{ form_widget(form) }}#}
-
-    {#Hola <input type="checkbox" name="a" value="pepe" title="Hola">#}
-    {#<input type="submit" value="Create"#}
-    {#class="btn btn-success" />#}
-    {#{{ form_end(form) }}#}
-    {#<div><p>Método: {{ method }}</p></div>#}
-
     <div class="container-fluid">
         <div id="confirmDialog">Pedido Actual</div>
 
@@ -37,10 +22,6 @@
                             </div>
 
                             <div>
-
-                                {#<div class="descripción {% if (muestra.getDescripcion) %}alert alert-danger{% endif %}">#}
-                                {#<p>{{ muestra.getDescripcion }}</p>#}
-                                {#</div>#}
                                 <div>
                                     <h4>Precio: {{ muestra.getPrecio }}€</h4>
                                 </div>
@@ -56,7 +37,6 @@
                                     <label>
                                         <input type="checkbox" name="checkbox-{{ muestra.getMuestra.getId }}" value="{{ muestra.getMuestra.getId }}" {% if (muestra.getEstado == 'seleccionada') %}checked{% endif %}> Seleccionar
                                     </label>
-                                    {#<hr style="width: 80px; margin: 6px auto" class="half-rule">#}
                                 </div>
                             </div>
                         </div>
@@ -70,17 +50,6 @@
 
         </form>
     </div>
-    <script>
-        document.getElementById('botonPedido').onclick = function (e) {
-            if (confirm('¿Esta seguro?')){
-                    $('#confirmDialog').append('<h1>Si</h1>');
-                    location.href = '{{ path('pedido') }}';
-                } else {
-                    $('#confirmDialog').append('<h1>No</h1>');
-                    e.preventDefault();
-                }
-            };
-    </script>
 {% endblock %}
 
 {% block stylesheets %}
