@@ -31,10 +31,10 @@ class CitasAdmin extends AbstractAdmin
     {
         $listMapper
             ->add('id')
-            ->add('cuadrante')
-            ->add('user', null, array('sortable' => true, 'label' => 'Usuario'))
-            ->add('fecha')
-            ->add('hora')
+            ->add('cuadrante',null, array('label'=>'Cuadrante'))
+            ->add('user', null, array('label' => 'Usuario'))
+            ->add('onlyDate',null, array('label' => 'Fecha'))
+            ->add('onlyHour',null, array('label' => 'Hora'))
             ->add('_action', null, array(
                 'actions' => array(
                     'show' => array(),
@@ -68,8 +68,8 @@ class CitasAdmin extends AbstractAdmin
             ->add('id')
             ->add('cuadrante')
             ->add('user', null, array('label' => 'Usuario'))
-            ->add('fecha')
-            ->add('hora')
+            ->add('onlyDate')
+            ->add('onlyHour')
         ;
     }
 
@@ -79,6 +79,12 @@ class CitasAdmin extends AbstractAdmin
         $results[] = 'fecha';
         $results[] = 'hora';
 
-        return $results;
+        return array(
+            'Fecha' => 'onlyDate',
+            'Hora' => 'onlyHour',
+            'Usuario'=>'user.nombreCompleto',
+            'Teléfono' => 'user.telefono',
+            'Correo' => 'user.email',
+        );
     }
 }

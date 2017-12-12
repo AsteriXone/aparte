@@ -10,7 +10,7 @@ services:
         class: AppBundle\Admin\GruposUsuariosAdmin
         arguments: [~, AppBundle\Entity\GruposUsuarios, SonataAdminBundle:CRUD]
         tags:
-            - { name: sonata.admin, manager_type: orm, group: Grupos, label: GruposUsuarios }
+            - { name: sonata.admin, manager_type: orm, group: Usuarios, label: Usuarios por Grupo }
         public: true
 
     app.admin.universidad:

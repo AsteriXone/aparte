@@ -2,6 +2,7 @@
 
 namespace AppBundle\Admin;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -63,5 +64,15 @@ class GruposUsuariosAdmin extends AbstractAdmin
             ->add('grupo')
             ->add('user')
         ;
+    }
+
+    public function getExportFields()
+    {
+        return array(
+            'Grupo' => 'grupo',
+            'Usuario'=>'user.nombreCompleto',
+            'Teléfono' => 'user.telefono',
+            'Correo' => 'user.email',
+        );
     }
 }
