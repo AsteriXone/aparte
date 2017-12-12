@@ -1,6 +1,3 @@
-/**
- * Created by ASUS on 11/12/2017.
- */
     $(document).ready(function () {
         var numeroMaximoVotos = 5;
         $(".voto").click(function(evt){
