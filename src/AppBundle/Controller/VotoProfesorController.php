@@ -185,7 +185,7 @@ class VotoProfesorController extends Controller
                         // Obtiene de request el conjunto
                         $indexSelected = $request->request->get('profe-'.$profe->getId().'');
 //                        $cantidadSelected = $request->request->get('cant-'.$profe->getId().'');
-                        dump($indexSelected);
+//                        dump($indexSelected);
 //                        dump($cantidadSelected);
 
 
