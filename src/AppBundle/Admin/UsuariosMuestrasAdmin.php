@@ -33,6 +33,8 @@ class UsuariosMuestrasAdmin extends AbstractAdmin
             ->add('id')
             ->add('grupo')
             ->add('usuario')
+            ->add('usuario.email')
+            ->add('usuario.telefono')
             ->add('muestra')
             ->add('cantidad')
             ->add('precio')
