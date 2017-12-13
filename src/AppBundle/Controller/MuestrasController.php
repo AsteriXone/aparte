@@ -306,9 +306,11 @@ class MuestrasController extends Controller
         }
 
             // Renderiza Lista Pedido
-        if ($usuariosMuestras){
+        if (count($usuariosMuestras)>0){
             $mensaje = 'Tu pedido se ha realizado correctamente, te enviaremos un correo'.
             ' con las instrucciones para formalizarlo. Agradecemos tu confianza';
+        } else {
+            $error = 'Actualmente no tienes nada, ve a la pestaña muestras y realiza tu pedido.';
         }
         return $this->render('usuario/pedido.html.twig', [
                 'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
