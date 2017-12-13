@@ -1,5 +1,5 @@
     $(document).ready(function () {
-        var numeroMaximoVotos = 5;
+        var numeroMaximoVotos = 8;
         $(".voto").click(function(evt){
             var i = 0;
             $('button[status="selected"]').each(function() {

@@ -74,11 +74,6 @@ class CitasAdmin extends AbstractAdmin
     }
 
     public function getExportFields(){
-//        $results = $this->getModelManager()->getExportFields($this->getClass());
-        $results[] = 'user';
-        $results[] = 'fecha';
-        $results[] = 'hora';
-
         return array(
             'Fecha' => 'onlyDate',
             'Hora' => 'onlyHour',

@@ -68,6 +68,13 @@ class UsuariosMuestras
      */
     private $muestra;
 
+    /**
+     * One UsuarioMuestra has One Grupo.
+     * @ORM\OneToOne(targetEntity="Grupo", inversedBy="usuario_muestra")
+     * @ORM\JoinColumn(name="grupo_id", referencedColumnName="id", nullable=true)
+     */
+    private $grupo;
+
     public function __toString()
     {
         // TODO: Implement __toString() method.
@@ -316,5 +323,29 @@ class UsuariosMuestras
     public function getEstado()
     {
         return $this->estado;
+    }
+
+    /**
+     * Set grupo
+     *
+     * @param \AppBundle\Entity\Grupo $grupo
+     *
+     * @return UsuariosMuestras
+     */
+    public function setGrupo(\AppBundle\Entity\Grupo $grupo = null)
+    {
+        $this->grupo = $grupo;
+
+        return $this;
+    }
+
+    /**
+     * Get grupo
+     *
+     * @return \AppBundle\Entity\Grupo
+     */
+    public function getGrupo()
+    {
+        return $this->grupo;
     }
 }

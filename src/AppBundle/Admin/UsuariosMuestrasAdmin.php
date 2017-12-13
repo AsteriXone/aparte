@@ -19,6 +19,8 @@ class UsuariosMuestrasAdmin extends AbstractAdmin
             ->add('id')
             ->add('usuario')
             ->add('muestra')
+            ->add('grupo')
+
         ;
     }
 
@@ -29,6 +31,7 @@ class UsuariosMuestrasAdmin extends AbstractAdmin
     {
         $listMapper
             ->add('id')
+            ->add('grupo')
             ->add('usuario')
             ->add('muestra')
             ->add('cantidad')
@@ -55,6 +58,8 @@ class UsuariosMuestrasAdmin extends AbstractAdmin
             ->add('muestra')
             ->add('cantidad')
             ->add('precio')
+            ->add('grupo')
+
         ;
     }
 
@@ -66,9 +71,22 @@ class UsuariosMuestrasAdmin extends AbstractAdmin
         $showMapper
             ->add('id')
             ->add('usuario')
+            ->add('grupo')
             ->add('muestra')
             ->add('cantidad')
             ->add('precio')
         ;
+    }
+
+    public function getExportFields(){
+        return array(
+            'Grupo' => 'grupo',
+            'Usuario'=>'usuario.nombreCompleto',
+            'Teléfono' => 'usuario.telefono',
+            'Correo' => 'usuario.email',
+            'Muestra' => 'muestra.imageName',
+            'Cantidad' => 'cantidad',
+            'Precio' => 'precio',
+        );
     }
 }

@@ -66,6 +66,12 @@ class Grupo
      */
     private $grupos_profesores;
 
+    /**
+     * One Grupo has One UsuarioMuestra.
+     * @ORM\OneToOne(targetEntity="UsuariosMuestras", mappedBy="grupo")
+     */
+    private $usuario_muestra;
+
 
     public function __construct()
     {
@@ -78,6 +84,11 @@ class Grupo
     public function __toString()
     {
         // TODO: Implement __toString() method.
+        return (string) $this->getUniversidad(). " - ".$this->getEspecialidad(). " (" . $this->getAnio().")";
+    }
+
+    public function getNombreGrupo()
+    {
         return (string) $this->getUniversidad(). " - ".$this->getEspecialidad(). " (" . $this->getAnio().")";
     }
     /**

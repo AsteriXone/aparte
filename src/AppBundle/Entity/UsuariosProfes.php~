@@ -184,4 +184,28 @@ class UsuariosProfes
     {
         return $this->usuarioId;
     }
+
+    /**
+     * Set grupoPerteneciente
+     *
+     * @param integer $grupoPerteneciente
+     *
+     * @return UsuariosProfes
+     */
+    public function setGrupoPerteneciente($grupoPerteneciente)
+    {
+        $this->grupoPerteneciente = $grupoPerteneciente;
+
+        return $this;
+    }
+
+    /**
+     * Get grupoPerteneciente
+     *
+     * @return integer
+     */
+    public function getGrupoPerteneciente()
+    {
+        return $this->grupoPerteneciente;
+    }
 }

@@ -47,7 +47,13 @@ class MuestrasController extends Controller
             $grupoUsuario = $em->getRepository(GruposUsuarios::class)->findBy(array('usuarioId'=>$userId));
 
             // Revisar... más adelante un usuario pertenece a varios grupos
+            //dump($grupoUsuario[0]);
             $idGrupo = $grupoUsuario[0]->getGrupoId(); // Id del grupo
+
+            $repository = $this->getDoctrine()
+                ->getRepository(Grupo::class);
+            $grupo = $repository->find($idGrupo);
+
 
             // Obtener id muestras asignadas a grupo
             $em2 = $this->getDoctrine()->getManager();
@@ -205,6 +211,7 @@ class MuestrasController extends Controller
                                     $usuarioMuestraGuardar->setUsuario($user);
                                     $usuarioMuestraGuardar->setMuestra($muestra);
                                     $usuarioMuestraGuardar->setEstado('seleccionada');
+                                    $usuarioMuestraGuardar->setGrupo($grupo);
                                     // $error = "Gu de DB!";
                                     $em = $this->getDoctrine()->getEntityManager();
                                     $em->persist($usuarioMuestraGuardar);
@@ -270,7 +277,6 @@ class MuestrasController extends Controller
         $em2 = $this->getDoctrine()->getManager();
         $grupoMuestra = $em2->getRepository(GrupoMuestra::class)->findBy(array('grupoId'=>$idGrupo));
 
-        $error=false;
         if ($request->getMethod()=== 'GET'){
             if ($grupoMuestra){
                 // Obtener muestras y renderizar formulario
@@ -363,20 +369,26 @@ class MuestrasController extends Controller
                     ' con las instrucciones para formalizarlo. Agradecemos tu confianza';
                 $copia = "Ok!";
                 // Enviar Correo
-                $message = (new \Swift_Message('Hello Email'))
-                    ->setFrom('rubenrueda80@gmail.com')
+                $message = (new \Swift_Message('Apartefotografía pedido'))
+                    ->setFrom('departamento.comercial@apartefotografia.es')
                     ->setTo('rubenrueda80@gmail.com')
                     ->setBody(
                         $this->renderView(
                         // app/Resources/views/Emails/registration.html.twig
                             'Emails/pedido-realizado.html.twig',
-                            array('Copia' => $copia)
+                            array('muestras' => $usuariosMuestras)
                         ),
                         'text/html'
                     )
                 ;
 
-                $mailer->send($message);
+                 $mailer->send($message);
+                return $this->render('usuario/pedido.html.twig', [
+                    'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
+                    'muestras' => $usuariosMuestras,
+                    'mensaje' => $mensaje,
+                    'error' => $error,
+                ]);
             } else {
                 $error = 'Actualmente no tienes nada, ve a la pestaña muestras y realiza tu pedido.';
             }

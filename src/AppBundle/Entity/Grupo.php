@@ -66,6 +66,12 @@ class Grupo
      */
     private $grupos_profesores;
 
+    /**
+     * One Grupo has One UsuarioMuestra.
+     * @ORM\OneToOne(targetEntity="UsuariosMuestras", mappedBy="grupo")
+     */
+    private $usuario_muestra;
+
 
     public function __construct()
     {
@@ -78,6 +84,11 @@ class Grupo
     public function __toString()
     {
         // TODO: Implement __toString() method.
+        return (string) $this->getUniversidad(). " - ".$this->getEspecialidad(). " (" . $this->getAnio().")";
+    }
+
+    public function getNombreGrupo()
+    {
         return (string) $this->getUniversidad(). " - ".$this->getEspecialidad(). " (" . $this->getAnio().")";
     }
     /**
@@ -322,5 +333,29 @@ class Grupo
     public function getGruposProfesores()
     {
         return $this->grupos_profesores;
+    }
+
+    /**
+     * Set usuarioMuestra
+     *
+     * @param \AppBundle\Entity\UsuariosMuestras $usuarioMuestra
+     *
+     * @return Grupo
+     */
+    public function setUsuarioMuestra(\AppBundle\Entity\UsuariosMuestras $usuarioMuestra = null)
+    {
+        $this->usuario_muestra = $usuarioMuestra;
+
+        return $this;
+    }
+
+    /**
+     * Get usuarioMuestra
+     *
+     * @return \AppBundle\Entity\UsuariosMuestras
+     */
+    public function getUsuarioMuestra()
+    {
+        return $this->usuario_muestra;
     }
 }

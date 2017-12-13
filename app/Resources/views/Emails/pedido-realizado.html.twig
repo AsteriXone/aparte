@@ -1,3 +1,61 @@
-<h3>Tu pedido se ha realizado correctamente</h3>
+{% extends 'base.html.twig' %}
+{% block body %}
+    {% block content %}
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3">
+                    <h2>Pedido realizado en apartefotografía.es</h2>
+                    <table class="table table-striped table-hover table-responsive">
+                        <tr>
+                            <th>Muestra</th>
+                            <th>Cantidad</th>
+                            <th>Precio</th>
+                            <th>Sub-total</th>
+                        </tr>
+                        {% set total = 0 %}
+                        {% for muestra in muestras %}
+                            <tr>
+                                <td>
+                                    <p>{{ muestra.getMuestra.getImageName }}</p>
+                                </td>
+                                <td>
+                                    <p class="text-right">{{ muestra.getPrecio }}€</p>
+                                </td>
+                                <td>
+                                    <p class="text-right">{{ muestra.getCantidad }}</p>
+                                </td>
+                                <td>
+                                    <p class="text-right">{{ muestra.getCantidad*muestra.getPrecio }}€</p>
+                                </td>
+                            </tr>
+                            {% set total = total + muestra.getCantidad*muestra.getPrecio %}
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="text-center col-md-offset-3 col-md-6 alert alert-success">
+                    <p>El precio total de tu pedido es de <strong>{{ total }}€</strong></p>
+                    <p>A continuación deberás ingresar la cantidad en la siguiente cuenta:</p>
+                    <p><strong>ES89 0182 3311 7702 0154 8712</strong></p>
+                    <P>En concepto debes poner el <strong>nombre del niño</strong> y su <strong>clase.</strong></P>
+                </div>
+            </div>
+            <footer class="text-center">
+                <br>
+                <address>
+                    <strong>Aparte &copy; 2017</strong>
+                    <br>
+                    apartefotografia@gmail.com
+                    <br>
+                    <p><span class="glyphicon glyphicon-earphone" aria-hidden="true"></span> 677 551 784</p>
+                </address>
+            </footer>
+        </div>
 
-Hola {{ copia }}
+    {% endblock %}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}

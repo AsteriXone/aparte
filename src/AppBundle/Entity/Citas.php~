@@ -47,6 +47,13 @@ class Citas
      */
     private $user;
 
+    public function getOnlyHour(){
+        return $this->hora->format('H:i');
+    }
+
+    public function getOnlyDate(){
+        return $this->fecha->format('d/m/Y');
+    }
 
     /**
      * Get id
