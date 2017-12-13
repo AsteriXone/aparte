@@ -34,7 +34,7 @@
                                 </div>
                                 <div class="text-center" style="margin-top: 5px">
                                     <label>
-                                        <input type="checkbox" name="checkbox-{{ muestra.getMuestra.getId }}" value="{{ muestra.getMuestra.getId }}" {% if (muestra.getEstado == 'seleccionada') %}checked{% endif %}> Seleccionar
+                                        <input type="checkbox" name="checkbox-{{ muestra.getMuestra.getId }}" value="{{ muestra.getMuestra.getId }}" {% if (muestra.getEstado == 'seleccionada') %}checked{% endif %} {% if (muestra.getEstado == 'pedido') %}checked{% endif %}> Seleccionar
                                     </label>
                                 </div>
                             </div>

@@ -300,6 +300,14 @@ class MuestrasController extends Controller
                     $usuariosMuestrasAux = $usuarioMuestra[0];
                     $descripcion = $muestra->getDescripcion();
                     $usuariosMuestrasAux->setDescripcion($descripcion);
+
+                    if ($usuariosMuestrasAux->getEstado() != 'pedido'){
+                        $usuariosMuestrasAux->setEstado('pedido');
+                        $em = $this->getDoctrine()->getEntityManager();
+                        $em->persist($usuariosMuestrasAux);
+                        $em->flush();
+                    }
+
                     $usuariosMuestras[] = $usuariosMuestrasAux;
                 }
             }
