@@ -244,10 +244,82 @@ class MuestrasController extends Controller
     /**
      * @Route("/usuario/pedido", name="pedido-muestras")
      */
-    public function pedidoAction(){
+    public function pedidoAction(Request $request){
+        // Method = POST
+        // Comprobamos los índices que tenemos
+        // de muestras a comprobar
+
+        /*
+         * Recopilación de datos
+         */
+        $error = false;
+        $mensaje = false;
+
+        // userId = Id de Usuario
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+        $userId = $user->getId();
+
+        // Busca grupo usuario
+        $em = $this->getDoctrine()->getManager();
+        $grupoUsuario = $em->getRepository(GruposUsuarios::class)->findBy(array('usuarioId'=>$userId));
+
+        // Revisar... más adelante un usuario pertenece a varios grupos
+        $idGrupo = $grupoUsuario[0]->getGrupoId(); // Id del grupo
+
+        // Obtener id muestras asignadas a grupo
+        $em2 = $this->getDoctrine()->getManager();
+        $grupoMuestra = $em2->getRepository(GrupoMuestra::class)->findBy(array('grupoId'=>$idGrupo));
+
+        $error=false;
+        if ($grupoMuestra){
+            // Obtener muestras y renderizar formulario
+
+            // usuariosMuestras = array de objetos usuariosMuestra
+            $usuariosMuestras = new ArrayCollection();
+            foreach ($grupoMuestra as $lineaGrupoMuestra){
+                // Obtener Ids Muestra para Grupo
+                $usuariosMuestrasAux = new UsuariosMuestras();
+
+                $muestra = $lineaGrupoMuestra->getMuestra();
+
+                // Comprueba si existe usuarioMuestra con muestraId y UserId
+                $repository = $this->getDoctrine()
+                    ->getRepository(UsuariosMuestras::class);
+
+                $query = $repository->createQueryBuilder('c')
+                    ->where('c.usuarioId = :userId')
+                    ->andwhere('c.muestraId = :muestraId')
+                    ->setParameter('userId', $userId)
+                    ->setParameter('muestraId', $muestra->getId())
+                    ->getQuery();
+
+                $usuarioMuestra = $query->getResult();
+
+                if($usuarioMuestra){
+                    // Si existe (true)
+                    $usuariosMuestrasAux = $usuarioMuestra[0];
+                    $descripcion = $muestra->getDescripcion();
+                    $usuariosMuestrasAux->setDescripcion($descripcion);
+                    $usuariosMuestras[] = $usuariosMuestrasAux;
+                }
+            }
+        }
+
+            // Renderiza Lista Pedido
+        if ($usuariosMuestras){
+            $mensaje = 'Tu pedido se ha realizado correctamente, te enviaremos un correo'.
+            ' con las instrucciones para formalizarlo. Agradecemos tu confianza';
+        }
         return $this->render('usuario/pedido.html.twig', [
-            'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
-        ]);
+                'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
+                'muestras' => $usuariosMuestras,
+                'mensaje' => $mensaje,
+                'error' => $error,
+            ]);
+        // *** ///
+//        return $this->render('usuario/pedido.html.twig', [
+//            'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
+//        ]);
     }
 
     /**

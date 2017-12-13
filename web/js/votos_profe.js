@@ -25,4 +25,8 @@
                 }
             }
         });
+
+        // $("#botonPedido").click(function(evt){
+        //     $('#myModal').modal('toggle')
+        // });
     });
