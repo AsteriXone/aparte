@@ -371,7 +371,7 @@ class MuestrasController extends Controller
                 // Enviar Correo
                 $message = (new \Swift_Message('Apartefotografía pedido'))
                     ->setFrom('departamento.comercial@apartefotografia.es')
-                    ->setTo('rubenrueda80@gmail.com')
+                    ->setTo($user->getEmail())
                     ->setBody(
                         $this->renderView(
                         // app/Resources/views/Emails/registration.html.twig
