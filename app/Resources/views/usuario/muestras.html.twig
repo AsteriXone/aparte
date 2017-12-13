@@ -50,10 +50,18 @@
                 <div class="text-center">
                     <input type="submit" value="Guardar Estado" class="btn btn-success" />
                     {#<a href="{{ path('pedido') }}" class="btn btn-danger">Realizar Pedido</a>#}
-                    <a href="{{ path('pedido-muestras') }}" id="botonPedido" class="btn btn-danger">Realizar Pedido</a>
+                    {#<a href="{{ path('pedido-muestras') }}" id="botonPedido" class="btn btn-danger">Realizar Pedido</a>#}
                 </div>
             {% endif %}
         </form>
+        {% if not(error) and not(mensaje) %}
+        <form action="{{ path('pedido-muestras') }}" method="post">
+            <div style="margin-top: 15px" class="text-center">
+                <input id="botonPedido" type="submit" value="Realizar Pedido" class="btn btn-danger" />
+                {#<a href="{{ path('pedido') }}" class="btn btn-danger">Realizar Pedido</a>#}
+            </div>
+        </form>
+        {% endif %}
     </div>
 {% endblock %}
 

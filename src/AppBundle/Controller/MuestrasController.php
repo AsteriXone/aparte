@@ -244,7 +244,7 @@ class MuestrasController extends Controller
     /**
      * @Route("/usuario/pedido", name="pedido-muestras")
      */
-    public function pedidoAction(Request $request){
+    public function pedidoAction(Request $request, \Swift_Mailer $mailer){
         // Method = POST
         // Comprobamos los índices que tenemos
         // de muestras a comprobar
@@ -271,55 +271,117 @@ class MuestrasController extends Controller
         $grupoMuestra = $em2->getRepository(GrupoMuestra::class)->findBy(array('grupoId'=>$idGrupo));
 
         $error=false;
-        if ($grupoMuestra){
-            // Obtener muestras y renderizar formulario
+        if ($request->getMethod()=== 'GET'){
+            if ($grupoMuestra){
+                // Obtener muestras y renderizar formulario
 
-            // usuariosMuestras = array de objetos usuariosMuestra
-            $usuariosMuestras = new ArrayCollection();
-            foreach ($grupoMuestra as $lineaGrupoMuestra){
-                // Obtener Ids Muestra para Grupo
-                $usuariosMuestrasAux = new UsuariosMuestras();
+                // usuariosMuestras = array de objetos usuariosMuestra
+                $usuariosMuestras = new ArrayCollection();
+                foreach ($grupoMuestra as $lineaGrupoMuestra){
+                    // Obtener Ids Muestra para Grupo
+                    $usuariosMuestrasAux = new UsuariosMuestras();
 
-                $muestra = $lineaGrupoMuestra->getMuestra();
+                    $muestra = $lineaGrupoMuestra->getMuestra();
 
-                // Comprueba si existe usuarioMuestra con muestraId y UserId
-                $repository = $this->getDoctrine()
-                    ->getRepository(UsuariosMuestras::class);
+                    // Comprueba si existe usuarioMuestra con muestraId y UserId
+                    $repository = $this->getDoctrine()
+                        ->getRepository(UsuariosMuestras::class);
 
-                $query = $repository->createQueryBuilder('c')
-                    ->where('c.usuarioId = :userId')
-                    ->andwhere('c.muestraId = :muestraId')
-                    ->setParameter('userId', $userId)
-                    ->setParameter('muestraId', $muestra->getId())
-                    ->getQuery();
+                    $query = $repository->createQueryBuilder('c')
+                        ->where('c.usuarioId = :userId')
+                        ->andwhere('c.muestraId = :muestraId')
+                        ->setParameter('userId', $userId)
+                        ->setParameter('muestraId', $muestra->getId())
+                        ->getQuery();
 
-                $usuarioMuestra = $query->getResult();
+                    $usuarioMuestra = $query->getResult();
 
-                if($usuarioMuestra){
-                    // Si existe (true)
-                    $usuariosMuestrasAux = $usuarioMuestra[0];
-                    $descripcion = $muestra->getDescripcion();
-                    $usuariosMuestrasAux->setDescripcion($descripcion);
+                    if($usuarioMuestra){
+                        // Si existe (true)
+                        $usuariosMuestrasAux = $usuarioMuestra[0];
+                        $descripcion = $muestra->getDescripcion();
+                        $usuariosMuestrasAux->setDescripcion($descripcion);
 
-                    if ($usuariosMuestrasAux->getEstado() != 'pedido'){
-                        $usuariosMuestrasAux->setEstado('pedido');
-                        $em = $this->getDoctrine()->getEntityManager();
-                        $em->persist($usuariosMuestrasAux);
-                        $em->flush();
+                        if ($usuariosMuestrasAux->getEstado() == 'pedido'){
+                            $usuariosMuestras[] = $usuariosMuestrasAux;
+                        }
                     }
-
-                    $usuariosMuestras[] = $usuariosMuestrasAux;
                 }
+            }
+
+            // Renderiza Lista Pedido
+            if (count($usuariosMuestras)<1){
+                $error = 'Actualmente no tienes nada, ve a la pestaña muestras y realiza tu pedido.';
+            }
+
+        } else {
+            if ($grupoMuestra){
+                // Obtener muestras y renderizar formulario
+
+                // usuariosMuestras = array de objetos usuariosMuestra
+                $usuariosMuestras = new ArrayCollection();
+                foreach ($grupoMuestra as $lineaGrupoMuestra){
+                    // Obtener Ids Muestra para Grupo
+                    $usuariosMuestrasAux = new UsuariosMuestras();
+
+                    $muestra = $lineaGrupoMuestra->getMuestra();
+
+                    // Comprueba si existe usuarioMuestra con muestraId y UserId
+                    $repository = $this->getDoctrine()
+                        ->getRepository(UsuariosMuestras::class);
+
+                    $query = $repository->createQueryBuilder('c')
+                        ->where('c.usuarioId = :userId')
+                        ->andwhere('c.muestraId = :muestraId')
+                        ->setParameter('userId', $userId)
+                        ->setParameter('muestraId', $muestra->getId())
+                        ->getQuery();
+
+                    $usuarioMuestra = $query->getResult();
+
+                    if($usuarioMuestra){
+                        // Si existe (true)
+                        $usuariosMuestrasAux = $usuarioMuestra[0];
+                        $descripcion = $muestra->getDescripcion();
+                        $usuariosMuestrasAux->setDescripcion($descripcion);
+
+                        if ($usuariosMuestrasAux->getEstado() != 'pedido'){
+                            $usuariosMuestrasAux->setEstado('pedido');
+                            $em = $this->getDoctrine()->getEntityManager();
+                            $em->persist($usuariosMuestrasAux);
+                            $em->flush();
+                        }
+
+                        $usuariosMuestras[] = $usuariosMuestrasAux;
+                    }
+                }
+            }
+
+            // Renderiza Lista Pedido
+            if (count($usuariosMuestras)>0){
+                $mensaje = 'Tu pedido se ha realizado correctamente, te enviaremos un correo'.
+                    ' con las instrucciones para formalizarlo. Agradecemos tu confianza';
+                $copia = "Ok!";
+                // Enviar Correo
+                $message = (new \Swift_Message('Hello Email'))
+                    ->setFrom('rubenrueda80@gmail.com')
+                    ->setTo('rubenrueda80@gmail.com')
+                    ->setBody(
+                        $this->renderView(
+                        // app/Resources/views/Emails/registration.html.twig
+                            'Emails/pedido-realizado.html.twig',
+                            array('Copia' => $copia)
+                        ),
+                        'text/html'
+                    )
+                ;
+
+                $mailer->send($message);
+            } else {
+                $error = 'Actualmente no tienes nada, ve a la pestaña muestras y realiza tu pedido.';
             }
         }
 
-            // Renderiza Lista Pedido
-        if (count($usuariosMuestras)>0){
-            $mensaje = 'Tu pedido se ha realizado correctamente, te enviaremos un correo'.
-            ' con las instrucciones para formalizarlo. Agradecemos tu confianza';
-        } else {
-            $error = 'Actualmente no tienes nada, ve a la pestaña muestras y realiza tu pedido.';
-        }
         return $this->render('usuario/pedido.html.twig', [
                 'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
                 'muestras' => $usuariosMuestras,

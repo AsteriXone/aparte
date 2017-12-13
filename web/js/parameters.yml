@@ -1,0 +1,12 @@
+# This file is auto-generated during the composer install
+parameters:
+    database_host: 127.0.0.1
+    database_port: null
+    database_name: sf_aparte
+    database_user: andrespi
+    database_password: airedelsur39
+    mailer_transport: gmail
+    mailer_host: 127.0.0.1
+    mailer_user: rubenrueda80@gmail.com
+    mailer_password: airedelsur39
+    secret: klsjhfdiuwqeho85hwbvdkusyrgtoqye45piy438ytgfiraeut7834
