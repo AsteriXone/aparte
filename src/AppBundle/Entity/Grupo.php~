@@ -67,8 +67,8 @@ class Grupo
     private $grupos_profesores;
 
     /**
-     * One Grupo has One UsuarioMuestra.
-     * @ORM\OneToOne(targetEntity="UsuariosMuestras", mappedBy="grupo")
+     * One Grupo has Many UsuarioMuestra.
+     * @ORM\OneToMany(targetEntity="UsuariosMuestras", mappedBy="grupo")
      */
     private $usuario_muestra;
 
@@ -333,5 +333,29 @@ class Grupo
     public function getGruposProfesores()
     {
         return $this->grupos_profesores;
+    }
+
+    /**
+     * Set usuarioMuestra
+     *
+     * @param \AppBundle\Entity\UsuariosMuestras $usuarioMuestra
+     *
+     * @return Grupo
+     */
+    public function setUsuarioMuestra(\AppBundle\Entity\UsuariosMuestras $usuarioMuestra = null)
+    {
+        $this->usuario_muestra = $usuarioMuestra;
+
+        return $this;
+    }
+
+    /**
+     * Get usuarioMuestra
+     *
+     * @return \AppBundle\Entity\UsuariosMuestras
+     */
+    public function getUsuarioMuestra()
+    {
+        return $this->usuario_muestra;
     }
 }

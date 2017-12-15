@@ -67,8 +67,8 @@ class Grupo
     private $grupos_profesores;
 
     /**
-     * One Grupo has One UsuarioMuestra.
-     * @ORM\OneToOne(targetEntity="UsuariosMuestras", mappedBy="grupo")
+     * One Grupo has Many UsuarioMuestra.
+     * @ORM\OneToMany(targetEntity="UsuariosMuestras", mappedBy="grupo")
      */
     private $usuario_muestra;
 
@@ -357,5 +357,29 @@ class Grupo
     public function getUsuarioMuestra()
     {
         return $this->usuario_muestra;
+    }
+
+    /**
+     * Add usuarioMuestra
+     *
+     * @param \AppBundle\Entity\UsuariosMuestras $usuarioMuestra
+     *
+     * @return Grupo
+     */
+    public function addUsuarioMuestra(\AppBundle\Entity\UsuariosMuestras $usuarioMuestra)
+    {
+        $this->usuario_muestra[] = $usuarioMuestra;
+
+        return $this;
+    }
+
+    /**
+     * Remove usuarioMuestra
+     *
+     * @param \AppBundle\Entity\UsuariosMuestras $usuarioMuestra
+     */
+    public function removeUsuarioMuestra(\AppBundle\Entity\UsuariosMuestras $usuarioMuestra)
+    {
+        $this->usuario_muestra->removeElement($usuarioMuestra);
     }
 }

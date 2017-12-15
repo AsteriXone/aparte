@@ -69,8 +69,8 @@ class UsuariosMuestras
     private $muestra;
 
     /**
-     * One UsuarioMuestra has One Grupo.
-     * @ORM\OneToOne(targetEntity="Grupo", inversedBy="usuario_muestra")
+     * Many UsuarioMuestra has One Grupo.
+     * @ORM\ManyToOne(targetEntity="Grupo", inversedBy="usuario_muestra")
      * @ORM\JoinColumn(name="grupo_id", referencedColumnName="id", nullable=true)
      */
     private $grupo;
