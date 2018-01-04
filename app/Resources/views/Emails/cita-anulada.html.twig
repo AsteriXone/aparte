@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    {% block content %}
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3">
+                    <h2>Cita anulada en apartefotografía.es</h2>
+                    <br/>
+                    <p>Has anulado tu cita con fecha <strong>{{ cita.getFecha()|date('d/m/Y') }}</strong> a las <strong>{{ cita.getHora()|date('H:i') }}</strong></p>
+                    <p>Puedes pedir otra cita si no se ha cerrado el plazo.</p>
+                </div>
+            </div>
+            <footer class="text-center">
+                <br/>
+                <address>
+                    <strong>Aparte &copy; 2017</strong>
+                    <br>
+                    apartefotografia@gmail.com
+                    <br>
+                    <p><span class="glyphicon glyphicon-earphone" aria-hidden="true"></span> 677 551 784</p>
+                </address>
+            </footer>
+        </div>
+
+    {% endblock %}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}

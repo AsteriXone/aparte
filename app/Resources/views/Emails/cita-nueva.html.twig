@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    {% block content %}
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3">
+                    <h2>Nueva cita en apartefotografía.es</h2>
+                    <br/>
+                    <p>Tienes una nueva cita con nosotros el dia <strong>{{ cita.getFecha()|date('d/m/Y') }}</strong> a las <strong>{{ cita.getHora()|date('H:i') }}</strong> horas.</p>
+                    <p>Para evitar contratiempos y que todo salga bien necesitamos tu colaboración, se puntual.</p>
+                    <p>En caso de no poder asistir, te rogaríamos que avisaras con antelación.</p>
+                </div>
+            </div>
+            <footer class="text-center">
+                <br/>
+                <address>
+                    <strong>Aparte &copy; 2017</strong>
+                    <br>
+                    apartefotografia@gmail.com
+                    <br>
+                    <p><span class="glyphicon glyphicon-earphone" aria-hidden="true"></span> 677 551 784</p>
+                </address>
+            </footer>
+        </div>
+
+    {% endblock %}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}

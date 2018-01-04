@@ -16,7 +16,7 @@ class CitaUsuarioController extends Controller
     /**
      * @Route("/usuario/cita", name="usuario_cita")
      */
-    public function usuarioCitaAction(Request $request)
+    public function usuarioCitaAction(Request $request, \Swift_Mailer $mailer)
     {
         // Usuario Logueado
         if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
@@ -108,6 +108,21 @@ class CitaUsuarioController extends Controller
                     $em->persist($cita);
                     $em->flush();
 
+                    // Envía correo
+                    $message = (new \Swift_Message('Apartefotografía citas'))
+                        ->setFrom('departamento.comercial@apartefotografia.es')
+                        ->setTo($user->getEmail())
+                        ->setBody(
+                            $this->renderView(
+                                'Emails/cita-nueva.html.twig',
+                                array('cita' => $cita)
+                            ),
+                            'text/html'
+                        )
+                    ;
+
+                    $mailer->send($message);
+
                     return $this->render('usuario/cita-actual.html.twig', [
                         'base_dir' => realpath($this->getParameter('kernel.project_dir')) . DIRECTORY_SEPARATOR,
                         'error' => 'Id: ' . $citaAceptada,
@@ -127,6 +142,63 @@ class CitaUsuarioController extends Controller
                 'base_dir' => realpath($this->getParameter('kernel.project_dir')) . DIRECTORY_SEPARATOR,
                 'error' => 'Ops! Estamos trabajando para solucionarlo pronto...',
 //            '' =>
+            ]);
+        }
+    }
+    /**
+     * @Route("/usuario/cancelar-cita", name="cancelar-cita")
+     */
+    public function cancelarCitaAction(Request $request, \Swift_Mailer $mailer)
+    {
+        if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            /*
+             * Usuario Logueado
+             * Recopilación de datos
+             */
+            // userId = Id de Usuario
+            $user = $this->get('security.token_storage')->getToken()->getUser();
+            $userId = $user->getId();
+
+            // Comprobamos si el usuario ya tiene una cita
+
+            $em = $this->getDoctrine()->getManager();
+            $isCita = $em->getRepository(Citas::class)->findBy(array('user'=>$user));
+
+            if($isCita) {
+                // Usuario tiene una cita
+                // Deja libre cita en DB
+                $isCita[0]->setUser(null);
+                $em->persist($isCita[0]);
+                $em->flush();
+
+                // Envía correo
+                $message = (new \Swift_Message('Apartefotografía citas'))
+                    ->setFrom('departamento.comercial@apartefotografia.es')
+                    ->setTo($user->getEmail())
+                    ->setBody(
+                        $this->renderView(
+                            'Emails/cita-anulada.html.twig',
+                            array('cita' => $isCita[0])
+                        ),
+                        'text/html'
+                    )
+                ;
+
+                $mailer->send($message);
+
+                return $this->render('usuario/cancelar-cita.html.twig', [
+                    'base_dir' => realpath($this->getParameter('kernel.project_dir')) . DIRECTORY_SEPARATOR,
+                ]);
+            } else {
+                // Usuario NO tiene una cita
+                return $this->redirectToRoute('usuario_cita');
+
+            }
+        } else {
+            // Usuario NO logueado
+            return $this->render('default/index.html.twig', [
+                'base_dir' => realpath($this->getParameter('kernel.project_dir')) . DIRECTORY_SEPARATOR,
+                'error' => 'Ops! Estamos trabajando para solucionarlo pronto...',
             ]);
         }
     }

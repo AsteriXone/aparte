@@ -1,0 +1,19 @@
+{% extends 'layout.html.twig' %}
+{% block content %}
+    <div class="container-fluid">
+        <h1 class="text-center">Cita Cancelada</h1>
+        <div class="jumbotron text-center alert alert-success">
+            <p>Se ha cancelado tu cita correctamente!</p>
+            <p>Si el plazo sigue abierto puedes pedir una nueva cita.</p>
+        </div>
+        <div>
+            <div>
+                <a style="width: 150px" href="{{ path('usuario_cita') }}" role="button" class="btn btn-success center-block">Continuar</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}

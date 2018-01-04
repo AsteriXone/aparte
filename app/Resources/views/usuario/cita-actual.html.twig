@@ -3,10 +3,15 @@
     <div class="container-fluid">
         <h1 class="text-center">Cita Actual</h1>
         <div class="jumbotron text-center alert alert-info">
-            <p>Actualmente tienes una cita pendiente con nosotros el dia <strong>{{ cita.getFecha()|date('d/m/Y') }}</strong> a las <strong>{{ cita.getHora()|date('H:i') }}</strong></p>
+            <p>Actualmente tienes una cita pendiente con nosotros el dia <strong>{{ cita.getFecha()|date('d/m/Y') }}</strong> a las <strong>{{ cita.getHora()|date('H:i') }}</strong> horas.</p>
             <p>Para evitar contratiempos y que todo salga bien necesitamos tu colaboración, se puntual.</p>
             <p>En caso de no poder asistir, te rogaríamos que avisaras con antelación.</p>
             <p>Muchas gracias, hasta pronto...</p>
+        </div>
+        <div>
+            <div>
+                <a style="width: 150px" href="{{ path('cancelar-cita') }}" role="button" class="btn btn-success center-block">Cancelar Cita</a>
+            </div>
         </div>
     </div>
 {% endblock %}
