@@ -1,0 +1,18 @@
+{% extends 'layout.html.twig' %}
+{% block content %}
+    <div class="container-fluid">
+        <h1 class="text-center">Muestras</h1>
+        <div class="jumbotron text-center alert alert-info">
+            <p>El plazo para seleccionar muestras y realizar pedidos está cerrado!</p>
+        </div>
+    </div>
+    <div>
+        <div>
+            <a style="width: 150px" href="{{ path('homepage') }}" role="button" class="btn btn-success center-block">Continuar</a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}

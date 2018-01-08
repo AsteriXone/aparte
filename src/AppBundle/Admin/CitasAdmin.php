@@ -68,8 +68,8 @@ class CitasAdmin extends AbstractAdmin
             ->add('id')
             ->add('cuadrante')
             ->add('user', null, array('label' => 'Usuario'))
-            ->add('onlyDate')
-            ->add('onlyHour')
+            ->add('onlyDate',null, array('label' => 'Fecha'))
+            ->add('onlyHour',null, array('label' => 'Hora'))
         ;
     }
 

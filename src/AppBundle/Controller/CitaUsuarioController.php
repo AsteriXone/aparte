@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Citas;
 use AppBundle\Entity\Cuadrante;
 use AppBundle\Entity\CuadranteGrupo;
+use AppBundle\Entity\Grupo;
 use AppBundle\Entity\GruposUsuarios;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -18,123 +19,132 @@ class CitaUsuarioController extends Controller
      */
     public function usuarioCitaAction(Request $request, \Swift_Mailer $mailer)
     {
+
         // Usuario Logueado
         if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
             /*
-             * Recopilación de datos
-             */
+            * Recopilación de datos
+            */
             // userId = Id de Usuario
             $user = $this->get('security.token_storage')->getToken()->getUser();
             $userId = $user->getId();
 
-            // Comprobamos si el usuario ya tiene una cita
+            // Grupo al que pertenece usuario
+            $em = $this->getDoctrine()->getManager();
+            $grupoUsuario = $em->getRepository(GruposUsuarios::class)->findBy(array('usuarioId' => $userId));
+
+            // Revisar... más adelante un usuario pertenece a varios grupos
+            $idGrupo = $grupoUsuario[0]->getGrupoId(); // Id del grupo
+
+            //$em = $this->getDoctrine()->getManager();
+            $grupo = $em->getRepository(Grupo::class)->find($idGrupo);
 
             $em = $this->getDoctrine()->getManager();
             $isCita = $em->getRepository(Citas::class)->findBy(array('user'=>$user));
 
-            if(!$isCita) {
-                // Grupo al que pertenece usuario
-                $em = $this->getDoctrine()->getManager();
-                $grupoUsuario = $em->getRepository(GruposUsuarios::class)->findBy(array('usuarioId' => $userId));
-
-                // Revisar... más adelante un usuario pertenece a varios grupos
-                $idGrupo = $grupoUsuario[0]->getGrupoId(); // Id del grupo
-
-                // Obtener cuadrantes que pertenecen al grupo
-                $em2 = $this->getDoctrine()->getManager();
-                $cuadrantesGrupo = $em2->getRepository(CuadranteGrupo::class)->findBy(array('grupo' => $idGrupo));
-
-//            dump($cuadrantesGrupo);
-
-                // Buscar citas que hay para cada cuadrante
-                // comprobar si están disponibles o no ¿?
-                $cuadrantes = new ArrayCollection();
-
-                foreach ($cuadrantesGrupo as $lineaCuadranteGrupo) {
-                    $cuadrantes[] = $lineaCuadranteGrupo->getCuadrante();
+            // Comprueba si estan activadas las citas
+            if (!$grupo->getIsCitasActive() || !$grupo->getIsActive()){
+                // Citas no activadas
+                $cita = false;
+                if ($isCita){
+                    $cita = $isCita[0];
                 }
+                return $this->render('usuario/plazo-citas.html.twig', [
+                    // Enviar fecha, hora, cuadrante, usuario para usar en view
+                    'base_dir' => realpath($this->getParameter('kernel.project_dir')) . DIRECTORY_SEPARATOR,
+                    'cita' => $cita,
+                ]);
+            } else {
+                // Comprobamos si el usuario ya tiene una cita
 
 
-//            dump($cuadrantes);
+                if(!$isCita) {
+                    // Obtener cuadrantes que pertenecen al grupo
+                    $em2 = $this->getDoctrine()->getManager();
+                    $cuadrantesGrupo = $em2->getRepository(CuadranteGrupo::class)->findBy(array('grupo' => $idGrupo));
 
-//            $em3 = $this->getDoctrine()->getManager();
-//            $citas = $em3->getRepository(Citas::class)->findBy(array('cuadrante'=>$cuadrantesGrupo[1]->getCuadrante()));
+                    // Buscar citas que hay para cada cuadrante
+                    // comprobar si están disponibles o no ¿?
+                    $cuadrantes = new ArrayCollection();
 
-                $citasPorCuadrante = new ArrayCollection();
-                foreach ($cuadrantes as $cuadrante) {
-                    $em3 = $this->getDoctrine()->getManager();
-                    $citasPorCuadrante[] = $em3->getRepository(Citas::class)->findBy(array('cuadrante' => $cuadrante->getId()));
-                }
-
-
-//            dump($citasPorCuadrante);
-
-                $citas = new ArrayCollection();
-                foreach ($citasPorCuadrante as $citaCuadrante) {
-                    foreach ($citaCuadrante as $cita) {
-                        $citas[] = $cita;
+                    foreach ($cuadrantesGrupo as $lineaCuadranteGrupo) {
+                        $cuadrantes[] = $lineaCuadranteGrupo->getCuadrante();
                     }
-                }
-                if (count($citas)<1){
-                    return $this->render('usuario/no-citas.html.twig', [
-                        // Enviar fecha, hora, cuadrante, usuario para usar en view
 
-                        'base_dir' => realpath($this->getParameter('kernel.project_dir')) . DIRECTORY_SEPARATOR,
-                    ]);
-                }
-//            dump($citas);
-                // Methodo GET
-                if ($request->getMethod() === 'GET') {
+                    $citasPorCuadrante = new ArrayCollection();
+                    foreach ($cuadrantes as $cuadrante) {
+                        $em3 = $this->getDoctrine()->getManager();
+                        $citasPorCuadrante[] = $em3->getRepository(Citas::class)->findBy(array('cuadrante' => $cuadrante->getId()));
+                    }
 
-                    return $this->render('usuario/citas.html.twig', [
-                        // Enviar fecha, hora, cuadrante, usuario para usar en view
+                    $citas = new ArrayCollection();
+                    foreach ($citasPorCuadrante as $citaCuadrante) {
+                        foreach ($citaCuadrante as $cita) {
+                            $citas[] = $cita;
+                        }
+                    }
 
-                        'base_dir' => realpath($this->getParameter('kernel.project_dir')) . DIRECTORY_SEPARATOR,
-                        'error' => false,
-                        'citas' => $citas,
-                        'usuario' => $user,
-                    ]);
-                } else {
-                    // Methodo POST
+                    if (count($citas)<1){
+                        return $this->render('usuario/no-citas.html.twig', [
+                            // Enviar fecha, hora, cuadrante, usuario para usar en view
 
-                    $citaAceptada = $request->get('cita');
+                            'base_dir' => realpath($this->getParameter('kernel.project_dir')) . DIRECTORY_SEPARATOR,
+                        ]);
+                    }
 
-                    $em = $this->getDoctrine()->getManager();
-                    $cita = $em->getRepository(Citas::class)->find($citaAceptada);
+                    // Methodo GET
+                    if ($request->getMethod() === 'GET') {
 
-                    $cita->setUser($user);
+                        return $this->render('usuario/citas.html.twig', [
+                            // Enviar fecha, hora, cuadrante, usuario para usar en view
 
-                    $em = $this->getDoctrine()->getEntityManager();
-                    $em->persist($cita);
-                    $em->flush();
+                            'base_dir' => realpath($this->getParameter('kernel.project_dir')) . DIRECTORY_SEPARATOR,
+                            'error' => false,
+                            'citas' => $citas,
+                            'usuario' => $user,
+                        ]);
+                    } else {
+                        // Methodo POST
 
-                    // Envía correo
-                    $message = (new \Swift_Message('Apartefotografía citas'))
-                        ->setFrom('departamento.comercial@apartefotografia.es')
-                        ->setTo($user->getEmail())
-                        ->setBody(
-                            $this->renderView(
-                                'Emails/cita-nueva.html.twig',
-                                array('cita' => $cita)
-                            ),
-                            'text/html'
-                        )
-                    ;
+                        $citaAceptada = $request->get('cita');
 
-                    $mailer->send($message);
+                        $em = $this->getDoctrine()->getManager();
+                        $cita = $em->getRepository(Citas::class)->find($citaAceptada);
 
+                        $cita->setUser($user);
+
+                        $em = $this->getDoctrine()->getEntityManager();
+                        $em->persist($cita);
+                        $em->flush();
+
+                        // Envía correo
+                        $message = (new \Swift_Message('Apartefotografía citas'))
+                            ->setFrom('departamento.comercial@apartefotografia.es')
+                            ->setTo($user->getEmail())
+                            ->setBody(
+                                $this->renderView(
+                                    'Emails/cita-nueva.html.twig',
+                                    array('cita' => $cita)
+                                ),
+                                'text/html'
+                            )
+                        ;
+
+                        $mailer->send($message);
+
+                        return $this->render('usuario/cita-actual.html.twig', [
+                            'base_dir' => realpath($this->getParameter('kernel.project_dir')) . DIRECTORY_SEPARATOR,
+                            'error' => 'Id: ' . $citaAceptada,
+                            'cita' => $cita,
+                        ]);
+                    }
+                } else{
+                    // Usuario tiene cita cogida
                     return $this->render('usuario/cita-actual.html.twig', [
                         'base_dir' => realpath($this->getParameter('kernel.project_dir')) . DIRECTORY_SEPARATOR,
-                        'error' => 'Id: ' . $citaAceptada,
-                        'cita' => $cita,
+                        'cita' => $isCita[0],
                     ]);
                 }
-            } else{
-                // Usuario tiene cita cogida
-                return $this->render('usuario/cita-actual.html.twig', [
-                    'base_dir' => realpath($this->getParameter('kernel.project_dir')) . DIRECTORY_SEPARATOR,
-                    'cita' => $isCita[0],
-                    ]);
             }
         } else {
             // Usuario NO logueado

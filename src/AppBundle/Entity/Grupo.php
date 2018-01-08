@@ -37,6 +37,27 @@ class Grupo
     private $anio;
 
     /**
+     * @var boolean
+     *
+     * @ORM\Column(name="isActive", type="boolean")
+     */
+    private $isActive;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="isCitasActive", type="boolean")
+     */
+    private $isCitasActive;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="isComprasActive", type="boolean")
+     */
+    private $isComprasActive;
+
+    /**
      * @ORM\ManyToOne(targetEntity="Universidad", inversedBy="grupo")
      */
     private $universidad;
@@ -381,5 +402,77 @@ class Grupo
     public function removeUsuarioMuestra(\AppBundle\Entity\UsuariosMuestras $usuarioMuestra)
     {
         $this->usuario_muestra->removeElement($usuarioMuestra);
+    }
+
+    /**
+     * Set isActive
+     *
+     * @param boolean $isActive
+     *
+     * @return Grupo
+     */
+    public function setIsActive($isActive)
+    {
+        $this->isActive = $isActive;
+
+        return $this;
+    }
+
+    /**
+     * Get isActive
+     *
+     * @return boolean
+     */
+    public function getIsActive()
+    {
+        return $this->isActive;
+    }
+
+    /**
+     * Set isCitasActive
+     *
+     * @param boolean $isCitasActive
+     *
+     * @return Grupo
+     */
+    public function setIsCitasActive($isCitasActive)
+    {
+        $this->isCitasActive = $isCitasActive;
+
+        return $this;
+    }
+
+    /**
+     * Get isCitasActive
+     *
+     * @return boolean
+     */
+    public function getIsCitasActive()
+    {
+        return $this->isCitasActive;
+    }
+
+    /**
+     * Set isComprasActive
+     *
+     * @param boolean $isComprasActive
+     *
+     * @return Grupo
+     */
+    public function setIsComprasActive($isComprasActive)
+    {
+        $this->isComprasActive = $isComprasActive;
+
+        return $this;
+    }
+
+    /**
+     * Get isComprasActive
+     *
+     * @return boolean
+     */
+    public function getIsComprasActive()
+    {
+        return $this->isComprasActive;
     }
 }

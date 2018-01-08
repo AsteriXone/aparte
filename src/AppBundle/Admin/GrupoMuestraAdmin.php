@@ -29,8 +29,13 @@ class GrupoMuestraAdmin extends AbstractAdmin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->add('id')
-            ->add('muestra')
+            ->add('muestra.name' ,null, array(
+                    'label'=>'Muestra',
+                    'base_path' => '%app.path.muestras_images%',
+                    'template' => 'image.html.twig',
+                )
+            )
+            ->add('muestra', null, array('label'=>'Nombre'))
             ->add('grupo')
             ->add('precio')
             ->add('_action', null, array(
@@ -64,7 +69,13 @@ class GrupoMuestraAdmin extends AbstractAdmin
         $showMapper
             ->add('id')
             ->add('grupo')
-            ->add('muestra')
+            ->add('muestra.name' ,null, array(
+                    'label'=>'Muestra',
+                    'base_path' => '%app.path.muestras_images%',
+                    'template' => 'image.html.twig',
+                )
+            )
+            ->add('muestra', null, array('label'=>'Nombre'))
             ->add('precio')
         ;
     }

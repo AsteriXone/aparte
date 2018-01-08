@@ -1,0 +1,21 @@
+{% extends 'layout.html.twig' %}
+{% block content %}
+    <div class="container-fluid">
+        <h1 class="text-center">Citas</h1>
+        <div class="jumbotron text-center alert alert-info">
+            <p>El plazo para pedir o anular citas ha finalizado!</p>
+            {% if (cita) %}
+                <p>Actualmente tienes una cita pendiente con nosotros el dia <strong>{{ cita.getFecha()|date('d/m/Y') }}</strong> a las <strong>{{ cita.getHora()|date('H:i') }}</strong> horas.</p>
+            {% endif %}
+        </div>
+        <div>
+            <div>
+                <a style="width: 150px" href="{{ path('homepage') }}" role="button" class="btn btn-success center-block">Continuar</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}

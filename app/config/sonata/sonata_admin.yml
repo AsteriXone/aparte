@@ -10,7 +10,6 @@ sonata_block:
 sonata_admin:
     title: Administración
     title_logo: bundles/app/images/aparte-logo.jpg
-
     assets:
         stylesheets:
             # Defaults:
@@ -18,7 +17,7 @@ sonata_admin:
             - bundles/sonatacore/vendor/components-font-awesome/css/font-awesome.min.css
             - bundles/sonatacore/vendor/ionicons/css/ionicons.min.css
             - bundles/sonataadmin/vendor/admin-lte/dist/css/AdminLTE.min.css
-            - bundles/sonataadmin/vendor/admin-lte/dist/css/skins/skin-red.min.css
+            - bundles/sonataadmin/vendor/admin-lte/dist/css/skins/skin-black.min.css
             - bundles/sonataadmin/vendor/iCheck/skins/square/blue.css
             - bundles/sonatacore/vendor/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css
             - bundles/sonataadmin/vendor/jqueryui/themes/base/jquery-ui.css

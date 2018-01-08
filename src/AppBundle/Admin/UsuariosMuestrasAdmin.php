@@ -35,7 +35,13 @@ class UsuariosMuestrasAdmin extends AbstractAdmin
             ->add('usuario')
             ->add('usuario.email')
             ->add('usuario.telefono')
-            ->add('muestra')
+            ->add('muestra', null, array('label'=>'Archivo'))
+            ->add('muestra.name' ,null, array(
+                    'label'=>'Muestra',
+                    'base_path' => '%app.path.muestras_images%',
+                    'template' => 'image.html.twig',
+                )
+            )
             ->add('cantidad')
             ->add('precio')
             ->add('estado')
@@ -74,7 +80,13 @@ class UsuariosMuestrasAdmin extends AbstractAdmin
             ->add('id')
             ->add('usuario')
             ->add('grupo')
-            ->add('muestra')
+            ->add('muestra', null, array('label'=>'Archivo'))
+            ->add('muestra.name' ,null, array(
+                    'label'=>'Muestra',
+                    'base_path' => '%app.path.muestras_images%',
+                    'template' => 'image.html.twig',
+                )
+            )
             ->add('cantidad')
             ->add('precio')
         ;

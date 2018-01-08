@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use FOS\UserBundle\FOSUserEvents;
 use FOS\UserBundle\Event\FormEvent;
 use FOS\UserBundle\Event\FilterUserResponseEvent;
+use Symfony\Component\Validator\Constraints\Date;
 
 class RegistrationController extends BaseController
 {
@@ -28,6 +29,8 @@ class RegistrationController extends BaseController
         $user = $userManager->createUser();
         $user->addRole("ROLE_USER");
         $user->setEnabled(true);
+        $fecha = new \DateTime();
+        $user->setFechaRegistro($fecha);
 
         $event = new GetResponseUserEvent($user, $request);
         $dispatcher->dispatch(FOSUserEvents::REGISTRATION_INITIALIZE, $event);

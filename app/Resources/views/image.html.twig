@@ -1,0 +1,8 @@
+{# app/Resources/views/vich_uploader_image.html.twig #}
+
+<td class="sonata-ba-list-field sonata-ba-list-field-text">
+    {#<img style="height: 40px;" src="{{ vich_uploader_asset('muestra', 'imageFile', 'AppBundle\\Entity\\Muestra') }}" />#}
+    {#<img src="{{ vich_uploader_asset('muestra', 'imageFile') }}" alt="{{ muestra.name }}" />#}
+    <img class="center-block" style="height: 40px;" src="{{ asset('img/muestras/' ~ object.getMuestra) }}" title="nada" />
+    {#<p>Imagen</p>#}
+</td>

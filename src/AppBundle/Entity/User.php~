@@ -69,6 +69,13 @@ class User extends BaseUser
     protected $mencion;
 
     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="fecha_registro", type="datetime")
+     */
+    protected $fecha_registro;
+
+    /**
      * @ORM\OneToMany(targetEntity="GruposUsuarios", mappedBy="user")
      */
     private $grupos_usuarios;

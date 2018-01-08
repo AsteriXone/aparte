@@ -17,9 +17,10 @@ class GruposUsuariosAdmin extends AbstractAdmin
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
-            ->add('id')
             ->add('grupo')
-            ->add('user')
+            ->add('user', null, array ('label'=>'Usuario'))
+            ->add('user.telefono', null, array ('label'=>'Teléfono'))
+            ->add('user.email', null, array ('label'=>'Correo'))
         ;
     }
 
@@ -29,9 +30,12 @@ class GruposUsuariosAdmin extends AbstractAdmin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->add('id')
+//            ->add('id')
             ->add('grupo')
-            ->add('user')
+            ->add('user.nombreCompleto', null, array ('label'=>'Usuario'))
+            ->add('user.telefono', null, array ('label'=>'Teléfono'))
+            ->add('user.email', null, array ('label'=>'Correo'))
+            ->add('user.onlyDate',null, array('label' => 'Fecha Registro'))
             ->add('_action', null, array(
                 'actions' => array(
                     'show' => array(),
@@ -62,7 +66,10 @@ class GruposUsuariosAdmin extends AbstractAdmin
         $showMapper
             ->add('id')
             ->add('grupo')
-            ->add('user')
+            ->add('user.nombreCompleto', null, array ('label'=>'Usuario'))
+            ->add('user.telefono', null, array ('label'=>'Teléfono'))
+            ->add('user.email', null, array ('label'=>'Correo'))
+            ->add('user.onlyDate',null, array('label' => 'Fecha Registro'))
         ;
     }
 
@@ -73,6 +80,7 @@ class GruposUsuariosAdmin extends AbstractAdmin
             'Usuario'=>'user.nombreCompleto',
             'Teléfono' => 'user.telefono',
             'Correo' => 'user.email',
+            'Fecha Registro' => 'user.onlyDate'
         );
     }
 }

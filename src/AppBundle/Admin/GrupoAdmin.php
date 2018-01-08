@@ -35,6 +35,9 @@ class GrupoAdmin extends AbstractAdmin
             ->add('especialidad')
             ->add('anio')
             ->add('codigoGrupo')
+            ->add('isActive',null, array('label'=>'Activo'))
+            ->add('isCitasActive',null, array('label'=>'Citas'))
+            ->add('isComprasActive',null, array('label'=>'Compras'))
             ->add('_action', null, array(
                 'actions' => array(
                     'show' => array(),
@@ -51,11 +54,18 @@ class GrupoAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            //->add('id')
+            ->with('Grupo', ['class' => 'col-md-9'])
             ->add('universidad')
             ->add('especialidad')
             ->add('anio')
             ->add('codigoGrupo')
+            ->end()
+
+            ->with('Gestión', ['class' => 'col-md-3'])
+            ->add('isActive',null, array('label'=>'Activo'))
+            ->add('isCitasActive',null, array('label'=>'Pedir Citas'))
+            ->add('isComprasActive',null, array('label'=>'Hacer Compras'))
+            ->end()
         ;
     }
 
@@ -65,11 +75,18 @@ class GrupoAdmin extends AbstractAdmin
     protected function configureShowFields(ShowMapper $showMapper)
     {
         $showMapper
-            ->add('id')
+            ->with('Grupo', ['class' => 'col-md-9'])
             ->add('universidad')
             ->add('especialidad')
             ->add('anio')
             ->add('codigoGrupo')
+            ->end()
+
+            ->with('Gestión', ['class' => 'col-md-3'])
+            ->add('isActive',null, array('label'=>'Activo'))
+            ->add('isCitasActive',null, array('label'=>'Pedir Citas'))
+            ->add('isComprasActive',null, array('label'=>'Hacer Compras'))
+            ->end()
         ;
     }
 }
