@@ -6,7 +6,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="28239bfc-4a69-4427-bc22-b3f97495a773" name="Default" comment="Registro ok!">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Admin/UserAdmin.php" afterPath="$PROJECT_DIR$/src/AppBundle/Admin/UserAdmin.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Entity/User.php" afterPath="$PROJECT_DIR$/src/AppBundle/Entity/User.php" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -50,11 +50,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="User.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="User.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/User.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-4549">
-              <caret line="73" column="71" lean-forward="false" selection-start-line="73" selection-start-column="71" selection-end-line="73" selection-end-column="71" />
+            <state relative-caret-position="194">
+              <caret line="73" column="86" lean-forward="false" selection-start-line="73" selection-start-column="86" selection-end-line="73" selection-end-column="86" />
               <folding />
             </state>
           </provider>
@@ -80,7 +80,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="UserAdmin.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="UserAdmin.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/AppBundle/Admin/UserAdmin.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="408">
@@ -177,8 +177,8 @@
         <option value="$PROJECT_DIR$/src/AppBundle/Admin/UsuariosMuestrasAdmin.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Admin/GrupoMuestraAdmin.php" />
         <option value="$PROJECT_DIR$/app/config/sonata/sonata_admin.yml" />
-        <option value="$PROJECT_DIR$/src/AppBundle/Entity/User.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Admin/UserAdmin.php" />
+        <option value="$PROJECT_DIR$/src/AppBundle/Entity/User.php" />
       </list>
     </option>
   </component>
@@ -705,7 +705,7 @@
       <workItem from="1511612865552" duration="85000" />
       <workItem from="1514921667576" duration="248000" />
       <workItem from="1514977263541" duration="7737000" />
-      <workItem from="1515348697854" duration="20636000" />
+      <workItem from="1515348697854" duration="21749000" />
     </task>
     <task id="LOCAL-00001" summary="Registro y login">
       <created>1508205270506</created>
@@ -774,7 +774,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="500952000" />
+    <option name="totallyTimeSpent" value="502065000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -789,7 +789,7 @@
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19742814" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.19742814" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3289689" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32569557" sideWeight="0.5797546" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980332" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -1271,6 +1271,14 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Admin/UserAdmin.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="53" column="66" lean-forward="false" selection-start-line="53" selection-start-column="66" selection-end-line="53" selection-end-column="66" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/AppBundle/Admin/UsuariosProfesAdmin.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="279">
@@ -1281,16 +1289,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/User.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-4549">
-          <caret line="73" column="71" lean-forward="false" selection-start-line="73" selection-start-column="71" selection-end-line="73" selection-end-column="71" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Admin/UserAdmin.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="53" column="66" lean-forward="false" selection-start-line="53" selection-start-column="66" selection-end-line="53" selection-end-column="66" />
+        <state relative-caret-position="194">
+          <caret line="73" column="86" lean-forward="false" selection-start-line="73" selection-start-column="86" selection-end-line="73" selection-end-column="86" />
           <folding />
         </state>
       </provider>

@@ -71,7 +71,7 @@ class User extends BaseUser
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fecha_registro", type="datetime", unique=false)
+     * @ORM\Column(name="fecha_registro", type="datetime", unique=false, nullable=true)
      */
     protected $fecha_registro;
 
