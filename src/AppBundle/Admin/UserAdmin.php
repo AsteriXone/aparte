@@ -51,6 +51,7 @@ class UserAdmin extends AbstractAdmin
             ->add('direccion')
             ->add('telefono')
             ->add('roles')
+            ->add('onlyDate', null, array('label'=>'Fecha Registro'))
             ->add('_action', null, array(
                 'actions' => array(
                     'show' => array(),
