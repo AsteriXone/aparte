@@ -23,8 +23,8 @@
                     {% if is_granted('ROLE_ADMIN') %}
                         <!-- ROLE_ADMIN -->
                         <li><a href="{{ path('sonata_admin_redirect') }}">Administración</a></li>
-                        <li><a href="{{ path('muestras') }}">Muestras</a></li>
-                        <li><a href="{{ path('usuario_cita') }}">Citas</a></li>
+                        <li><a href="{{ path('votaciones-profe') }}">Votaciones</a></li>
+                        {#<li><a href="{{ path('usuario_cita') }}">Citas</a></li>#}
                         <!-- li><a href="#"></a></li>
                         <li><a href="#"></a></li -->
                         {% elseif is_granted('ROLE_USER') %}
@@ -42,6 +42,7 @@
                     <li><a href="{{ path('fotoescuela') }}">Fotoescuela</a></li>
                     <li><a href="{{ path('graduaciones') }}">Graduaciones</a></li>
                     <li><a href="{{ path('estudio') }}">Estudio</a></li>
+                    {#<li><a href="{{ path('galeria') }}">Galería</a></li>#}
                     <li><a href="{{ path('about') }}">Quienes Somos</a></li>
                     <li><a href="{{ path('contactar') }}">Contactar</a></li>
                 {% endif %}

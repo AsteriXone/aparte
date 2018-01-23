@@ -71,7 +71,7 @@ class User extends BaseUser
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fecha_registro", type="datetime")
+     * @ORM\Column(name="fecha_registro", type="datetime", unique=false, nullable=true)
      */
     protected $fecha_registro;
 
@@ -95,6 +95,10 @@ class User extends BaseUser
      * @ORM\OneToOne(targetEntity="Citas", mappedBy="user")
      */
     private $cita;
+
+    public function getOnlyDate(){
+        return $this->fecha_registro->format('d/m/Y');
+    }
 
     public function __construct()
     {
@@ -409,5 +413,29 @@ class User extends BaseUser
     public function getUsuariosProfes()
     {
         return $this->usuarios_profes;
+    }
+
+    /**
+     * Set fechaRegistro
+     *
+     * @param \DateTime $fechaRegistro
+     *
+     * @return User
+     */
+    public function setFechaRegistro($fechaRegistro)
+    {
+        $this->fecha_registro = $fechaRegistro;
+
+        return $this;
+    }
+
+    /**
+     * Get fechaRegistro
+     *
+     * @return \DateTime
+     */
+    public function getFechaRegistro()
+    {
+        return $this->fecha_registro;
     }
 }

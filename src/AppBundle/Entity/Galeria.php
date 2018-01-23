@@ -1,0 +1,115 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Galeria
+ *
+ * @ORM\Table(name="galeria")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\GaleriaRepository")
+ */
+class Galeria
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nombreGaleria", type="string", length=255)
+     */
+    private $nombreGaleria;
+
+    /**
+     * @ORM\OneToMany(targetEntity="ImageGallery", mappedBy="galeria", cascade={"persist", "remove"})
+     */
+    protected $imagenes;
+
+    public function __construct()
+    {
+        $this->imagenes = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        // TODO: Implement __toString() method.
+        return (string) $this->getNombreGaleria();
+    }
+
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set nombreGaleria
+     *
+     * @param string $nombreGaleria
+     *
+     * @return Galeria
+     */
+    public function setNombreGaleria($nombreGaleria)
+    {
+        $this->nombreGaleria = $nombreGaleria;
+
+        return $this;
+    }
+
+    /**
+     * Get nombreGaleria
+     *
+     * @return string
+     */
+    public function getNombreGaleria()
+    {
+        return $this->nombreGaleria;
+    }
+
+    /**
+     * Add imagene
+     *
+     * @param \AppBundle\Entity\ImageGallery $imagene
+     *
+     * @return Galeria
+     */
+    public function addImagene(\AppBundle\Entity\ImageGallery $imagene)
+    {
+        $this->imagenes[] = $imagene;
+
+        return $this;
+    }
+
+    /**
+     * Remove imagene
+     *
+     * @param \AppBundle\Entity\ImageGallery $imagene
+     */
+    public function removeImagene(\AppBundle\Entity\ImageGallery $imagene)
+    {
+        $this->imagenes->removeElement($imagene);
+    }
+
+    /**
+     * Get imagenes
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getImagenes()
+    {
+        return $this->imagenes;
+    }
+}

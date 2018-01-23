@@ -50,7 +50,13 @@ class Profesor
     private $estado;
 
     /**
-     * @ORM\OneToMany(targetEntity="GrupoProfesor", mappedBy="profesor")
+     * @var int
+     *
+     */
+    private $numeroVotos;
+
+    /**
+     * @ORM\OneToMany(targetEntity="GrupoProfesor", mappedBy="profesor", cascade={"persist", "remove"})
      */
     private $grupos_profesores;
 

@@ -2,15 +2,14 @@
 
 namespace AppBundle\Admin;
 
-use AppBundle\Entity\Grupo;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Sonata\CoreBundle\Form\Type\CollectionType;
 
-class MuestraAdmin extends AbstractAdmin
+class GaleriaAdmin extends AbstractAdmin
 {
     /**
      * @param DatagridMapper $datagridMapper
@@ -19,8 +18,7 @@ class MuestraAdmin extends AbstractAdmin
     {
         $datagridMapper
             ->add('id')
-            ->add('imageName')
-            ->add('descripcion')
+            ->add('nombreGaleria', null, array('label' => 'Nombre Galería'))
         ;
     }
 
@@ -31,13 +29,7 @@ class MuestraAdmin extends AbstractAdmin
     {
         $listMapper
             ->add('id')
-            ->add('imageName', null, array('label' => "Nombre"))
-            ->add('imagen' ,null, array(
-                'base_path' => '%app.path.muestras_images%',
-                'template' => 'vich_uploader_image.html.twig',
-                    )
-                )
-            ->add('descripcion')
+            ->add('nombreGaleria', null, array('label' => 'Nombre Galería'))
             ->add('_action', null, array(
                 'actions' => array(
                     'show' => array(),
@@ -54,9 +46,10 @@ class MuestraAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('imageFile', FileType::class, array('label' => 'Subir imagen'))
-            ->add('descripcion')
-
+            ->add('nombreGaleria', null, array('label' => 'Nombre Galería'))
+            ->add('imagenes', CollectionType::class, array(
+                'label' => 'Imagen',
+            ))
         ;
     }
 
@@ -67,14 +60,7 @@ class MuestraAdmin extends AbstractAdmin
     {
         $showMapper
             ->add('id')
-            ->add('imageName', null, array('label' => "Nombre"))
-            ->add('imagen' ,null, array(
-                    'base_path' => '%app.path.muestras_images%',
-                    'template' => 'vich_uploader_image.html.twig',
-                )
-            )
-            ->add('descripcion')
-
+            ->add('nombreGaleria', null, array('label' => 'Nombre Galería'))
         ;
     }
 }

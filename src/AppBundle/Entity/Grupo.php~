@@ -451,4 +451,28 @@ class Grupo
     {
         return $this->isCitasActive;
     }
+
+    /**
+     * Set isComprasActive
+     *
+     * @param boolean $isComprasActive
+     *
+     * @return Grupo
+     */
+    public function setIsComprasActive($isComprasActive)
+    {
+        $this->isComprasActive = $isComprasActive;
+
+        return $this;
+    }
+
+    /**
+     * Get isComprasActive
+     *
+     * @return boolean
+     */
+    public function getIsComprasActive()
+    {
+        return $this->isComprasActive;
+    }
 }

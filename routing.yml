@@ -1,0 +1,31 @@
+app:
+    resource: '@AppBundle/Controller/'
+    type: annotation
+
+admin_area:
+     resource: "@SonataAdminBundle/Resources/config/routing/sonata_admin.xml"
+     prefix: /admin
+admin:
+    resource: '@SonataAdminBundle/Resources/config/routing/sonata_admin.xml'
+    prefix: /admin
+
+_sonata_admin:
+    resource: .
+    type: sonata_admin
+    prefix: /admin
+
+## ...
+#_sonata_admin:
+#    resource: .
+#    type: sonata_admin
+#    prefix: /admin
+#
+logout:
+    path: /logout
+
+fos_user:
+    resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+
+fos_user_register:
+    resource: "@FOSUserBundle/Resources/config/routing/registration.xml"
+    prefix: /registrar

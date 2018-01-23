@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Form\ContactarType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -78,8 +79,26 @@ class DefaultController extends Controller
      */
     public function contactarAction(Request $request)
     {
+        $form = $this->createForm(ContactarType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $contacto = $form->getData();
+
+            // ... perform some action, such as saving the task to the database
+            // for example, if Task is a Doctrine entity, save it!
+//            $em = $this->getDoctrine()->getManager();
+//            $em->persist($muestra);
+//            $em->flush();
+
+
+            return $this->render('default/contactar-enviado.html.twig');
+        }
+
         return $this->render('default/contactar.html.twig', [
             'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
+            'form' => $form->createView(),
         ]);
     }
 

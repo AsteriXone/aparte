@@ -110,3 +110,17 @@ services:
         tags:
             - { name: sonata.admin, manager_type: orm, group: Profesores, label: UsuariosProfes }
         public: true
+
+    app.admin.galeria:
+        class: AppBundle\Admin\GaleriaAdmin
+        arguments: [~, AppBundle\Entity\Galeria, AppBundle:GaleriaAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Galeria, label: Galeria }
+        public: true
+
+    app.admin.image_gallery:
+        class: AppBundle\Admin\ImageGalleryAdmin
+        arguments: [~, AppBundle\Entity\ImageGallery, AppBundle:ImageGalleryAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Galeria, label: Imagenes Galeria }
+        public: true

@@ -1,0 +1,186 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+
+/**
+ * ImageGallery
+ *
+ * @ORM\Table(name="image_gallery")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ImageGalleryRepository")
+ * @Vich\Uploadable
+ */
+class ImageGallery
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * NOTE: This is not a mapped field of entity metadata, just a simple property.
+     *
+     * @Vich\UploadableField(mapping="gallery_image", fileNameProperty="imageName")
+     *
+     * @var File
+     */
+    private $imageFile;
+
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     *
+     * @var string
+     */
+    private $imageName;
+
+
+    /**
+     * @ORM\Column(type="datetime")
+     *
+     * @var \DateTime
+     */
+    private $updatedAt;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Galeria", inversedBy="imagenes")
+     * @ORM\JoinColumn(name="id_galeria", referencedColumnName="id", nullable=false)
+     */
+    protected $galeria;
+
+
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set fileName
+     *
+     * @param string $fileName
+     *
+     * @return ImageGallery
+     */
+    public function setFileName($fileName)
+    {
+        $this->fileName = $fileName;
+
+        return $this;
+    }
+
+    /**
+     * Get fileName
+     *
+     * @return string
+     */
+    public function getFileName()
+    {
+        return $this->fileName;
+    }
+
+    /**
+     * Set imageName
+     *
+     * @param string $imageName
+     *
+     * @return ImageGallery
+     */
+    public function setImageName($imageName)
+    {
+        $this->imageName = $imageName;
+
+        return $this;
+    }
+
+    /**
+     * Get imageName
+     *
+     * @return string
+     */
+    public function getImageName()
+    {
+        return $this->imageName;
+    }
+
+    /**
+     * Set updatedAt
+     *
+     * @param \DateTime $updatedAt
+     *
+     * @return ImageGallery
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get updatedAt
+     *
+     * @return \DateTime
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * Set galeria
+     *
+     * @param \AppBundle\Entity\Galeria $galeria
+     *
+     * @return ImageGallery
+     */
+    public function setGaleria(\AppBundle\Entity\Galeria $galeria = null)
+    {
+        $this->galeria = $galeria;
+
+        return $this;
+    }
+
+    /**
+     * Get galeria
+     *
+     * @return \AppBundle\Entity\Galeria
+     */
+    public function getGaleria()
+    {
+        return $this->galeria;
+    }
+
+    public function setImageFile(File $image = null)
+    {
+        $this->imageFile = $image;
+
+        if ($image) {
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            $this->updatedAt = new \DateTimeImmutable();
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return File|null
+     */
+    public function getImageFile()
+    {
+        return $this->imageFile;
+    }
+}

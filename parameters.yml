@@ -1,0 +1,14 @@
+# This file is auto-generated during the composer install
+parameters:
+    database_host: 127.0.0.1
+    database_port: null
+    database_name: sf_aparte
+    database_user: andrespi
+    database_password: airedelsur39
+    mailer_transport: smtp
+    mailer_host: mail.apartefotografia.es
+    mailer_user: departamento.comercial@apartefotografia.es
+    mailer_password: airedelsur39
+    mailer_port: 587
+    mailer_auth: plain
+    secret: sdfñosdglejrñlgiuoeiajg8743975834hfsgd

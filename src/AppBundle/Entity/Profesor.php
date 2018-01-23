@@ -50,7 +50,13 @@ class Profesor
     private $estado;
 
     /**
-     * @ORM\OneToMany(targetEntity="GrupoProfesor", mappedBy="profesor")
+     * @var int
+     *
+     */
+    private $numeroVotos;
+
+    /**
+     * @ORM\OneToMany(targetEntity="GrupoProfesor", mappedBy="profesor", cascade={"persist", "remove"})
      */
     private $grupos_profesores;
 
@@ -277,5 +283,29 @@ class Profesor
     public function getUsuariosProfesores()
     {
         return $this->usuarios_profesores;
+    }
+
+    /**
+     * Set estado
+     *
+     * @param int $estado
+     *
+     * @return Profesor
+     */
+    public function setNumeroVotos($votos)
+    {
+        $this->numeroVotos = $votos;
+
+        return $this;
+    }
+
+    /**
+     * Get estado
+     *
+     * @return int
+     */
+    public function getNumeroVotos()
+    {
+        return $this->numeroVotos;
     }
 }
