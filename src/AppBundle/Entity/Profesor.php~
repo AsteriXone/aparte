@@ -284,4 +284,28 @@ class Profesor
     {
         return $this->usuarios_profesores;
     }
+
+    /**
+     * Set estado
+     *
+     * @param int $estado
+     *
+     * @return Profesor
+     */
+    public function setNumeroVotos($votos)
+    {
+        $this->numeroVotos = $votos;
+
+        return $this;
+    }
+
+    /**
+     * Get estado
+     *
+     * @return int
+     */
+    public function getNumeroVotos()
+    {
+        return $this->numeroVotos;
+    }
 }

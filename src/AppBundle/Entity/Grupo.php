@@ -46,6 +46,20 @@ class Grupo
     /**
      * @var boolean
      *
+     * @ORM\Column(name="isVotosProfe", type="boolean")
+     */
+    private $isVotosProfe;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="isVotosMuestra", type="boolean")
+     */
+    private $isVotosMuestra;
+
+    /**
+     * @var boolean
+     *
      * @ORM\Column(name="isCitasActive", type="boolean")
      */
     private $isCitasActive;
@@ -76,6 +90,11 @@ class Grupo
      * @ORM\OneToMany(targetEntity="GrupoMuestra", mappedBy="grupo")
      */
     private $gruposMuestras;
+
+    /**
+     * @ORM\OneToMany(targetEntity="GrupoMuestraVotar", mappedBy="grupo")
+     */
+    private $gruposMuestrasVotar;
 
     /**
      * @ORM\OneToMany(targetEntity="CuadranteGrupo", mappedBy="grupo")
@@ -474,5 +493,87 @@ class Grupo
     public function getIsComprasActive()
     {
         return $this->isComprasActive;
+    }
+
+    /**
+     * Set isVotosProfe
+     *
+     * @param boolean $isVotosProfe
+     *
+     * @return Grupo
+     */
+    public function setIsVotosProfe($isVotosProfe)
+    {
+        $this->isVotosProfe = $isVotosProfe;
+
+        return $this;
+    }
+
+    /**
+     * Get isVotosProfe
+     *
+     * @return boolean
+     */
+    public function getIsVotosProfe()
+    {
+        return $this->isVotosProfe;
+    }
+
+    /**
+     * Set isVotosMuestra
+     *
+     * @param boolean $isVotosMuestra
+     *
+     * @return Grupo
+     */
+    public function setIsVotosMuestra($isVotosMuestra)
+    {
+        $this->isVotosMuestra = $isVotosMuestra;
+
+        return $this;
+    }
+
+    /**
+     * Get isVotosMuestra
+     *
+     * @return boolean
+     */
+    public function getIsVotosMuestra()
+    {
+        return $this->isVotosMuestra;
+    }
+
+    /**
+     * Add gruposMuestrasVotar
+     *
+     * @param \AppBundle\Entity\GrupoMuestra $gruposMuestrasVotar
+     *
+     * @return Grupo
+     */
+    public function addGruposMuestrasVotar(\AppBundle\Entity\GrupoMuestra $gruposMuestrasVotar)
+    {
+        $this->gruposMuestrasVotar[] = $gruposMuestrasVotar;
+
+        return $this;
+    }
+
+    /**
+     * Remove gruposMuestrasVotar
+     *
+     * @param \AppBundle\Entity\GrupoMuestra $gruposMuestrasVotar
+     */
+    public function removeGruposMuestrasVotar(\AppBundle\Entity\GrupoMuestra $gruposMuestrasVotar)
+    {
+        $this->gruposMuestrasVotar->removeElement($gruposMuestrasVotar);
+    }
+
+    /**
+     * Get gruposMuestrasVotar
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getGruposMuestrasVotar()
+    {
+        return $this->gruposMuestrasVotar;
     }
 }

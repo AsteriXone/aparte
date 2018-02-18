@@ -1,0 +1,33 @@
+{% extends 'layout.html.twig' %}
+{% block content %}
+    <div class="container-fluid">
+
+        <h1 class="text-center">Correo Masivo</h1>
+        <br/>
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                {{ form_start(form)}}
+                {{ form_errors(form)}}
+
+                <div>{{ form_label(form.grupo) }}</div>
+                <div>{{ form_errors(form.grupo) }}</div>
+                <div>{{ form_widget(form.grupo) }}</div>
+                <br/>
+                <div>{{ form_label(form.asunto) }}</div>
+                <div>{{ form_errors(form.asunto) }}</div>
+                <div>{{ form_widget(form.asunto) }}</div>
+                <div>{{ form_label(form.mensaje) }}</div>
+                <div>{{ form_errors(form.mensaje) }}</div>
+                <div>{{ form_widget(form.mensaje) }}</div>
+                <br/>
+                <div class="text-center">{{ form_widget(form.submit) }}</div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+    <br/>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}

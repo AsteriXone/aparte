@@ -47,78 +47,87 @@ class VotoProfesorController extends Controller
 
             // Busca grupo usuario
             $em = $this->getDoctrine()->getManager();
-            $grupoUsuario = $em->getRepository(GruposUsuarios::class)->findBy(array('usuarioId'=>$userId));
+            $grupoUsuario = $em->getRepository(GruposUsuarios::class)->findBy(array('usuarioId' => $userId));
 
             // Revisar... más adelante un usuario pertenece a varios grupos
             $idGrupo = $grupoUsuario[0]->getGrupoId(); // Id del grupo
+            $grupo = $grupoUsuario[0]->getGrupo();
 
-            // Obtener id profes asignados a grupo
-            $em2 = $this->getDoctrine()->getManager();
-            $gruposProfes = $em2->getRepository(GrupoProfesor::class)->findBy(array('grupoId'=>$idGrupo));
+//            dump($grupo->getIsVotosProfe());
+
+            if (!$grupo->getIsVotosProfe()) {
+                return $this->render('usuario/no-votacion-profes.html.twig', [
+                    'base_dir' => realpath($this->getParameter('kernel.project_dir')) . DIRECTORY_SEPARATOR,
+                ]);
+            } else {
+                // Obtener id profes asignados a grupo
+                $em2 = $this->getDoctrine()->getManager();
+                $gruposProfes = $em2->getRepository(GrupoProfesor::class)->findBy(array('grupoId' => $idGrupo));
 
 
-            /*
-             * Fin Recopilacion de datos
-             */
+                /*
+                 * Fin Recopilacion de datos
+                 */
 
-            // Comprobar metodo GET/POST
-            if ($request->getMethod()=== 'GET'){
-//                $method = $request->getMethod();
+                // Comprobar metodo GET/POST
+                if ($request->getMethod() === 'GET') {
+    //                $method = $request->getMethod();
 
-                // Comprueba si existen profes para grupo
-                if ($gruposProfes){
-                    // Obtener profes para usuario y renderizar formulario
+                    // Comprueba si existen profes para grupo
+                    if ($gruposProfes) {
+                        // Obtener profes para usuario y renderizar formulario
 
-                    // usuariosProfes = array de objetos usuariosProfes
-                    $profes = new ArrayCollection();
-                     foreach ($gruposProfes as $lineaGruposProfes){
-//                         $profeAux = new Profesor(); // Aniadira un usuario-profe aunque no este votado
+                        // usuariosProfes = array de objetos usuariosProfes
+                        $profes = new ArrayCollection();
+                        foreach ($gruposProfes as $lineaGruposProfes) {
+    //                         $profeAux = new Profesor(); // Aniadira un usuario-profe aunque no este votado
 
-                         // Obtener Ids Profes para Grupo
-                         $profe = $lineaGruposProfes->getProfesor();
+                            // Obtener Ids Profes para Grupo
+                            $profe = $lineaGruposProfes->getProfesor();
 
-//                       dump($profe->getId());
+    //                       dump($profe->getId());
 
-                        // Comprueba si existe usuarioProfe con profeId y UserId
-                        $repository = $this->getDoctrine()
-                            ->getRepository(UsuariosProfes::class);
+                            // Comprueba si existe usuarioProfe con profeId y UserId
+                            $repository = $this->getDoctrine()
+                                ->getRepository(UsuariosProfes::class);
 
-                        $query = $repository->createQueryBuilder('c')
-                            ->where('c.usuarioId = :userId')
-                            ->andwhere('c.profesorId = :profeId')
-                            ->setParameter('userId', $userId)
-                            ->setParameter('profeId', $profe->getId())
-                            ->getQuery();
+                            $query = $repository->createQueryBuilder('c')
+                                ->where('c.usuarioId = :userId')
+                                ->andwhere('c.profesorId = :profeId')
+                                ->setParameter('userId', $userId)
+                                ->setParameter('profeId', $profe->getId())
+                                ->getQuery();
 
-                        $usuarioProfe = $query->getResult();
-//                        dump($usuarioProfe);
-                        if($usuarioProfe){
-                            // Si existe setProfeSeleccionado(1) (true)
-                            $profe->setEstado(1);
-                            $profes[] = $profe;
-                        } else {
-                            // Si no existe setProfeSeleccionado(0) (false)
-                            $profe->setEstado(0);
-                            $profes[] = $profe;
+                            $usuarioProfe = $query->getResult();
+    //                        dump($usuarioProfe);
+                            if ($usuarioProfe) {
+                                // Si existe setProfeSeleccionado(1) (true)
+                                $profe->setEstado(1);
+                                $profes[] = $profe;
+                            } else {
+                                // Si no existe setProfeSeleccionado(0) (false)
+                                $profe->setEstado(0);
+                                $profes[] = $profe;
+                            }
                         }
+
+                        // Renderiza Formulario
+
+                        return $this->render('usuario/votos-profe.html.twig', [
+                            'base_dir' => realpath($this->getParameter('kernel.project_dir')) . DIRECTORY_SEPARATOR,
+                            'profes' => $profes,
+                            'mensaje' => $mensaje,
+                            'error' => $error,
+                        ]);
+                    } else {
+                        // No Profes disponibles para Grupo
+                        return $this->render('usuario/no-profes.html.twig', [
+                            'base_dir' => realpath($this->getParameter('kernel.project_dir')) . DIRECTORY_SEPARATOR,
+                            'muestras' => false,
+                            'error' => ':( Aún no hay profesores registrados para tu grupo ):',
+                            'mensaje' => $mensaje,
+                        ]);
                     }
-
-                    // Renderiza Formulario
-
-                    return $this->render('usuario/votos-profe.html.twig', [
-                        'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
-                        'profes' => $profes,
-                        'mensaje' => $mensaje,
-                        'error' => $error,
-                    ]);
-                } else {
-                    // No Profes disponibles para Grupo
-                    return $this->render('usuario/no-profes.html.twig', [
-                        'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
-                        'muestras' => false,
-                        'error' => ':( Aún no hay profesores registrados para tu grupo ):',
-                        'mensaje' => $mensaje,
-                    ]);
                 }
             }
         }
@@ -128,7 +137,7 @@ class VotoProfesorController extends Controller
     }
 
     /**
-     * @Route("/votacion", name="votacion")
+     * @Route("/votacion-profes", name="votacion-profes")
      */
     public function votacionAction(Request $request)
     {
@@ -251,7 +260,7 @@ class VotoProfesorController extends Controller
                         }
                     }
                     $mensaje = "Se ha guardado tu votación correctamente!";
-                    return $this->render('usuario/votacion.html.twig', [
+                    return $this->render('usuario/votacion-profes.html.twig', [
                         'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
                         'muestras' => false,
                         'error' => $error,

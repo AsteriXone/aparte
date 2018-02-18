@@ -124,3 +124,17 @@ services:
         tags:
             - { name: sonata.admin, manager_type: orm, group: Galeria, label: Imagenes Galeria }
         public: true
+
+    app.admin.muestra_votar:
+        class: AppBundle\Admin\MuestraVotarAdmin
+        arguments: [~, AppBundle\Entity\MuestraVotar, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Muestras, label: Muestras para Votar }
+        public: true
+
+    app.admin.grupo_muestra_votar:
+        class: AppBundle\Admin\GrupoMuestraVotarAdmin
+        arguments: [~, AppBundle\Entity\GrupoMuestraVotar, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Muestras, label: Asignar Muestras Votar Grupo }
+        public: true

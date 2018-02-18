@@ -30,7 +30,7 @@
                         </tr>
                     {% endfor %}
                 </table>
-                <form action="{{ path('votacion') }}" method="post" name="votacion">
+                <form action="{{ path('votacion-profes') }}" method="post" name="votacion">
                     <div id="formulario" class="text-center">
                         <input type="submit" value="Guardar Votación" class="btn btn-primary" />
                         {% for profe in profes %}

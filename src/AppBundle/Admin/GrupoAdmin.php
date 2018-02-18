@@ -38,6 +38,8 @@ class GrupoAdmin extends AbstractAdmin
             ->add('isActive',null, array('label'=>'Activo'))
             ->add('isCitasActive',null, array('label'=>'Citas'))
             ->add('isComprasActive',null, array('label'=>'Compras'))
+            ->add('isVotosProfe',null, array('label'=>'Votar Profes'))
+            ->add('isVotosMuestra',null, array('label'=>'Votar Muestras'))
             ->add('_action', null, array(
                 'actions' => array(
                     'show' => array(),
@@ -65,6 +67,9 @@ class GrupoAdmin extends AbstractAdmin
             ->add('isActive',null, array('label'=>'Activo'))
             ->add('isCitasActive',null, array('label'=>'Pedir Citas'))
             ->add('isComprasActive',null, array('label'=>'Hacer Compras'))
+            ->add('isVotosProfe',null, array('label'=>'Votar Profes'))
+            ->add('isVotosMuestra',null, array('label'=>'Votar Muestras'))
+
             ->end()
         ;
     }
@@ -86,6 +91,8 @@ class GrupoAdmin extends AbstractAdmin
             ->add('isActive',null, array('label'=>'Activo'))
             ->add('isCitasActive',null, array('label'=>'Pedir Citas'))
             ->add('isComprasActive',null, array('label'=>'Hacer Compras'))
+            ->add('isVotosProfe',null, array('label'=>'Votar Profes'))
+            ->add('isVotosMuestra',null, array('label'=>'Votar Muestras'))
             ->end()
         ;
     }

@@ -91,6 +91,11 @@ class User extends BaseUser
     private $usuarios_profes;
 
     /**
+     * @ORM\OneToMany(targetEntity="UsuarioMuestraVotar", mappedBy="usuario")
+     */
+    private $usuarios_muestras_votar;
+
+    /**
      * One User has One Cita.
      * @ORM\OneToOne(targetEntity="Citas", mappedBy="user")
      */
@@ -107,6 +112,7 @@ class User extends BaseUser
         $this->grupos_usuarios = new ArrayCollection();
         $this->usuarios_muestras = new ArrayCollection();
         $this->usuarios_profes = new ArrayCollection();
+        $this->usuarios_muestras_votar = new ArrayCollection();
     }
 
     public function __toString()

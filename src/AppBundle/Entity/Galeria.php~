@@ -30,7 +30,7 @@ class Galeria
     private $nombreGaleria;
 
     /**
-     * @ORM\OneToMany(targetEntity="ImageGallery", mappedBy="galeria")
+     * @ORM\OneToMany(targetEntity="ImageGallery", mappedBy="galeria", cascade={"persist", "remove"})
      */
     protected $imagenes;
 
@@ -42,7 +42,7 @@ class Galeria
     public function __toString()
     {
         // TODO: Implement __toString() method.
-        return $this->getNombreGaleria();
+        return (string) $this->getNombreGaleria();
     }
 
     /**

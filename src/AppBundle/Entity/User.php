@@ -91,6 +91,11 @@ class User extends BaseUser
     private $usuarios_profes;
 
     /**
+     * @ORM\OneToMany(targetEntity="UsuarioMuestraVotar", mappedBy="usuario")
+     */
+    private $usuarios_muestras_votar;
+
+    /**
      * One User has One Cita.
      * @ORM\OneToOne(targetEntity="Citas", mappedBy="user")
      */
@@ -107,6 +112,7 @@ class User extends BaseUser
         $this->grupos_usuarios = new ArrayCollection();
         $this->usuarios_muestras = new ArrayCollection();
         $this->usuarios_profes = new ArrayCollection();
+        $this->usuarios_muestras_votar = new ArrayCollection();
     }
 
     public function __toString()
@@ -437,5 +443,39 @@ class User extends BaseUser
     public function getFechaRegistro()
     {
         return $this->fecha_registro;
+    }
+
+    /**
+     * Add usuariosMuestrasVotar
+     *
+     * @param \AppBundle\Entity\UsuarioMuestraVotar $usuariosMuestrasVotar
+     *
+     * @return User
+     */
+    public function addUsuariosMuestrasVotar(\AppBundle\Entity\UsuarioMuestraVotar $usuariosMuestrasVotar)
+    {
+        $this->usuarios_muestras_votar[] = $usuariosMuestrasVotar;
+
+        return $this;
+    }
+
+    /**
+     * Remove usuariosMuestrasVotar
+     *
+     * @param \AppBundle\Entity\UsuarioMuestraVotar $usuariosMuestrasVotar
+     */
+    public function removeUsuariosMuestrasVotar(\AppBundle\Entity\UsuarioMuestraVotar $usuariosMuestrasVotar)
+    {
+        $this->usuarios_muestras_votar->removeElement($usuariosMuestrasVotar);
+    }
+
+    /**
+     * Get usuariosMuestrasVotar
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getUsuariosMuestrasVotar()
+    {
+        return $this->usuarios_muestras_votar;
     }
 }

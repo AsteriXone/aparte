@@ -37,7 +37,7 @@ class VotacionesProfeController extends Controller
 
             // Obtener todos los profes del grupo
             $profesoresGrupo = $grupoConsulta->getGruposProfesores();
-
+//            dump($profesoresGrupo);
             foreach ($profesoresGrupo as $profesorGrupo){
                 $votaciones++;
                 $profesor = $profesorGrupo->getProfesor();

@@ -1,0 +1,86 @@
+{% extends 'layout.html.twig' %}
+{% block title %}Generar citas{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <h1 class="text-center">Generar Citas</h1>
+    <br/>
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            {{ form_start(form)}}
+            {{ form_errors(form)}}
+
+            <div>{{ form_label(form.cuadrante) }}</div>
+            <div>{{ form_errors(form.cuadrante) }}</div>
+            <div>{{ form_widget(form.cuadrante) }}</div>
+            <br/>
+            <ul class="diaCuadrante" data-prototype="{{ form_widget(form.diaCuadrante.vars.prototype)|e('html_attr') }}">
+                {% for dia in form.diaCuadrante %}
+                    <li>
+                        {{ form_row(dia) }}
+                    </li>
+                {% endfor %}
+            </ul>
+            {#<div class="text-center">{{ form_widget(form.submit) }}</div>#}
+            {{ form_end(form) }}
+        </div>
+    </div>
+
+</div>
+<br/>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .descanso{
+            border: 1px solid rgba(100,100,100, .1);
+            border-radius: 7px;
+            box-shadow: -2px 2px 2px rgba(0,0,0, .5);
+            padding: 10px;
+        }
+    </style>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        var $collectionHolder;
+
+        var $addTagLink = $('<a href="#" class="add_tag_link">Nueva Fecha</a>');
+        var $newLinkLi =  $('<li></li>').append($addTagLink);
+
+        jQuery(document).ready(function(){
+            $collectionHolder = $('ul.diaCuadrante');
+            $collectionHolder.append($newLinkLi);
+
+            $collectionHolder.data('index', $collectionHolder.find(':input').length);
+
+            $addTagLink.on('click', function(e){
+                e.preventDefault();
+
+                addTagForm($collectionHolder, $newLinkLi);
+            });
+        });
+
+        function addTagForm($collectionHolder, $newLinkLi){
+            var prototype = $collectionHolder.data('prototype');
+
+            var index = $collectionHolder.data('index');
+
+            var newForm = prototype;
+
+            newForm = newForm.replace(/__name__/g, index);
+
+            $collectionHolder.data('index', index + 1);
+
+            var $newFormLi = $('<li></li>').append(newForm);
+            $newLinkLi.before($newFormLi);
+        }
+
+        jQuery(document).ready(function(){
+
+        });
+    </script>
+{% endblock %}

@@ -323,7 +323,7 @@ class MuestrasController extends Controller
                     }
                 }
             }
-            dump($usuariosMuestras);
+//            dump($usuariosMuestras);
             // Renderiza Lista Pedido
             if (count($usuariosMuestras)<1){
                 $error = 'Actualmente no tienes nada, ve a la pestaña muestras y realiza tu pedido.';

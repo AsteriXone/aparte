@@ -10,6 +10,7 @@ parameters:
     locale: es
     app.path.muestras_images: /img/muestras
     app.path.gallery_images: /img/gallery
+    app.path.muestras_votar: /img/muestras-votar
 
 framework:
     #esi: ~
@@ -85,9 +86,13 @@ vich_uploader:
             upload_destination: '%kernel.root_dir%/../web/img/muestras'
             inject_on_load: true
         gallery_image:
-                    uri_prefix:         /img/gallery
-                    upload_destination: '%kernel.root_dir%/../web/img/gallery'
-                    inject_on_load: true
+            uri_prefix:         /img/gallery
+            upload_destination: '%kernel.root_dir%/../web/img/gallery'
+            inject_on_load: true
+        muestra_votar:
+            uri_prefix:         /img/muestras-votar
+            upload_destination: '%kernel.root_dir%/../web/img/muestras-votar'
+            inject_on_load: true
 
 swiftmailer:
     transport: '%mailer_transport%'

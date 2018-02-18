@@ -119,7 +119,7 @@ class CitaUsuarioController extends Controller
 
                         // Envía correo
                         $message = (new \Swift_Message('Apartefotografía citas'))
-                            ->setFrom('departamento.comercial@apartefotografia.es')
+                            ->setFrom('info@apartefotografia.es')
                             ->setTo($user->getEmail())
                             ->setBody(
                                 $this->renderView(

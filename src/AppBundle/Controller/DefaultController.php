@@ -77,7 +77,7 @@ class DefaultController extends Controller
     /**
      * @Route("/contactar", name="contactar")
      */
-    public function contactarAction(Request $request)
+    public function contactarAction(Request $request, \Swift_Mailer $mailer)
     {
         $form = $this->createForm(ContactarType::class);
         $form->handleRequest($request);
@@ -86,12 +86,19 @@ class DefaultController extends Controller
 
             $contacto = $form->getData();
 
-            // ... perform some action, such as saving the task to the database
-            // for example, if Task is a Doctrine entity, save it!
-//            $em = $this->getDoctrine()->getManager();
-//            $em->persist($muestra);
-//            $em->flush();
-
+            $message = (new \Swift_Message($contacto['asunto']))
+                ->setFrom('apartefotografia@apartefotografia.es')
+//                ->setTo('info@apartefotografia.es')
+                ->setTo('info@apartefotografia.es')
+                ->setBody(
+                    $this->renderView(
+                        'Emails/contacto.html.twig',
+                        array('contacto' => $contacto)
+                    ),
+                    'text/html'
+                )
+            ;
+            $mailer->send($message);
 
             return $this->render('default/contactar-enviado.html.twig');
         }

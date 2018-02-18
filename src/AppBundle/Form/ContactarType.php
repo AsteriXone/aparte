@@ -37,7 +37,11 @@ class ContactarType extends AbstractType
                 'label' => 'Teléfono',
                 'attr' => array('placeholder' => 'Tu teléfono'),
                 'required' => true,))
-            ->add('Comentario', TextareaType::class, array(
+            ->add('asunto', TextType::class, array(
+                'label' => 'Asunto',
+                'attr' => array('placeholder' => 'Asunto'),
+                'required' => true,))
+            ->add('comentario', TextareaType::class, array(
                 'label' => 'Comentario',
                 'attr' => array('placeholder' => 'Escribe aquí tu comentario'),
                 'required' => true,))
