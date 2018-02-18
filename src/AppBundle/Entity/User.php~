@@ -444,4 +444,38 @@ class User extends BaseUser
     {
         return $this->fecha_registro;
     }
+
+    /**
+     * Add usuariosMuestrasVotar
+     *
+     * @param \AppBundle\Entity\UsuarioMuestraVotar $usuariosMuestrasVotar
+     *
+     * @return User
+     */
+    public function addUsuariosMuestrasVotar(\AppBundle\Entity\UsuarioMuestraVotar $usuariosMuestrasVotar)
+    {
+        $this->usuarios_muestras_votar[] = $usuariosMuestrasVotar;
+
+        return $this;
+    }
+
+    /**
+     * Remove usuariosMuestrasVotar
+     *
+     * @param \AppBundle\Entity\UsuarioMuestraVotar $usuariosMuestrasVotar
+     */
+    public function removeUsuariosMuestrasVotar(\AppBundle\Entity\UsuarioMuestraVotar $usuariosMuestrasVotar)
+    {
+        $this->usuarios_muestras_votar->removeElement($usuariosMuestrasVotar);
+    }
+
+    /**
+     * Get usuariosMuestrasVotar
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getUsuariosMuestrasVotar()
+    {
+        return $this->usuarios_muestras_votar;
+    }
 }

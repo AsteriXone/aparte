@@ -70,6 +70,12 @@ class MuestraVotar
      */
     private $estado;
 
+    /**
+     * @var int
+     *
+     */
+    private $numeroVotos;
+
 
     /**
      * @ORM\OneToMany(targetEntity="GrupoMuestraVotar", mappedBy="muestraVotar", cascade={"persist", "remove"})
@@ -118,7 +124,7 @@ class MuestraVotar
     /**
      * @param int $accion
      *
-     * @return Muestra
+     * @return MuestraVotar
      */
     public function setMuestraSeleccionada($accion)
     {
@@ -138,7 +144,7 @@ class MuestraVotar
     /**
      * @param int $accion
      *
-     * @return Muestra
+     * @return MuestraVotar
      */
     public function setEstado($accion)
     {
@@ -172,7 +178,7 @@ class MuestraVotar
     /**
      * @param string $imageName
      *
-     * @return Muestra
+     * @return MuestraVotar
      */
     public function setImageName($imageName)
     {
@@ -194,7 +200,7 @@ class MuestraVotar
      *
      * @param \DateTime $updatedAt
      *
-     * @return Muestra
+     * @return MuestraVotar
      */
     public function setUpdatedAt($updatedAt)
     {
@@ -219,7 +225,7 @@ class MuestraVotar
      *
      * @param string $descripcion
      *
-     * @return Muestra
+     * @return MuestraVotar
      */
     public function setDescripcion($descripcion)
     {
@@ -270,5 +276,62 @@ class MuestraVotar
     public function getGruposMuestrasVotar()
     {
         return $this->gruposMuestrasVotar;
+    }
+
+    /**
+     * Add usuariosMuestrasVotar
+     *
+     * @param \AppBundle\Entity\UsuarioMuestraVotar $usuariosMuestrasVotar
+     *
+     * @return MuestraVotar
+     */
+    public function addUsuariosMuestrasVotar(\AppBundle\Entity\UsuarioMuestraVotar $usuariosMuestrasVotar)
+    {
+        $this->usuarios_muestras_votar[] = $usuariosMuestrasVotar;
+
+        return $this;
+    }
+
+    /**
+     * Remove usuariosMuestrasVotar
+     *
+     * @param \AppBundle\Entity\UsuarioMuestraVotar $usuariosMuestrasVotar
+     */
+    public function removeUsuariosMuestrasVotar(\AppBundle\Entity\UsuarioMuestraVotar $usuariosMuestrasVotar)
+    {
+        $this->usuarios_muestras_votar->removeElement($usuariosMuestrasVotar);
+    }
+
+    /**
+     * Get usuariosMuestrasVotar
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getUsuariosMuestrasVotar()
+    {
+        return $this->usuarios_muestras_votar;
+    }
+    /**
+     * Set numeroVotos
+     *
+     * @param int $votos
+     *
+     * @return MuestraVotar
+     */
+    public function setNumeroVotos($votos)
+    {
+        $this->numeroVotos = $votos;
+
+        return $this;
+    }
+
+    /**
+     * Get estado
+     *
+     * @return int
+     */
+    public function getNumeroVotos()
+    {
+        return $this->numeroVotos;
     }
 }

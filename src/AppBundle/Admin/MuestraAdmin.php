@@ -35,8 +35,8 @@ class MuestraAdmin extends AbstractAdmin
             ->add('imagen' ,null, array(
                 'base_path' => '%app.path.muestras_images%',
                 'template' => 'vich_uploader_image.html.twig',
-                    )
                 )
+            )
             ->add('descripcion')
             ->add('_action', null, array(
                 'actions' => array(

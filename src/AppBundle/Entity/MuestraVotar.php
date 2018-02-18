@@ -124,7 +124,7 @@ class MuestraVotar
     /**
      * @param int $accion
      *
-     * @return Muestra
+     * @return MuestraVotar
      */
     public function setMuestraSeleccionada($accion)
     {
@@ -144,7 +144,7 @@ class MuestraVotar
     /**
      * @param int $accion
      *
-     * @return Muestra
+     * @return MuestraVotar
      */
     public function setEstado($accion)
     {
@@ -178,7 +178,7 @@ class MuestraVotar
     /**
      * @param string $imageName
      *
-     * @return Muestra
+     * @return MuestraVotar
      */
     public function setImageName($imageName)
     {
@@ -200,7 +200,7 @@ class MuestraVotar
      *
      * @param \DateTime $updatedAt
      *
-     * @return Muestra
+     * @return MuestraVotar
      */
     public function setUpdatedAt($updatedAt)
     {
@@ -225,7 +225,7 @@ class MuestraVotar
      *
      * @param string $descripcion
      *
-     * @return Muestra
+     * @return MuestraVotar
      */
     public function setDescripcion($descripcion)
     {
@@ -312,11 +312,11 @@ class MuestraVotar
         return $this->usuarios_muestras_votar;
     }
     /**
-     * Set estado
+     * Set numeroVotos
      *
-     * @param int $estado
+     * @param int $votos
      *
-     * @return Profesor
+     * @return MuestraVotar
      */
     public function setNumeroVotos($votos)
     {

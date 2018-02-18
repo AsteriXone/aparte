@@ -32,8 +32,8 @@ class MuestraVotarAdmin extends AbstractAdmin
             ->add('id')
             ->add('imageName', null, array('label' => "Nombre"))
             ->add('imagen' ,null, array(
-                    'base_path' => '%app.path.muestras_votar%',
-                    'template' => 'muestras_votar.html.twig',
+                'base_path' => '%app.path.muestras_votar%',
+                'template' => 'muestras_votar.html.twig',
                 )
             )
             ->add('descripcion')
