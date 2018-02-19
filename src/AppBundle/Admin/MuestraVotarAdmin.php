@@ -55,7 +55,6 @@ class MuestraVotarAdmin extends AbstractAdmin
         $formMapper
             ->add('imageFile', FileType::class, array('label' => 'Subir imagen'))
             ->add('descripcion')
-
         ;
     }
 
