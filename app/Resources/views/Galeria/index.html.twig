@@ -1,49 +1,21 @@
 {% extends 'layout.html.twig' %}
 {% block title %}Galería{% endblock %}
 {% block content %}
-    {#<h2 class="text-center">Galería</h2>#}
-    <!-- The Gallery as lightbox dialog, should be a child element of the document body -->
-    <div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls">
-        <div class="slides"></div>
-        <h3 class="title"></h3>
-        <a class="prev">‹</a>
-        <a class="next">›</a>
-        <a class="close">×</a>
-        <a class="play-pause"></a>
-        <ol class="indicator"></ol>
+    <div class="container-fluid">
+        <h1 class="text-center">Ver Galerías</h1>
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                {% for galeria in galerias %}
+                    <br/>
+                    <a style="width: 190px" href="{{ path('galeria', { 'id': galeria.id}) }}" role="button" class="btn btn-primary center-block">{{  galeria.nombreGaleria }}</a>
+                {% endfor %}
+            </div>
+        </div>
     </div>
-    <div id="links">
-        <a href="{{ asset('img/avatar/avatar_001.png') }}" title="Banana">
-            <img src="{{ asset('img/avatar/avatar_001.png') }}" alt="Banana">
-        </a>
-        <a href="{{ asset('img/avatar/avatar_002.png') }}" title="Apple">
-            <img src="{{ asset('img/avatar/avatar_002.png') }}" alt="Apple">
-        </a>
-        <a href="{{ asset('img/avatar/avatar_003.png') }}" title="Orange">
-            <img src="{{ asset('img/avatar/avatar_003.png') }}" alt="Orange">
-        </a>
-    </div>
+    <br/>
 
-    {#{% for galeria in galerias %}#}
-        {#{% for imagen in galeria.imagenes %}#}
-            {#<p><strong>Nombre:</strong> {{ imagen.imageName }}</p>#}
-        {#{% endfor %}#}
-    {#{% endfor %}#}
-    <script src="{{ asset('js/blueimp-gallery.min.js') }}"></script>
-
-    <script>
-        document.getElementById('links').onclick = function (event) {
-            event = event || window.event;
-            var target = event.target || event.srcElement,
-                link = target.src ? target.parentNode : target,
-                options = {index: link, event: event},
-                links = this.getElementsByTagName('a');
-            blueimp.Gallery(links, options);
-        };
-    </script>
 {% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
-    <link rel="stylesheet" href="{{ asset('css/blueimp-gallery.min.css') }}" />
 {% endblock %}

@@ -1,0 +1,39 @@
+{% extends 'layout.html.twig' %}
+{% block title %}Galería{% endblock %}
+{% block content %}
+    <div class="container-fluid">
+        <h1 class="text-center">{{ nombre_galeria }}</h1>
+        {#<br/>#}
+        <div class="row">
+            <div class="col-md-12">
+                <div class="center-block" id="gallery" style="display:none;">
+                    {% for imagen in galeria %}
+                        <img class="img-responsive" alt="{{ imagen.imageName }}" src="{{ asset('img/gallery/' ~ imagen.imageName) }}"
+                             data-image="{{ asset('img/gallery/' ~ imagen.imageName) }}"
+                             data-description="Image 1 Description">
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+
+        jQuery(document).ready(function(){
+            jQuery("#gallery").unitegallery({
+                tiles_type: "justified",
+                theme_enable_preloader: true,
+
+            });
+        });
+
+    </script>
+{% endblock %}

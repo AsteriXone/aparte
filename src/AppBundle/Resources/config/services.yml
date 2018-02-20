@@ -115,14 +115,14 @@ services:
         class: AppBundle\Admin\GaleriaAdmin
         arguments: [~, AppBundle\Entity\Galeria, AppBundle:GaleriaAdmin]
         tags:
-            - { name: sonata.admin, manager_type: orm, group: Galeria, label: Galeria }
+            - { name: sonata.admin, manager_type: orm, group: Galerias, label: Galeria }
         public: true
 
     app.admin.image_gallery:
         class: AppBundle\Admin\ImageGalleryAdmin
         arguments: [~, AppBundle\Entity\ImageGallery, AppBundle:ImageGalleryAdmin]
         tags:
-            - { name: sonata.admin, manager_type: orm, group: Galeria, label: Imagenes Galeria }
+            - { name: sonata.admin, manager_type: orm, group: Galerias, label: Imagenes Galeria }
         public: true
 
     app.admin.muestra_votar:

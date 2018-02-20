@@ -13,6 +13,7 @@ use AppBundle\Entity\Grupo;
 use AppBundle\Entity\GrupoMuestra;
 use AppBundle\Entity\GrupoProfesor;
 use AppBundle\Entity\GruposUsuarios;
+use AppBundle\Entity\ImageGallery;
 use AppBundle\Entity\Profesor;
 use AppBundle\Entity\User;
 use AppBundle\Entity\UsuariosMuestras;
@@ -30,7 +31,7 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 class GaleriaController extends Controller
 {
     /**
-     * @Route("/galeria", name="galeria")
+     * @Route("/galeria", name="galerias")
      */
     public function indexAction(Request $request)
     {
@@ -42,6 +43,30 @@ class GaleriaController extends Controller
         return $this->render('Galeria/index.html.twig', [
             'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
             'galerias' => $galerias,
+        ]);
+    }
+
+    /**
+     * @Route("/galeria/{id}", name="galeria")
+     */
+    public function galleriaAction($id)
+    {
+        // Traer galerias de DB
+        $imagenes = $this->getDoctrine()
+            ->getRepository(ImageGallery::class)
+            ->findBy(array('galeria' => $id));
+
+        $galeria = $this->getDoctrine()
+            ->getRepository(Galeria::class)
+            ->find($id);
+        $nombre = $galeria->getNombreGaleria();
+
+//        dump($imagenes);
+
+        return $this->render('Galeria/galeria.html.twig', [
+            'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
+            'galeria' => $imagenes,
+            'nombre_galeria'=> $nombre,
         ]);
     }
 }

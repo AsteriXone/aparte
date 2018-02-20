@@ -47,9 +47,9 @@ class GaleriaAdmin extends AbstractAdmin
     {
         $formMapper
             ->add('nombreGaleria', null, array('label' => 'Nombre Galería'))
-            ->add('imagenes', CollectionType::class, array(
-                'label' => 'Imagen',
-            ))
+//            ->add('imagenes', CollectionType::class, array(
+//                'label' => 'Imagen',
+//            ))
         ;
     }
 
