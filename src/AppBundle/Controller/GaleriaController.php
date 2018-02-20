@@ -39,11 +39,17 @@ class GaleriaController extends Controller
         $galerias = $this->getDoctrine()
             ->getRepository(Galeria::class)
             ->findAll();
-
-        return $this->render('Galeria/index.html.twig', [
-            'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
-            'galerias' => $galerias,
-        ]);
+        if ($galerias){
+            return $this->render('Galeria/index.html.twig', [
+                'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
+                'galerias' => $galerias,
+            ]);
+        } else {
+            return $this->render('Galeria/no-galerias.html.twig', [
+                'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
+                'galerias' => $galerias,
+            ]);
+        }
     }
 
     /**
@@ -55,18 +61,24 @@ class GaleriaController extends Controller
         $imagenes = $this->getDoctrine()
             ->getRepository(ImageGallery::class)
             ->findBy(array('galeria' => $id));
-
-        $galeria = $this->getDoctrine()
-            ->getRepository(Galeria::class)
-            ->find($id);
-        $nombre = $galeria->getNombreGaleria();
+        if($imagenes){
+            $galeria = $this->getDoctrine()
+                ->getRepository(Galeria::class)
+                ->find($id);
+            $nombre = $galeria->getNombreGaleria();
 
 //        dump($imagenes);
 
-        return $this->render('Galeria/galeria.html.twig', [
-            'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
-            'galeria' => $imagenes,
-            'nombre_galeria'=> $nombre,
-        ]);
+            return $this->render('Galeria/galeria.html.twig', [
+                'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
+                'galeria' => $imagenes,
+                'nombre_galeria'=> $nombre,
+            ]);
+        } else {
+            return $this->render('Galeria/no-imagenes-galeria.html.twig', [
+                'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
+            ]);
+        }
+
     }
 }
