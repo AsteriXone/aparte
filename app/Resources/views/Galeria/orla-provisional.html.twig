@@ -1,0 +1,59 @@
+{% extends 'layout.html.twig' %}
+{% block title %}Orla provisional{% endblock %}
+{% block content %}
+    <div class="container-fluid">
+        <h1 class="text-center">Orla Provisional</h1>
+        <h2 class="text-center">{{ nombre_grupo }}</h2>
+        {#<br/>#}
+        <div class="row">
+            <div class="col-md-offset-1 col-md-10">
+                <div class="center-block" id="orla-provisional" style="display:none;">
+                    {% for imagen in imagenes %}
+                        <img class="img-responsive" alt="{{ imagen.imageName }}" src="{{ asset('img/orla-provisional/' ~ imagen.imageName) }}"
+                             data-image="{{ asset('img/orla-provisional/' ~ imagen.imageName) }}"
+                             data-description="Image 1 Description">
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <div class="login-panel panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title text-center">¿Quieres poner una incidencia?</h3>
+                    </div>
+
+                    <div class="panel-body">
+                        {{ form_start(form) }}
+                        {{ form_widget(form) }}
+                        <div>
+                            <button type="submit" class="btn btn-success center-block">Enviar</button>
+                        </div>
+                        {{ form_end(form) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+
+        jQuery(document).ready(function(){
+            jQuery("#orla-provisional").unitegallery({
+                gallery_theme: "tiles",
+                tiles_type: "justified",
+                theme_enable_preloader: true,
+            });
+        });
+
+    </script>
+{% endblock %}

@@ -112,6 +112,11 @@ class Grupo
      */
     private $usuario_muestra;
 
+    /**
+     * @ORM\OneToMany(targetEntity="ImageOrla", mappedBy="grupo", cascade={"persist", "remove"})
+     */
+    protected $imagenes;
+
 
     public function __construct()
     {
@@ -119,6 +124,7 @@ class Grupo
         $this->grupos_usuarios = new ArrayCollection();
         $this->cuadranteGrupo = new ArrayCollection();
         $this->grupos_profesores = new ArrayCollection();
+        $this->imagenes = new ArrayCollection();
     }
 
     public function __toString()

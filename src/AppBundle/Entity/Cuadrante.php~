@@ -64,7 +64,7 @@ class Cuadrante
     public function __construct()
     {
         $this->cuadranteGrupo = new ArrayCollection();
-        $this->cita = new ArrayCollection();
+        $this->citas = new ArrayCollection();
         $this->diaCuadrante = new ArrayCollection();
     }
 

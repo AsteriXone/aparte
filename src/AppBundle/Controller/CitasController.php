@@ -23,7 +23,7 @@ class CitasController extends Controller
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $cuad = $form->get('cuadrante')->getData();
+            $cuad = $form->getData();
             dump($cuad);
 
         }
@@ -40,7 +40,7 @@ class CitasController extends Controller
     public function generarCitasPruebaAction(Request $request)
     {
         $cuadrante = new Cuadrante();
-        $form = $this->createForm(CuadranteType::class, $cuadrante);
+        $form = $this->createForm(CuadranteType::class);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {

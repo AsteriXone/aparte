@@ -112,6 +112,11 @@ class Grupo
      */
     private $usuario_muestra;
 
+    /**
+     * @ORM\OneToMany(targetEntity="ImageOrla", mappedBy="grupo", cascade={"persist", "remove"})
+     */
+    protected $imagenes;
+
 
     public function __construct()
     {
@@ -119,6 +124,7 @@ class Grupo
         $this->grupos_usuarios = new ArrayCollection();
         $this->cuadranteGrupo = new ArrayCollection();
         $this->grupos_profesores = new ArrayCollection();
+        $this->imagenes = new ArrayCollection();
     }
 
     public function __toString()
@@ -575,5 +581,39 @@ class Grupo
     public function getGruposMuestrasVotar()
     {
         return $this->gruposMuestrasVotar;
+    }
+
+    /**
+     * Add imagene
+     *
+     * @param \AppBundle\Entity\ImageOrla $imagene
+     *
+     * @return Grupo
+     */
+    public function addImagene(\AppBundle\Entity\ImageOrla $imagene)
+    {
+        $this->imagenes[] = $imagene;
+
+        return $this;
+    }
+
+    /**
+     * Remove imagene
+     *
+     * @param \AppBundle\Entity\ImageOrla $imagene
+     */
+    public function removeImagene(\AppBundle\Entity\ImageOrla $imagene)
+    {
+        $this->imagenes->removeElement($imagene);
+    }
+
+    /**
+     * Get imagenes
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getImagenes()
+    {
+        return $this->imagenes;
     }
 }

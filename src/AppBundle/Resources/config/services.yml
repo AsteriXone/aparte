@@ -138,3 +138,17 @@ services:
         tags:
             - { name: sonata.admin, manager_type: orm, group: Muestras, label: Asignar Muestras Votar Grupo }
         public: true
+
+    app.admin.image_orla:
+            class: AppBundle\Admin\ImageOrlaAdmin
+            arguments: [~, AppBundle\Entity\ImageOrla, SonataAdminBundle:CRUD]
+            tags:
+                - { name: sonata.admin, manager_type: orm, group: Orla Provisional, label: Orlas Grupo }
+            public: true
+
+    app.admin.incidencia:
+        class: AppBundle\Admin\IncidenciaAdmin
+        arguments: [~, AppBundle\Entity\Incidencia, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Orla Provisional, label: Incidencias }
+        public: true

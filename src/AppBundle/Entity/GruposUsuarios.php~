@@ -34,6 +34,22 @@ class GruposUsuarios
     private $user;
 
     /**
+     * @ORM\OneToMany(targetEntity="Incidencia", mappedBy="grupo_usuario", cascade={"persist"})
+     */
+    private $incidencias;
+
+    public function __construct()
+    {
+        $this->incidencias = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        // TODO: Implement __toString() method.
+        return (string) $this->getUser()->getNombreCompleto() ." - ".$this->getGrupo()->getNombreGrupo(). " (" . $this->getGrupo()->getAnio().")";
+    }
+
+    /**
      * @var int
      *
      * @ORM\Column(name="user_id", type="integer", nullable=true)
@@ -177,5 +193,39 @@ class GruposUsuarios
     public function getGrupoId()
     {
         return $this->grupoId;
+    }
+
+    /**
+     * Add incidencia
+     *
+     * @param \AppBundle\Entity\Incidencia $incidencia
+     *
+     * @return GruposUsuarios
+     */
+    public function addIncidencia(\AppBundle\Entity\Incidencia $incidencia)
+    {
+        $this->incidencias[] = $incidencia;
+
+        return $this;
+    }
+
+    /**
+     * Remove incidencia
+     *
+     * @param \AppBundle\Entity\Incidencia $incidencia
+     */
+    public function removeIncidencia(\AppBundle\Entity\Incidencia $incidencia)
+    {
+        $this->incidencias->removeElement($incidencia);
+    }
+
+    /**
+     * Get incidencias
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getIncidencias()
+    {
+        return $this->incidencias;
     }
 }
