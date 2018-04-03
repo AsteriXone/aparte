@@ -77,7 +77,8 @@ class UsuarioController extends Controller
 
         // Grupo al que pertenece usuario
         $em = $this->getDoctrine()->getManager();
-        $grupoUsuario = $em->getRepository(GruposUsuarios::class)->find($user);
+        $grupoUsuario = $em->getRepository(GruposUsuarios::class)
+            ->findBy(array('user' => $user));
 
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -107,7 +108,7 @@ class UsuarioController extends Controller
 
         // Traer galerias de DB
 
-        $idGrupo = $grupoUsuario->getGrupoId();
+        $idGrupo = $grupoUsuario[0]->getGrupo()->getId();
         $imagenes = $this->getDoctrine()
             ->getRepository(ImageOrla::class)
             ->findBy(array('grupo' => $idGrupo));
