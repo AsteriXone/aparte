@@ -52,7 +52,7 @@ class ImageOrla
 
     /**
      * @ORM\ManyToOne(targetEntity="Grupo", inversedBy="imagenes")
-     * @ORM\JoinColumn(name="id_orla", referencedColumnName="id", nullable=false)
+     * @ORM\JoinColumn(name="id_grupo", referencedColumnName="id", nullable=false)
      */
     protected $grupo;
 

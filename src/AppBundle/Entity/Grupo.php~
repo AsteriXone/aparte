@@ -582,4 +582,38 @@ class Grupo
     {
         return $this->gruposMuestrasVotar;
     }
+
+    /**
+     * Add imagene
+     *
+     * @param \AppBundle\Entity\ImageOrla $imagene
+     *
+     * @return Grupo
+     */
+    public function addImagene(\AppBundle\Entity\ImageOrla $imagene)
+    {
+        $this->imagenes[] = $imagene;
+
+        return $this;
+    }
+
+    /**
+     * Remove imagene
+     *
+     * @param \AppBundle\Entity\ImageOrla $imagene
+     */
+    public function removeImagene(\AppBundle\Entity\ImageOrla $imagene)
+    {
+        $this->imagenes->removeElement($imagene);
+    }
+
+    /**
+     * Get imagenes
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getImagenes()
+    {
+        return $this->imagenes;
+    }
 }
