@@ -75,8 +75,8 @@
       <file leaf-file-name="UsuarioController.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/UsuarioController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="232">
-              <caret line="109" column="46" lean-forward="false" selection-start-line="109" selection-start-column="46" selection-end-line="109" selection-end-column="46" />
+            <state relative-caret-position="92">
+              <caret line="106" column="0" lean-forward="true" selection-start-line="106" selection-start-column="0" selection-end-line="106" selection-end-column="0" />
               <folding>
                 <element signature="e#40#76#0#PHP" expanded="true" />
               </folding>
@@ -98,7 +98,7 @@
         <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/GruposUsuarios.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="85">
-              <caret line="192" column="32" lean-forward="true" selection-start-line="192" selection-start-column="20" selection-end-line="192" selection-end-column="32" />
+              <caret line="192" column="32" lean-forward="false" selection-start-line="192" selection-start-column="20" selection-end-line="192" selection-end-column="32" />
               <folding />
             </state>
           </provider>
@@ -729,7 +729,7 @@
       <workItem from="1521714256687" duration="19941000" />
       <workItem from="1521972259749" duration="10353000" />
       <workItem from="1522650828238" duration="4588000" />
-      <workItem from="1522747124467" duration="11268000" />
+      <workItem from="1522747124467" duration="11940000" />
     </task>
     <task id="LOCAL-00001" summary="Registro y login">
       <created>1508205270506</created>
@@ -798,7 +798,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="731238000" />
+    <option name="totallyTimeSpent" value="731910000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1287,15 +1287,15 @@
     <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/GruposUsuarios.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
-          <caret line="192" column="32" lean-forward="true" selection-start-line="192" selection-start-column="20" selection-end-line="192" selection-end-column="32" />
+          <caret line="192" column="32" lean-forward="false" selection-start-line="192" selection-start-column="20" selection-end-line="192" selection-end-column="32" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/UsuarioController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="232">
-          <caret line="109" column="46" lean-forward="false" selection-start-line="109" selection-start-column="46" selection-end-line="109" selection-end-column="46" />
+        <state relative-caret-position="92">
+          <caret line="106" column="0" lean-forward="true" selection-start-line="106" selection-start-column="0" selection-end-line="106" selection-end-column="0" />
           <folding>
             <element signature="e#40#76#0#PHP" expanded="true" />
           </folding>
