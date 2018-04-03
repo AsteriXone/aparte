@@ -115,10 +115,10 @@ class UsuarioController extends Controller
         $em = $this->getDoctrine()->getManager();
         $grupoUsuario = $em->getRepository(GruposUsuarios::class)->find($user);
 
-        $nombre = $grupoUsuario->getGrupo();
+        $grupo = $grupoUsuario->getGrupo();
 
         // Traer galerias de DB
-        $grupo = $grupoUsuario->getGrupo();
+
         $idGrupo = $grupo->getId();
         $imagenes = $this->getDoctrine()
             ->getRepository(ImageOrla::class)
@@ -128,7 +128,7 @@ class UsuarioController extends Controller
             return $this->render('Galeria/orla-provisional.html.twig', [
                 'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
                 'imagenes' => $imagenes,
-                'nombre_grupo'=> $nombre,
+                'nombre_grupo'=> $grupo,
                 'form' => $form->createView(),
                 'isIncidencia' => $isIncidencia,
             ]);
@@ -136,7 +136,6 @@ class UsuarioController extends Controller
             return $this->render('Galeria/no-orla-provisional.html.twig', [
                 'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
                 'id_grupo' => $idGrupo,
-                'imagenes' => $imagenes,
             ]);
         }
 
