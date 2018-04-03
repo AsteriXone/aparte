@@ -81,7 +81,7 @@ class UsuarioController extends Controller
             $grupoUsuario = $em->getRepository(GruposUsuarios::class)->find($user);
 
             // Comprobar si ya existe incidencia en Grupo-Usuario
-            $em = $this->getDoctrine()->getManager();
+//            $em = $this->getDoctrine()->getManager();
             $existeIncidencia = $em->getRepository(Incidencia::class)->findBy(array('grupo_usuario' => $grupoUsuario));
 
             if ($existeIncidencia) {
@@ -116,11 +116,13 @@ class UsuarioController extends Controller
         $grupoUsuario = $em->getRepository(GruposUsuarios::class)->find($user);
 
         $nombre = $grupoUsuario->getGrupo();
+
         // Traer galerias de DB
-        $grupo = $grupoUsuario->getGrupo()->getId();
+        $grupo = $grupoUsuario->getGrupo();
+        $idGrupo = $grupo->getId();
         $imagenes = $this->getDoctrine()
             ->getRepository(ImageOrla::class)
-            ->findBy(array('grupo' => $grupo));
+            ->findBy(array('grupo' => $idGrupo));
 
         if($imagenes){
             return $this->render('Galeria/orla-provisional.html.twig', [
