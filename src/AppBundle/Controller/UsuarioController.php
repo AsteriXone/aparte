@@ -135,6 +135,8 @@ class UsuarioController extends Controller
         } else {
             return $this->render('Galeria/no-orla-provisional.html.twig', [
                 'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
+                'id_grupo' => $idGrupo,
+                'imagenes' => $imagenes,
             ]);
         }
 
