@@ -117,9 +117,10 @@ class UsuarioController extends Controller
 
         $nombre = $grupoUsuario->getGrupo();
         // Traer galerias de DB
+        $grupo = $grupoUsuario->getGrupo();
         $imagenes = $this->getDoctrine()
             ->getRepository(ImageOrla::class)
-            ->findBy(array('grupo' => $grupoUsuario->getGrupo()));
+            ->findBy(array('grupo' => $grupo));
 
         if($imagenes){
             return $this->render('Galeria/orla-provisional.html.twig', [

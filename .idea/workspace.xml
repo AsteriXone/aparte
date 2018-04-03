@@ -6,8 +6,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="28239bfc-4a69-4427-bc22-b3f97495a773" name="Default" comment="Registro ok!">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Entity/ImageOrla.php" afterPath="$PROJECT_DIR$/src/AppBundle/Entity/ImageOrla.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Controller/UsuarioController.php" afterPath="$PROJECT_DIR$/src/AppBundle/Controller/UsuarioController.php" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -73,11 +72,11 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="241">
-      <file leaf-file-name="UsuarioController.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="UsuarioController.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/UsuarioController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="442">
-              <caret line="120" column="42" lean-forward="false" selection-start-line="120" selection-start-column="42" selection-end-line="120" selection-end-column="42" />
+            <state relative-caret-position="578">
+              <caret line="119" column="14" lean-forward="false" selection-start-line="119" selection-start-column="8" selection-end-line="119" selection-end-column="14" />
               <folding>
                 <element signature="e#40#76#0#PHP" expanded="true" />
               </folding>
@@ -85,7 +84,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ImageOrla.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ImageOrla.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/ImageOrla.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="306">
@@ -194,10 +193,10 @@
         <option value="$PROJECT_DIR$/app/Resources/views/Galeria/orla-provisional.html.twig" />
         <option value="$PROJECT_DIR$/app/Resources/views/default/incidencia-enviada.html.twig" />
         <option value="$PROJECT_DIR$/app/Resources/views/default/contactar-enviado.html.twig" />
-        <option value="$PROJECT_DIR$/src/AppBundle/Controller/UsuarioController.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Admin/ImageOrlaAdmin.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Resources/config/services.yml" />
         <option value="$PROJECT_DIR$/src/AppBundle/Entity/ImageOrla.php" />
+        <option value="$PROJECT_DIR$/src/AppBundle/Controller/UsuarioController.php" />
       </list>
     </option>
   </component>
@@ -802,7 +801,7 @@
       <workItem from="1521714256687" duration="19941000" />
       <workItem from="1521972259749" duration="10353000" />
       <workItem from="1522650828238" duration="4588000" />
-      <workItem from="1522747124467" duration="2806000" />
+      <workItem from="1522747124467" duration="3495000" />
     </task>
     <task id="LOCAL-00001" summary="Registro y login">
       <created>1508205270506</created>
@@ -871,7 +870,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="722776000" />
+    <option name="totallyTimeSpent" value="723465000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -883,7 +882,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="7" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2549168" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
@@ -1345,16 +1344,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/UsuarioController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="120" column="42" lean-forward="false" selection-start-line="120" selection-start-column="42" selection-end-line="120" selection-end-column="42" />
-          <folding>
-            <element signature="e#40#76#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/Grupo.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="493">
@@ -1369,6 +1358,16 @@
           <caret line="54" column="37" lean-forward="false" selection-start-line="54" selection-start-column="37" selection-end-line="54" selection-end-column="37" />
           <folding>
             <element signature="e#36#84#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/UsuarioController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="578">
+          <caret line="119" column="14" lean-forward="false" selection-start-line="119" selection-start-column="8" selection-end-line="119" selection-end-column="14" />
+          <folding>
+            <element signature="e#40#76#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
