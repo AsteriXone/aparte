@@ -72,21 +72,16 @@ class UsuarioController extends Controller
         $form->handleRequest($request);
         $isIncidencia = false;
 
+        // Usuario
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+
+        // Grupo al que pertenece usuario
+        $em = $this->getDoctrine()->getManager();
+        $grupoUsuario = $em->getRepository(GruposUsuarios::class)->find($user);
+
+
         if ($form->isSubmitted() && $form->isValid()) {
-            // Usuario
-            $user = $this->get('security.token_storage')->getToken()->getUser();
 
-            // Grupo al que pertenece usuario
-            $em = $this->getDoctrine()->getManager();
-            $grupoUsuario = $em->getRepository(GruposUsuarios::class)->find($user);
-
-            // Comprobar si ya existe incidencia en Grupo-Usuario
-//            $em = $this->getDoctrine()->getManager();
-            $existeIncidencia = $em->getRepository(Incidencia::class)->findBy(array('grupo_usuario' => $grupoUsuario));
-
-            if ($existeIncidencia) {
-                $isIncidencia = true;
-            }
             // Obteniendo datos del formulario
             $data = $form->getData();
 
@@ -108,13 +103,6 @@ class UsuarioController extends Controller
             return $this->render('default/incidencia-enviada.html.twig');
         }
 
-        // Usuario
-        $user = $this->get('security.token_storage')->getToken()->getUser();
-
-        // Grupo al que pertenece usuario
-        $em = $this->getDoctrine()->getManager();
-        $grupoUsuario = $em->getRepository(GruposUsuarios::class)->find($user);
-
         $grupo = $grupoUsuario->getGrupo();
 
         // Traer galerias de DB
@@ -123,7 +111,7 @@ class UsuarioController extends Controller
         $imagenes = $this->getDoctrine()
             ->getRepository(ImageOrla::class)
             ->findBy(array('grupo' => $idGrupo));
-
+        $idUSer = $user->getId();
         if($imagenes){
             return $this->render('Galeria/orla-provisional.html.twig', [
                 'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
@@ -136,6 +124,7 @@ class UsuarioController extends Controller
             return $this->render('Galeria/no-orla-provisional.html.twig', [
                 'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
                 'id_grupo' => $idGrupo,
+                'id_usuario'  => $idUSer,
             ]);
         }
 
