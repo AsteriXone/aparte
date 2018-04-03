@@ -117,7 +117,7 @@ class UsuarioController extends Controller
 
         $nombre = $grupoUsuario->getGrupo();
         // Traer galerias de DB
-        $grupo = $grupoUsuario->getGrupo();
+        $grupo = $grupoUsuario->getGrupo()->getId();
         $imagenes = $this->getDoctrine()
             ->getRepository(ImageOrla::class)
             ->findBy(array('grupo' => $grupo));
