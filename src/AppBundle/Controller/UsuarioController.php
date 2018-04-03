@@ -117,7 +117,7 @@ class UsuarioController extends Controller
             return $this->render('Galeria/orla-provisional.html.twig', [
                 'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
                 'imagenes' => $imagenes,
-                'nombre_grupo'=> "Pruebas",
+//                'nombre_grupo'=> "Pruebas",
                 'form' => $form->createView(),
                 'isIncidencia' => $isIncidencia,
             ]);
