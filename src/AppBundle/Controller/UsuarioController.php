@@ -90,7 +90,7 @@ class UsuarioController extends Controller
             $incidencia = new Incidencia();
 
             // Aniadir grupoUsuario a incidencia
-            $incidencia->setGrupoUsuario($grupoUsuario);
+            $incidencia->setGrupoUsuario($grupoUsuario[0]);
 
             // Aniadir incidencia a nueva incidencia
             $incidencia->setIncidencia($data['incidencia']);
