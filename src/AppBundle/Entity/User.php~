@@ -76,22 +76,22 @@ class User extends BaseUser
     protected $fecha_registro;
 
     /**
-     * @ORM\OneToMany(targetEntity="GruposUsuarios", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="GruposUsuarios", mappedBy="user", cascade={"persist", "remove"})
      */
     private $grupos_usuarios;
 
     /**
-     * @ORM\OneToMany(targetEntity="UsuariosMuestras", mappedBy="usuario")
+     * @ORM\OneToMany(targetEntity="UsuariosMuestras", mappedBy="usuario", cascade={"persist", "remove"})
      */
     private $usuarios_muestras;
 
     /**
-     * @ORM\OneToMany(targetEntity="UsuariosProfes", mappedBy="usuario")
+     * @ORM\OneToMany(targetEntity="UsuariosProfes", mappedBy="usuario", cascade={"persist", "remove"})
      */
     private $usuarios_profes;
 
     /**
-     * @ORM\OneToMany(targetEntity="UsuarioMuestraVotar", mappedBy="usuario")
+     * @ORM\OneToMany(targetEntity="UsuarioMuestraVotar", mappedBy="usuario", cascade={"persist", "remove"})
      */
     private $usuarios_muestras_votar;
 

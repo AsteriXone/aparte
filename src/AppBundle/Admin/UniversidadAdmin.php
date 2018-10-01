@@ -27,7 +27,7 @@ class UniversidadAdmin extends AbstractAdmin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->add('id')
+//            ->add('id')
             ->add('nombre')
             ->add('_action', null, array(
                 'actions' => array(

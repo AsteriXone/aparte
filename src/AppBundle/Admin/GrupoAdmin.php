@@ -6,6 +6,7 @@ use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Form\Type\ModelListType;
 use Sonata\AdminBundle\Show\ShowMapper;
 
 class GrupoAdmin extends AbstractAdmin
@@ -31,15 +32,15 @@ class GrupoAdmin extends AbstractAdmin
     {
         $listMapper
             ->add('id')
-            ->add('universidad')
-            ->add('especialidad')
-            ->add('anio')
-            ->add('codigoGrupo')
-            ->add('isActive',null, array('label'=>'Activo'))
-            ->add('isCitasActive',null, array('label'=>'Citas'))
-            ->add('isComprasActive',null, array('label'=>'Compras'))
-            ->add('isVotosProfe',null, array('label'=>'Votar Profes'))
-            ->add('isVotosMuestra',null, array('label'=>'Votar Muestras'))
+            ->add('__toString', null, array('label'=> 'Grupo', 'sortable'=>true))
+//            ->add('especialidad', null, array('editable'=> true))
+            ->add('anio', null, array('editable'=> true))
+            ->add('codigoGrupo', null, array('editable'=> true))
+            ->add('isActive',null, array('label'=>'Activo', 'editable'=> true))
+            ->add('isCitasActive',null, array('label'=>'Citas', 'editable'=> true))
+            ->add('isComprasActive',null, array('label'=>'Compras', 'editable'=> true))
+            ->add('isVotosProfe',null, array('label'=>'Votar Profes', 'editable'=> true))
+            ->add('isVotosMuestra',null, array('label'=>'Votar Muestras', 'editable'=> true))
             ->add('_action', null, array(
                 'actions' => array(
                     'show' => array(),
@@ -57,8 +58,8 @@ class GrupoAdmin extends AbstractAdmin
     {
         $formMapper
             ->with('Grupo', ['class' => 'col-md-9'])
-            ->add('universidad')
-            ->add('especialidad')
+            ->add('universidad',ModelListType::class, array('label'=>'Universidad/Colegio'))
+            ->add('especialidad', ModelListType::class, array('label'=>'Especialidad/Curso'))
             ->add('anio')
             ->add('codigoGrupo')
             ->end()

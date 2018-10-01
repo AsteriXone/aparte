@@ -82,33 +82,33 @@ class Grupo
     private $especialidad;
 
     /**
-     * @ORM\OneToMany(targetEntity="GruposUsuarios", mappedBy="grupo")
+     * @ORM\OneToMany(targetEntity="GruposUsuarios", mappedBy="grupo", cascade={"persist", "remove"})
      */
     private $grupos_usuarios;
 
     /**
-     * @ORM\OneToMany(targetEntity="GrupoMuestra", mappedBy="grupo")
+     * @ORM\OneToMany(targetEntity="GrupoMuestra", mappedBy="grupo", cascade={"persist", "remove"})
      */
     private $gruposMuestras;
 
     /**
-     * @ORM\OneToMany(targetEntity="GrupoMuestraVotar", mappedBy="grupo")
+     * @ORM\OneToMany(targetEntity="GrupoMuestraVotar", mappedBy="grupo", cascade={"persist", "remove"})
      */
     private $gruposMuestrasVotar;
 
     /**
-     * @ORM\OneToMany(targetEntity="CuadranteGrupo", mappedBy="grupo")
+     * @ORM\OneToMany(targetEntity="CuadranteGrupo", mappedBy="grupo", cascade={"persist", "remove"})
      */
     private $cuadranteGrupo;
 
     /**
-     * @ORM\OneToMany(targetEntity="GrupoProfesor", mappedBy="grupo")
+     * @ORM\OneToMany(targetEntity="GrupoProfesor", mappedBy="grupo", cascade={"persist", "remove"})
      */
     private $grupos_profesores;
 
     /**
      * One Grupo has Many UsuarioMuestra.
-     * @ORM\OneToMany(targetEntity="UsuariosMuestras", mappedBy="grupo")
+     * @ORM\OneToMany(targetEntity="UsuariosMuestras", mappedBy="grupo", cascade={"persist", "remove"})
      */
     private $usuario_muestra;
 

@@ -34,7 +34,7 @@ class GruposUsuarios
     private $user;
 
     /**
-     * @ORM\OneToMany(targetEntity="Incidencia", mappedBy="grupo_usuario", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="Incidencia", mappedBy="grupo_usuario", cascade={"persist", "remove"})
      */
     private $incidencias;
 

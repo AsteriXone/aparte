@@ -31,7 +31,7 @@ class GruposUsuariosAdmin extends AbstractAdmin
     {
         $listMapper
 //            ->add('id')
-            ->add('grupo')
+            ->add('grupo',null, array('editable'=>true))
             ->add('user.nombreCompleto', null, array ('label'=>'Usuario'))
             ->add('user.telefono', null, array ('label'=>'Teléfono'))
             ->add('user.email', null, array ('label'=>'Correo'))

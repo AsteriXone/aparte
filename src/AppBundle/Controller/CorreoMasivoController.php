@@ -48,8 +48,10 @@ class CorreoMasivoController extends Controller
             $mensaje = $form['mensaje']->getData();
             $asunto = $form['asunto']->getData();
             // Envía correo
+            $emailOrigen = $this->getUser()->getEmail();
+//            dump($emailOrigen);
             $message = (new \Swift_Message('Apartefotografía'))
-                ->setFrom('info@apartefotografia.es')
+                ->setFrom($emailOrigen)
                 ->setTo($emails[0])
                 ->setBody(
                     $this->renderView(

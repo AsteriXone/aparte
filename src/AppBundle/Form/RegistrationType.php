@@ -37,7 +37,7 @@ class RegistrationType extends AbstractType
             ->add('ape_2', TextType::class, array(
                 'label' => '2º Apellido',
                 'attr' => array('placeholder' => '2º Apellido'),
-                'required' => true,))
+                'required' => false,))
 
             ->add('direccion', TextType::class, array(
                 'label' => 'Dirección',
