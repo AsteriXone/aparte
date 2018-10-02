@@ -6,6 +6,7 @@ use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Form\Type\ModelListType;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 
@@ -53,9 +54,9 @@ class ImageGalleryAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('galeria')
-            ->add('imageName')
+            ->add('galeria', ModelListType::class)
             ->add('imageFile', FileType::class, array('label' => 'Subir imagen'))
+            ->add('imageName', null, array('label'=>'Descripción imagen'))
         ;
     }
 

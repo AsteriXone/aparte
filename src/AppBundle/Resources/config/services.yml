@@ -3,98 +3,49 @@ services:
         class: AppBundle\Admin\GrupoAdmin
         arguments: [~, AppBundle\Entity\Grupo, SonataAdminBundle:CRUD]
         tags:
-            - { name: sonata.admin, manager_type: orm, group: Grupos, label: Grupos }
+            - { name: sonata.admin, manager_type: orm, group: Grupos, label: Datos Grupos }
         public: true
 
     app.admin.grupos_usuarios:
         class: AppBundle\Admin\GruposUsuariosAdmin
         arguments: [~, AppBundle\Entity\GruposUsuarios, SonataAdminBundle:CRUD]
         tags:
-            - { name: sonata.admin, manager_type: orm, group: Usuarios, label: Usuarios por Grupo }
-        public: true
-
-    app.admin.universidad:
-        class: AppBundle\Admin\UniversidadAdmin
-        arguments: [~, AppBundle\Entity\Universidad, SonataAdminBundle:CRUD]
-        tags:
-            - { name: sonata.admin, manager_type: orm, group: Universidades, label: Universidad }
-        public: true
-
-    app.admin.especialidad:
-        class: AppBundle\Admin\EspecialidadAdmin
-        arguments: [~, AppBundle\Entity\Especialidad, SonataAdminBundle:CRUD]
-        tags:
-            - { name: sonata.admin, manager_type: orm, group: Universidades, label: Especialidad }
+            - { name: sonata.admin, manager_type: orm, group: Grupos, label: Usuarios por Grupo }
         public: true
 
     app.admin.user:
         class: AppBundle\Admin\UserAdmin
         arguments: [~, AppBundle\Entity\User, SonataAdminBundle:CRUD]
         tags:
-            - { name: sonata.admin, manager_type: orm, group: Usuarios, label: Usuarios }
-        public: true
-
-    app.admin.muestra:
-        class: AppBundle\Admin\MuestraAdmin
-        arguments: [~, AppBundle\Entity\Muestra, SonataAdminBundle:CRUD]
-        tags:
-            - { name: sonata.admin, manager_type: orm, group: Muestras, label: Muestras }
-        public: true
-
-    app.admin.grupo_muestra:
-        class: AppBundle\Admin\GrupoMuestraAdmin
-        arguments: [~, AppBundle\Entity\GrupoMuestra, SonataAdminBundle:CRUD]
-        tags:
-            - { name: sonata.admin, manager_type: orm, group: Muestras, label: Grupo-Muestra }
-        public: true
-
-    app.admin.usuarios_muestras:
-        class: AppBundle\Admin\UsuariosMuestrasAdmin
-        arguments: [~, AppBundle\Entity\UsuariosMuestras, SonataAdminBundle:CRUD]
-        tags:
-            - { name: sonata.admin, manager_type: orm, group: Muestras, label: Usuarios-Muestras }
-        public: true
-
-    app.admin.cuadrante:
-        class: AppBundle\Admin\CuadranteAdmin
-        arguments: [~, AppBundle\Entity\Cuadrante, AppBundle:CuadranteAdmin]
-        tags:
-            - { name: sonata.admin, manager_type: orm, group: Cuadrantes, label: Cuadrante }
+            - { name: sonata.admin, manager_type: orm, group: Usuarios, label: Todos los Usuarios }
         public: true
 
     app.admin.cuadrante_grupo:
         class: AppBundle\Admin\CuadranteGrupoAdmin
         arguments: [~, AppBundle\Entity\CuadranteGrupo, AppBundle:CuadranteGrupoAdmin]
         tags:
-            - { name: sonata.admin, manager_type: orm, group: Cuadrantes, label: Cuadrante-Grupo }
+            - { name: sonata.admin, manager_type: orm, group: Grupos, label: Cuadrante para Grupo }
         public: true
 
-    app.admin.dia_cuadrante:
-        class: AppBundle\Admin\DiaCuadranteAdmin
-        arguments: [~, AppBundle\Entity\DiaCuadrante, SonataAdminBundle:CRUD]
-        tags:
-            - { name: sonata.admin, manager_type: orm, group: Cuadrantes, label: Dia-Cuadrante }
-        public: true
-
-    app.admin.descanso_dia:
-        class: AppBundle\Admin\DescansoDiaAdmin
-        arguments: [~, AppBundle\Entity\DescansoDia, SonataAdminBundle:CRUD]
-        tags:
-            - { name: sonata.admin, manager_type: orm, group: Cuadrantes, label: DescansoDia }
-        public: true
-
-    app.admin.citas:
-        class: AppBundle\Admin\CitasAdmin
-        arguments: [~, AppBundle\Entity\Citas, AppBundle:CitasAdmin]
-        tags:
-            - { name: sonata.admin, manager_type: orm, group: Citas, label: Citas }
-        public: true
+#    app.admin.dia_cuadrante:
+#        class: AppBundle\Admin\DiaCuadranteAdmin
+#        arguments: [~, AppBundle\Entity\DiaCuadrante, SonataAdminBundle:CRUD]
+#        tags:
+#            - { name: sonata.admin, manager_type: orm, group: Cuadrantes, label: Dia-Cuadrante }
+#        public: true
+#
+#    app.admin.descanso_dia:
+#        class: AppBundle\Admin\DescansoDiaAdmin
+#        arguments: [~, AppBundle\Entity\DescansoDia, SonataAdminBundle:CRUD]
+#        tags:
+#            - { name: sonata.admin, manager_type: orm, group: Cuadrantes, label: DescansoDia }
+#        public: true
 
     app.admin.grupo_profesor:
         class: AppBundle\Admin\GrupoProfesorAdmin
         arguments: [~, AppBundle\Entity\GrupoProfesor, SonataAdminBundle:CRUD]
         tags:
-            - { name: sonata.admin, manager_type: orm, group: Profesores, label: Profesor }
+            - { name: sonata.admin, manager_type: orm, group: Grupos, label: Profesores por Grupo }
         public: true
 
 #    app.admin.usuarios_profes:
@@ -104,32 +55,18 @@ services:
 #            - { name: sonata.admin, manager_type: orm, group: Profesores, label: UsuariosProfes }
 #        public: true
 
-    app.admin.galeria:
-        class: AppBundle\Admin\GaleriaAdmin
-        arguments: [~, AppBundle\Entity\Galeria, AppBundle:GaleriaAdmin]
-        tags:
-            - { name: sonata.admin, manager_type: orm, group: Galerias, label: Galeria }
-        public: true
-
     app.admin.image_gallery:
         class: AppBundle\Admin\ImageGalleryAdmin
         arguments: [~, AppBundle\Entity\ImageGallery, AppBundle:ImageGalleryAdmin]
         tags:
-            - { name: sonata.admin, manager_type: orm, group: Galerias, label: Imagenes Galeria }
-        public: true
-
-    app.admin.muestra_votar:
-        class: AppBundle\Admin\MuestraVotarAdmin
-        arguments: [~, AppBundle\Entity\MuestraVotar, SonataAdminBundle:CRUD]
-        tags:
-            - { name: sonata.admin, manager_type: orm, group: Muestras, label: Muestras para Votar }
+            - { name: sonata.admin, manager_type: orm, group: Galerias, label: Imágenes para Galeria }
         public: true
 
     app.admin.grupo_muestra_votar:
         class: AppBundle\Admin\GrupoMuestraVotarAdmin
         arguments: [~, AppBundle\Entity\GrupoMuestraVotar, SonataAdminBundle:CRUD]
         tags:
-            - { name: sonata.admin, manager_type: orm, group: Muestras, label: Asignar Muestras Votar Grupo }
+            - { name: sonata.admin, manager_type: orm, group: Grupos, label: Muestras Votar Grupo }
         public: true
 
     app.admin.image_orla:
@@ -151,4 +88,67 @@ services:
         arguments: [~, AppBundle\Entity\Profesor, SonataAdminBundle:CRUD]
         tags:
             - { name: sonata.admin, manager_type: orm, group: Misc, label: Profesores }
+        public: true
+
+    app.admin.universidad:
+        class: AppBundle\Admin\UniversidadAdmin
+        arguments: [~, AppBundle\Entity\Universidad, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Misc, label: Universidades }
+        public: true
+
+    app.admin.especialidad:
+        class: AppBundle\Admin\EspecialidadAdmin
+        arguments: [~, AppBundle\Entity\Especialidad, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Misc, label: Especialidades }
+        public: true
+
+    app.admin.muestra:
+        class: AppBundle\Admin\MuestraAdmin
+        arguments: [~, AppBundle\Entity\Muestra, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Misc, label: Muestras para Comprar }
+        public: true
+
+    app.admin.usuarios_muestras:
+        class: AppBundle\Admin\UsuariosMuestrasAdmin
+        arguments: [~, AppBundle\Entity\UsuariosMuestras, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Misc, label: Usuarios Muestras Compradas }
+        public: true
+
+    app.admin.grupo_muestra:
+        class: AppBundle\Admin\GrupoMuestraAdmin
+        arguments: [~, AppBundle\Entity\GrupoMuestra, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Misc, label: Grupo Comprar Muestras  }
+        public: true
+
+    app.admin.muestra_votar:
+        class: AppBundle\Admin\MuestraVotarAdmin
+        arguments: [~, AppBundle\Entity\MuestraVotar, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Misc, label: Muestras para Votar }
+        public: true
+
+    app.admin.galeria:
+        class: AppBundle\Admin\GaleriaAdmin
+        arguments: [~, AppBundle\Entity\Galeria, AppBundle:GaleriaAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Misc, label: Galerias existentes }
+        public: true
+
+    app.admin.cuadrante:
+        class: AppBundle\Admin\CuadranteAdmin
+        arguments: [~, AppBundle\Entity\Cuadrante, AppBundle:CuadranteAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Misc, label: Nombres Cuadrantes }
+        public: true
+
+    app.admin.citas:
+        class: AppBundle\Admin\CitasAdmin
+        arguments: [~, AppBundle\Entity\Citas, AppBundle:CitasAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Misc, label: Cita Individual }
         public: true

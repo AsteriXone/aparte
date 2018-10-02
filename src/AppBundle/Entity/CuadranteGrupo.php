@@ -42,7 +42,12 @@ class CuadranteGrupo
     {
         return $this->id;
     }
-    
+
+    public function __toString()
+    {
+        return (string) $this->getCuadrante();
+    }
+
 
     /**
      * Set cuadrante

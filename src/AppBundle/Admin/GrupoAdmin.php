@@ -36,6 +36,7 @@ class GrupoAdmin extends AbstractAdmin
 //            ->add('especialidad', null, array('editable'=> true))
             ->add('anio', null, array('editable'=> true))
             ->add('codigoGrupo', null, array('editable'=> true))
+            ->add('cuadranteGrupo',null, array('label'=>'Cuadrante', 'editable'=> false))
             ->add('isActive',null, array('label'=>'Activo', 'editable'=> true))
             ->add('isCitasActive',null, array('label'=>'Citas', 'editable'=> true))
             ->add('isComprasActive',null, array('label'=>'Compras', 'editable'=> true))

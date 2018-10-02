@@ -6,6 +6,7 @@ use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Form\Type\ModelListType;
 use Sonata\AdminBundle\Show\ShowMapper;
 
 class GrupoMuestraVotarAdmin extends AbstractAdmin
@@ -17,8 +18,8 @@ class GrupoMuestraVotarAdmin extends AbstractAdmin
     {
         $datagridMapper
 //            ->add('id')
-            ->add('grupo')
             ->add('muestraVotar')
+            ->add('grupo')
         ;
     }
 
@@ -29,8 +30,14 @@ class GrupoMuestraVotarAdmin extends AbstractAdmin
     {
         $listMapper
 //            ->add('id')
+            ->add('Muestra' ,null, array(
+                    'base_path' => '%app.path.muestras_votar%',
+                    'template' => 'grupo_muestras_votar.html.twig',
+                )
+            )
+            ->add('muestraVotar', null,array('label'=>'Nombre'))
+            ->add('muestraVotar.descripcion', null,array('label'=>'Descripcion'))
             ->add('grupo')
-            ->add('muestraVotar')
             ->add('_action', null, array(
                 'actions' => array(
                     'show' => array(),
@@ -48,8 +55,9 @@ class GrupoMuestraVotarAdmin extends AbstractAdmin
     {
         $formMapper
 //            ->add('id')
+            ->add('muestraVotar', ModelListType::class)
             ->add('grupo')
-            ->add('muestraVotar')
+
         ;
     }
 
@@ -60,8 +68,8 @@ class GrupoMuestraVotarAdmin extends AbstractAdmin
     {
         $showMapper
             ->add('id')
-            ->add('grupo')
             ->add('muestraVotar')
+            ->add('grupo')
         ;
     }
 }

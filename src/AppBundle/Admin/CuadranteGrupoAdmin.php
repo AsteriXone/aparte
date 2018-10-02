@@ -6,6 +6,7 @@ use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Form\Type\ModelListType;
 use Sonata\AdminBundle\Show\ShowMapper;
 
 class CuadranteGrupoAdmin extends AbstractAdmin
@@ -48,8 +49,8 @@ class CuadranteGrupoAdmin extends AbstractAdmin
     {
         $formMapper
 //            ->add('id')
-            ->add('grupo')
-            ->add('cuadrante')
+            ->add('grupo', null, array('label'=>'Grupo'))
+            ->add('cuadrante', ModelListType::class, array('label'=>'Asignar Cuadrante'))
         ;
     }
 

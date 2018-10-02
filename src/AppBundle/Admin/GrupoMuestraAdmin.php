@@ -2,10 +2,13 @@
 
 namespace AppBundle\Admin;
 
+use AppBundle\Entity\Muestra;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Form\Type\ModelListType;
+use Sonata\AdminBundle\Form\Type\ModelType;
 use Sonata\AdminBundle\Show\ShowMapper;
 
 class GrupoMuestraAdmin extends AbstractAdmin
@@ -56,7 +59,7 @@ class GrupoMuestraAdmin extends AbstractAdmin
         $formMapper
 //            ->add('id')
             ->add('grupo')
-            ->add('muestra')
+            ->add('muestra', ModelListType::class, array('class'=>Muestra::class))
             ->add('precio')
         ;
     }

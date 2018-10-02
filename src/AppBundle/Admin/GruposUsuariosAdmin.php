@@ -32,7 +32,7 @@ class GruposUsuariosAdmin extends AbstractAdmin
         $listMapper
 //            ->add('id')
             ->add('grupo',null, array('editable'=>true))
-            ->add('user.nombreCompleto', null, array ('label'=>'Usuario'))
+            ->add('user', null, array ('label'=>'Usuario'))
             ->add('user.telefono', null, array ('label'=>'Teléfono'))
             ->add('user.email', null, array ('label'=>'Correo'))
             ->add('user.onlyDate',null, array('label' => 'Fecha Registro'))
@@ -66,7 +66,7 @@ class GruposUsuariosAdmin extends AbstractAdmin
         $showMapper
             ->add('id')
             ->add('grupo')
-            ->add('user.nombreCompleto', null, array ('label'=>'Usuario'))
+            ->add('user', null, array ('label'=>'Usuario'))
             ->add('user.telefono', null, array ('label'=>'Teléfono'))
             ->add('user.email', null, array ('label'=>'Correo'))
             ->add('user.onlyDate',null, array('label' => 'Fecha Registro'))

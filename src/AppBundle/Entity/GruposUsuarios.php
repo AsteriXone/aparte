@@ -46,7 +46,7 @@ class GruposUsuarios
     public function __toString()
     {
         // TODO: Implement __toString() method.
-        return (string) $this->getUser()->getNombreCompleto() ." - ".$this->getGrupo()->getNombreGrupo(). " (" . $this->getGrupo()->getAnio().")";
+        return (string) $this->getUser()." - ".$this->getGrupo();
     }
 
     /**
