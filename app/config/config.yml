@@ -84,19 +84,19 @@ vich_uploader:
     mappings:
         muestra_image:
             uri_prefix:         /img/muestras
-            upload_destination: '%kernel.root_dir%/../web/img/muestras'
+            upload_destination: '%kernel.root_dir%/../www/img/muestras'
             inject_on_load: true
         gallery_image:
             uri_prefix:         /img/gallery
-            upload_destination: '%kernel.root_dir%/../web/img/gallery'
+            upload_destination: '%kernel.root_dir%/../www/img/gallery'
             inject_on_load: true
         orla_image:
             uri_prefix:         /img/orla-provisional
-            upload_destination: '%kernel.root_dir%/../web/img/orla-provisional'
+            upload_destination: '%kernel.root_dir%/../www/img/orla-provisional'
             inject_on_load: true
         muestra_votar:
             uri_prefix:         /img/muestras-votar
-            upload_destination: '%kernel.root_dir%/../web/img/muestras-votar'
+            upload_destination: '%kernel.root_dir%/../www/img/muestras-votar'
             inject_on_load: true
 
 swiftmailer:
